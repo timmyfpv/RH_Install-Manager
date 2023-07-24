@@ -17,11 +17,11 @@ print_info_message() {
   printf "installing dependencies may need 'sudo' password\n\n"
 }
 
-check_for_new_ota() {
+check_for_new_rhim() {
 
   if ! test -f .first_time_here; then
-    wget https://raw.githubusercontent.com/RotorHazard/Install-Manager/stable/version.txt -q -O .new_ota_version_check_file.txt
-    diff version.txt .new_ota_version_check_file.txt > .new_ota_version_diff_file
+    wget https://raw.githubusercontent.com/RotorHazard/Install-Manager/stable/version.txt -q -O .new_rhim_version_check_file.txt
+    diff version.txt .new_rhim_version_check_file.txt > .new_rhim_version_diff_file
   else
     sudo apt update || printf "repositories have not been updated \n"
   fi
@@ -29,10 +29,10 @@ check_for_new_ota() {
 
 open_software_alias_check() {
 
-  if ! grep -q "alias ota=" ../.bashrc; then
+  if ! grep -q "alias rhim=" ../.bashrc; then
     echo '
 #[added during RH_Install-Manager setup]
-alias rhim="cd ~/RH_Install-Manager && sh ./rhim.sh"                        # opens OTA software' >> ../.bashrc
+alias rhim="cd ~/RH_Install-Manager && sh ./rhim.sh"                        # opens RH_Install-Manager software' >> ../.bashrc
   fi
 
   if ! grep -q "alias rh=" ../.bashrc; then
@@ -153,8 +153,8 @@ dependencies_check() {
 }
 
 print_info_message
-check_for_new_ota
+check_for_new_rhim
 open_software_alias_check &
 dependencies_check &
 wait
-python3 start_ota.py
+python3 start_rhim.py

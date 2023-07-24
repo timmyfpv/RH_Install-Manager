@@ -1,4 +1,4 @@
-OTA software requires python version 3.6 or newer. 
+Install-Manager software requires python version 3.6 or newer.
 
 
 First - check your current python3 version. 

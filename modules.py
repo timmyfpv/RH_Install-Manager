@@ -47,7 +47,7 @@ def triangle_image_show():
         print(f"{Bcolors.YELLOW}{f}{Bcolors.ENDC}")
 
 
-def ota_asci_image_show():
+def rhim_asci_image_show():
     with open('resources/rhim_image.txt', 'r') as file:
         f = file.read()
         print(f)
@@ -126,21 +126,21 @@ def internet_check():
     return internet_flag
 
 
-def load_ota_sys_markers(user):
-    ota_config_file = f'/home/{user}/.ota_markers/rhim_config.json'
-    if Path(ota_config_file).exists():
-        ota_config = load_json(ota_config_file)
+def load_rhim_sys_markers(user):
+    rhim_config_file = f'/home/{user}/.rhim_markers/rhim_config.json'
+    if Path(rhim_config_file).exists():
+        rhim_config = load_json(rhim_config_file)
     else:
-        ota_config = load_json(f'/home/{user}/RH_Install-Manager/resources/rhim_config.json')
-    return ota_config
+        rhim_config = load_json(f'/home/{user}/RH_Install-Manager/resources/rhim_config.json')
+    return rhim_config
 
 
-def write_ota_sys_markers(ota_config, user):
-    ota_config_file = f'/home/{user}/.ota_markers/rhim_config.json'
-    write_json(ota_config, ota_config_file)
+def write_rhim_sys_markers(rhim_config, user):
+    rhim_config_file = f'/home/{user}/.rhim_markers/rhim_config.json'
+    write_json(rhim_config, rhim_config_file)
 
 
-def get_ota_version(checking_from_updater):
+def get_rhim_version(checking_from_updater):
     config = load_config()
     if checking_from_updater:
         path = f'/home/{config.user}/RH_Install-Manager/'
@@ -150,7 +150,7 @@ def get_ota_version(checking_from_updater):
         with open(f'{path}/version.txt', 'r') as open_file:
             version = open_file.readline().strip()
     except:
-        version = "can't read OTA version"
+        version = "can't read Install-Manager version"
     return version
 
 

@@ -1,4 +1,4 @@
-Code for RotorHazard OTA Updater and Manager is Copyright (c) 2020 Paweł Fabiszewski.
+Code for RotorHazard Install-Manager is Copyright (c) 2020 Paweł Fabiszewski.
 
 MIT License
 

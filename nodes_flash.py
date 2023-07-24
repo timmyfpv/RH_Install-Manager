@@ -132,7 +132,8 @@ def all_nodes_flash(config):
             if odd_number and ((nodes_num - i) == 2):
                 break  # breaks the "flashing loop" after last even node
         flash_firmware_onto_a_node(config, config.nodes_number, True) if odd_number else None
-    unsuccessful_flashing_error_flag = os.path.exists(f"/home/{config.user}/RH_Install-Manager/.unsuccessful_flashing_error")
+    unsuccessful_flashing_error_flag = os.path.exists(
+        f"/home/{config.user}/RH_Install-Manager/.unsuccessful_flashing_error")
     unsuccessful_update_image() if unsuccessful_flashing_error_flag else successful_update_image(config)
     input("\nDone. Press ENTER to continue ")
     sleep(1)

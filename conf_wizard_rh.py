@@ -321,7 +321,7 @@ If you want to use value given as default, just hit 'Enter'.
 def conf_rh():
     """
         repeat the configuration script until
-        the user either aborts, configures ota
+        the user either aborts, configures rhim
         or it was already configured.
     :return:
     """

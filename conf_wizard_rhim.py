@@ -13,7 +13,7 @@ ask the user if they want to overwrite it.
 def conf_check():
     conf_now_flag = 1
     if os.path.exists("./updater-config.json"):
-        print("\n\tLooks that you have OTA software already configured.")
+        print("\n\tLooks that you have the Install-Manager software already configured.")
         while True:
             cont_conf = input("\n\tOverwrite and continue anyway? [Y/n]\t\t")
             if not cont_conf:
@@ -168,7 +168,7 @@ What is the number of the I2C bus used with nodes? [0/1 | default: 1]\t""")
 
             while True:
                 debug_mode = input("""
-Will you use OTA software in a simulation mode? [y/N | default: no]
+Will you use this software in a simulation mode? [y/N | default: no]
 Flashing itself is not possible in "sim" mode!\t\t\t\t""").lower()
                 if not debug_mode:
                     debug_mode, config.debug_mode = False, False
@@ -291,10 +291,10 @@ Are you using older, non-i2c hardware flashing mod?
     return conf_now_flag, old_config
 
 
-def conf_ota(config):
+def conf_rhim(config):
     """
         repeat the configuration script until
-        the user either aborts, configures ota
+        the user either aborts, configures rhim
         or it was already configured.
     :return:
     """
@@ -306,7 +306,7 @@ def conf_ota(config):
 
 def main():
     config = load_config()
-    conf_ota(config)
+    conf_rhim(config)
 
 
 if __name__ == "__main__":

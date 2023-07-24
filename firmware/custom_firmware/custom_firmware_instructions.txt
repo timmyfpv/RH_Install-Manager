@@ -19,7 +19,7 @@ in '~/RH_Install-Manager/firmware/<chosen_bootloader_version>/custom_firmware/' 
 so the path looks like: '~/RH_Install-Manager/firmware/new_bootloader/custom_firmware/custom_node.hex'
 or '~/RH_Install-Manager/firmware/old_bootloader/custom_firmware/custom_node.hex'
 
-Next - open OTA software, enter Nodes flash and update in Main Menu and navigate
+Next - open Install-Manager software, enter Nodes flash and update in Main Menu and navigate
 to 'Flash nodes individually' choose the node and use the option "Flash custom firmware..."
 
 If you use new bootloader it will be flashed in second attempt.

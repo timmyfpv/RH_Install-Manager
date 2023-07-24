@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo rfkill unblock wifi # in case of WiFi being still blocked at this point
-echo '#[Raspberry as AccessPoint - added by OTA]' | sudo tee -a ~/.bashrc
+echo '#[Raspberry as AccessPoint - added by RH_Install-Manager]' | sudo tee -a ~/.bashrc
 echo 'alias netcfg="cp /etc/dhcpcd.conf.net /etc/dhcpcd.conf"  # Pi as client' | sudo tee -a ~/.bashrc
 echo 'alias apcfg="cp /etc/dhcpcd.conf.ap /etc/dhcpcd.conf"  # Pi as AP' | sudo tee -a ~/.bashrc
 sudo cp /home/"${1}"/RH_Install-Manager/net_ap/dhcpcd.conf.net /etc/dhcpcd.conf.net

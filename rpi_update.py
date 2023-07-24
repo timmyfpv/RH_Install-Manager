@@ -3,8 +3,8 @@ import glob
 from pathlib import Path
 from time import sleep
 from conf_wizard_rh import conf_rh
-from modules import clear_the_screen, Bcolors, triangle_image_show, internet_check, load_ota_sys_markers, \
-    write_ota_sys_markers, load_config, server_start
+from modules import clear_the_screen, Bcolors, triangle_image_show, internet_check, load_rhim_sys_markers, \
+    write_rhim_sys_markers, load_config, server_start
 
 
 def check_preferred_rh_version(config):
@@ -71,7 +71,7 @@ def rh_update_check(config):
     installed_rh_server = raw_installed_rh_server.split("-")[0]  # 3.0.0
     installed_rh_server_number = int(installed_rh_server.replace(".", ""))  # 300
     server_installed_flag = get_rotorhazard_server_version(config)[0]  # check if RH is installed
-    newest_possible_rh_version = int(check_preferred_rh_version(config)[1])  # derived from OTA name 232.25.3h -> 232
+    newest_possible_rh_version = int(check_preferred_rh_version(config)[1])  # derived from Install-Manager version name 232.25.3h -> 232
     if installed_rh_server_number < newest_possible_rh_version and server_installed_flag is True:
         rh_update_available_flag = True
     else:
@@ -169,7 +169,7 @@ def end_installation(config):
 
 
 def installation(conf_allowed, config):
-    ota_config = load_ota_sys_markers(config.user)
+    rhim_config = load_rhim_sys_markers(config.user)
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
     clear_the_screen()
     internet_flag = internet_check()
@@ -203,9 +203,9 @@ def installation(conf_allowed, config):
                 os.system("./scripts/sys_conf.sh ssh")
                 print("\n\nsimulation mode - SPI, I2C and UART won't be configured\n\n\n")
                 sleep(3)
-        ota_config.sys_config_done, ota_config.uart_support_added = True, True
+        rhim_config.sys_config_done, rhim_config.uart_support_added = True, True
         # UART enabling added here so user won't have to reboot Pi again after doing it in Features Menu
-        write_ota_sys_markers(ota_config, config.user)
+        write_rhim_sys_markers(rhim_config, config.user)
         os.system(f"./scripts/install_rh.sh {config.user} {check_preferred_rh_version(config)[0]}")
         input("\n\n\npress Enter to continue")
         clear_the_screen()
@@ -266,8 +266,8 @@ def main_window(config):
         else:
             colored_server_version_name = f'{Bcolors.YELLOW}{Bcolors.UNDERLINE}installation not found{Bcolors.ENDC}'
         update_prompt = rh_update_check(config)
-        ota_config = load_ota_sys_markers(config.user)
-        sys_configured_flag = ota_config.sys_config_done
+        rhim_config = load_rhim_sys_markers(config.user)
+        sys_configured_flag = rhim_config.sys_config_done
         configured_server_target = check_preferred_rh_version(config)[0]
         sleep(0.1)
         welcome_text = """
@@ -280,7 +280,7 @@ def main_window(config):
         Source of the software is set to {underline}{blue}{server_version}{endc}{bold} version from the official 
         RotorHazard repository.
          
-        Please update this (OTA) software, before updating RotorHazard server.
+        Please update this (Manager) software, before updating RotorHazard server.
         Also make sure that you are logged as user {underline}{blue}{user}{endc}{bold} and that you don't have 
         other terminal windows opened - especially in RotorHazard directory.
         

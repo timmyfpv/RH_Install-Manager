@@ -3,9 +3,9 @@ import sys
 from time import sleep
 
 from conf_wizard_net import conf_wizard_net
-from conf_wizard_ota import conf_ota
-from modules import clear_the_screen, Bcolors, logo_top, triangle_image_show, ota_asci_image_show, load_config, \
-    load_ota_sys_markers, write_ota_sys_markers, get_ota_version
+from conf_wizard_rhim import conf_rhim
+from modules import clear_the_screen, Bcolors, logo_top, triangle_image_show, rhim_asci_image_show, load_config, \
+    load_rhim_sys_markers, write_rhim_sys_markers, get_rhim_version
 from rpi_update import main_window as rpi_update, rh_update_check
 from nodes_flash import flashing_menu
 from nodes_update_old import nodes_update as old_flash_gpio
@@ -104,9 +104,9 @@ User code: {code}
 
 
 def updated_check(config):
-    updated_recently_with_new_version_flag = os.path.exists(f"/home/{config.user}/.ota_markers/.was_updated_new")
+    updated_recently_with_new_version_flag = os.path.exists(f"/home/{config.user}/.rhim_markers/.was_updated_new")
     # true if self update was performed and new version was available to downloaded
-    updated_recently_with_old_version_flag = os.path.exists(f"/home/{config.user}/.ota_markers/.was_updated_old")
+    updated_recently_with_old_version_flag = os.path.exists(f"/home/{config.user}/.rhim_markers/.was_updated_old")
     # true if self update was performed and version was not available to downloaded
     if updated_recently_with_new_version_flag:
         clear_the_screen()
@@ -132,8 +132,8 @@ def updated_check(config):
                 break
             elif selection == 's':
                 break
-    os.system(f"rm /home/{config.user}/.ota_markers/.was_updated_new >/dev/null 2>&1")
-    os.system(f"rm /home/{config.user}/.ota_markers/.was_updated_old >/dev/null 2>&1")
+    os.system(f"rm /home/{config.user}/.rhim_markers/.was_updated_new >/dev/null 2>&1")
+    os.system(f"rm /home/{config.user}/.rhim_markers/.was_updated_old >/dev/null 2>&1")
     if updated_recently_with_new_version_flag or updated_recently_with_old_version_flag:
         os.system("rm ./.first_time_here > /dev/null 2>&1")
         return True
@@ -141,17 +141,17 @@ def updated_check(config):
         return False
 
 
-def ota_update_available_check(config):
+def rhim_update_available_check(config):
     # no config.user usage due to order of operations
-    if os.path.exists("./.new_ota_version_diff_file") and os.path.exists("./updater-config.json"):
-        if os.path.getsize("./.new_ota_version_diff_file"):
-            ota_update_available_flag = True
+    if os.path.exists("./.new_rhim_version_diff_file") and os.path.exists("./updater-config.json"):
+        if os.path.getsize("./.new_rhim_version_diff_file"):
+            rhim_update_available_flag = True
         else:
-            ota_update_available_flag = False  # done this way due to development purposes and weird edge cases
+            rhim_update_available_flag = False  # done this way due to development purposes and weird edge cases
     else:
-        ota_update_available_flag = False
+        rhim_update_available_flag = False
 
-    if ota_update_available_flag and config.beta_tester is False:  # don't show update prompt to beta-testers
+    if rhim_update_available_flag and config.beta_tester is False:  # don't show update prompt to beta-testers
         clear_the_screen()
         logo_top(config.debug_mode)
         print("""\n\n {bold}
@@ -228,13 +228,13 @@ def splash_screen(updater_version):
 
 
 def serial_menu(config):
-    ota_status = load_ota_sys_markers(config.user)
+    rhim_status = load_rhim_sys_markers(config.user)
 
     def uart_enabling():  # UART enabling prompt is also being shown when entering nodes flash menu for the first time
         # TODO Make this repeatable without adding multiple copies at the end of config.txt.
         os.system("./scripts/sys_conf.sh uart")
-        ota_status.uart_support_added = True
-        write_ota_sys_markers(ota_status, config.user)
+        rhim_status.uart_support_added = True
+        write_rhim_sys_markers(rhim_status, config.user)
         print("""
 
         Serial port enabled successfully.
@@ -275,7 +275,7 @@ def serial_menu(config):
             """.format(yellow=Bcolors.YELLOW_S, green=Bcolors.GREEN_S, endc=Bcolors.ENDC)
         selection = input(serial_adding_menu)
         if selection == 'y':
-            if ota_status.uart_support_added:
+            if rhim_status.uart_support_added:
                 print("\n\n\t\tLooks like you already enabled Serial port. \n\t\tDo you want to continue anyway?\n")
                 selection = input(f"\t\t\t{Bcolors.YELLOW}Press 'y' for yes or 'a' for abort{Bcolors.ENDC}\n")
                 if selection == 'y':
@@ -290,8 +290,8 @@ def serial_menu(config):
             old_flash_gpio(config) if config.old_hw_mod else flashing_menu(config)
             break
         elif selection == 'd':
-            ota_status.uart_support_added = True
-            write_ota_sys_markers(ota_status, config.user)
+            rhim_status.uart_support_added = True
+            write_rhim_sys_markers(rhim_status, config.user)
             old_flash_gpio(config) if config.old_hw_mod else flashing_menu(config)
             break
         elif selection == 'a':
@@ -299,13 +299,13 @@ def serial_menu(config):
 
 
 def aliases_menu(config):
-    ota_status = load_ota_sys_markers(config.user)
+    rhim_status = load_rhim_sys_markers(config.user)
 
     def aliases_content():
-        """load ota status, update aliases then write ota_status"""
+        """load rhim status, update aliases then write rhim_status"""
         os.system("cat ./resources/aliases.txt | tee -a ~/.bashrc")
-        ota_status.aliases_implemented = True
-        write_ota_sys_markers(ota_status, config.user)
+        rhim_status.aliases_implemented = True
+        write_rhim_sys_markers(rhim_status, config.user)
         print("\n\n\t\t    Aliases added successfully")
         sleep(2)
         return
@@ -327,7 +327,7 @@ def aliases_menu(config):
         print(aliases_description)
         selection = input(f"\n\t\t\t{Bcolors.YELLOW}Press 'y' for yes or 'a' for abort{Bcolors.ENDC}\n")
         if selection == 'y':
-            if ota_status.aliases_implemented:
+            if rhim_status.aliases_implemented:
                 print("""
 
             Looks like you already have aliases added. 
@@ -350,9 +350,9 @@ def aliases_menu(config):
 def self_updater(config):
     def check_if_beta_user(config):
         if config.beta_tester is not False:
-            ota_source_name = "main" if config.beta_tester is True else config.beta_tester
+            rhim_source_name = "main" if config.beta_tester is True else config.beta_tester
             updater_info = f'{Bcolors.RED}' \
-                           f'Source of the update is set to the "{Bcolors.UNDERLINE}{Bcolors.BOLD}{ota_source_name}' \
+                           f'Source of the update is set to the "{Bcolors.UNDERLINE}{Bcolors.BOLD}{rhim_source_name}' \
                            f'{Bcolors.ENDC}{Bcolors.RED}{Bcolors.BOLD}" branch.{Bcolors.ENDC}\n'
         else:
             updater_info = ''
@@ -378,18 +378,18 @@ def self_updater(config):
 
         {updater_info}
 
-            {green_s}u - Update OTA now{endc}
+            {green_s}u - Update Install-Manager now{endc}
 
            {yellow}e - Exit to main menu{endc}
         """.format(green=Bcolors.GREEN, green_s=Bcolors.GREEN_S, endc=Bcolors.ENDC, bold=Bcolors.BOLD,
-                   underline=Bcolors.UNDERLINE, blue=Bcolors.BLUE, version=get_ota_version(False),
+                   underline=Bcolors.UNDERLINE, blue=Bcolors.BLUE, version=get_rhim_version(False),
                    yellow=Bcolors.YELLOW_S, red=Bcolors.RED, updater_info=check_if_beta_user(config))
         print(updater)
         selection = input()
         if selection == 'e':
             break
         elif selection == 'u':
-            os.system("./scripts/updater_from_ota.sh")
+            os.system("scripts/updater_from_rhim.sh")
 
 
 def features_menu(config):
@@ -409,7 +409,7 @@ def features_menu(config):
 
                         4 - Add useful aliases
 
-                        5 - Update OTA software {endc}{bold}
+                        5 - Update the Install-Manager {endc}{bold}
 
                         6 - Create a log file{yellow}
 
@@ -471,7 +471,7 @@ def show_about(config):
         print(welcome_first_page)
         selection = input()
         if selection == 'c':
-            config = conf_ota(config)
+            config = conf_rhim(config)
             break
         elif selection == 'e':
             break
@@ -482,7 +482,7 @@ def show_about(config):
 def end():
     clear_the_screen()
     print("\n\n")
-    ota_asci_image_show()
+    rhim_asci_image_show()
     print(f"\t\t\t{Bcolors.BOLD}Happy flyin'!{Bcolors.ENDC}\n")
     sleep(1.3)
     clear_the_screen()
@@ -522,8 +522,8 @@ def main_menu(config):
                 attribute_error_handling()
         elif selection == '2':
             try:
-                ota_status = load_ota_sys_markers(config.user)
-                if ota_status.uart_support_added:
+                rhim_status = load_rhim_sys_markers(config.user)
+                if rhim_status.uart_support_added:
                     old_flash_gpio(config) if config.old_hw_mod else flashing_menu(config)
                 # enters "old" flashing menu only when "old_hw_mod" is confirmed
                 else:
@@ -540,11 +540,11 @@ def main_menu(config):
 
 def main():
     compatibility()
-    updater_version = get_ota_version(False)
+    updater_version = get_rhim_version(False)
     config = load_config()
     splash_screen(updater_version)
     updated_check(config)
-    ota_update_available_check(config)
+    rhim_update_available_check(config)
     welcome_screen(config)
     main_menu(config)
 

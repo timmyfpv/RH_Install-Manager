@@ -10,7 +10,7 @@ echo | tee -a ./log_data/log.txt
 cat /etc/os-release | tee -a ./log_data/log.txt
 echo | tee -a ./log_data/log.txt
 echo -------------------------------- | tee -a ./log_data/log.txt
-echo OTA Version | tee -a ./log_data/log.txt
+echo RH_Install-Manager version | tee -a ./log_data/log.txt
 echo | tee -a ./log_data/log.txt
 cat ~/RH_Install-Manager/version.txt | tee -a ./log_data/log.txt
 echo | tee -a ./log_data/log.txt
@@ -41,9 +41,9 @@ echo | tee -a ./log_data/log.txt
 cat ~/RH_Install-Manager/updater-config.json | tee -a ./log_data/log.txt
 echo | tee -a ./log_data/log.txt
 echo -------------------------------- | tee -a ./log_data/log.txt
-echo FILE ~/.ota_markers/rhim_config.txt | tee -a ./log_data/log.txt
+echo FILE ~/.rhim_markers/rhim_config.txt | tee -a ./log_data/log.txt
 echo | tee -a ./log_data/log.txt
-cat ~/.ota_markers/rhim_config.json | tee -a ./log_data/log.txt
+cat ~/.rhim_markers/rhim_config.json | tee -a ./log_data/log.txt
 echo | tee -a ./log_data/log.txt
 echo -- please wait few seconds --
 echo -------------------------------- | tee -a ./log_data/log.txt

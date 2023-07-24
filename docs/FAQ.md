@@ -91,7 +91,7 @@ those from same batch, check. Use those from different one, check.
 
 Assume that one Arduino is broken and try with other ones. Remove one and check etc.
 
-###  * You can handle that :) * 
+###   * You can handle that :) * 
 
-Remember - when everyting is configured properly hardware and software-wise it just HAVE TO work. Don't be frustrated,
+Remember - when everything is configured properly hardware and software-wise it just HAVE TO work. Don't be frustrated,
 check 3 times, have fun. It works :)

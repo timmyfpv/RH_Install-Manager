@@ -27,7 +27,7 @@ def aliases_clean(start, end, file_name, *words):
 
 def main():
     home_dir = str(Path.home())
-    Path(f"{home_dir}/.ota_markers").mkdir(exist_ok=True)
+    Path(f"{home_dir}/.rhim_markers").mkdir(exist_ok=True)
     aliases_clean('Shortcut', 'After', f'{home_dir}/.bashrc', 'uu', 'updateupdater', '# #')
 
 

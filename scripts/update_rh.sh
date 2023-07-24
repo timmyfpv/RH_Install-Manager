@@ -41,7 +41,7 @@ sudo mkdir /home/"${1}"/backup_RH_data >/dev/null 2>&1
 sudo chmod 777 -R /home/"${1}"/RotorHazard/src/server
 sudo chmod 777 -R /home/"${1}"/RotorHazard_"${upgradeDate}"
 sudo chmod 777 -R /home/"${1}"/backup_RH_data
-sudo chmod 777 -R /home/"${1}"/.ota_markers
+sudo chmod 777 -R /home/"${1}"/.rhim_markers
 sudo chmod 777 -R ~/RotorHazard
 cp /home/"${1}"/RotorHazard_"${upgradeDate}"/src/server/config.json /home/"${1}"/RotorHazard/src/server/ >/dev/null 2>&1 &
 cp -r /home/"${1}"/RotorHazard_"${upgradeDate}"/src/server/static /home/"${1}"/backup_RH_data
@@ -59,7 +59,7 @@ sudo pip3 install --upgrade --no-cache-dir -r requirements.txt
 
 ### python 3 transition handling ###
 
-PYTHON3_CONVERSION_FLAG_FILE=/home/"${1}"/.ota_markers/python3_support_was_added
+PYTHON3_CONVERSION_FLAG_FILE=/home/"${1}"/.rhim_markers/python3_support_was_added
 
 if ! test -f "$PYTHON3_CONVERSION_FLAG_FILE"; then
 

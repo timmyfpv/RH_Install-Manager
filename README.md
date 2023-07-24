@@ -1,8 +1,6 @@
-![OTA Logo](./resources/rhim_logo.png)
+![RHIM Logo](./resources/rhim_logo.png)
 
 # Easy mange and update your [RotorHazard](https://github.com/RotorHazard/RotorHazard) installation.
-
-
 
 ### Main features of the software:
 
@@ -73,9 +71,9 @@ You may also read [update notes](/docs/update-notes.txt) - new features are pres
 #### Manual download:
 
     cd ~
-    wget https://codeload.github.com/RotorHazard/Install-Manager/zip/stable -O tempota.zip
-    unzip tempota.zip
-    rm tempota.zip
+    wget https://codeload.github.com/RotorHazard/Install-Manager/zip/stable -O temprhim.zip
+    unzip temprhim.zip
+    rm temprhim.zip
     mv RH_Install-Manager-* RH_Install-Manager
 
 #### Commands to open the software after successful installation:

@@ -1,4 +1,4 @@
-### OTA aliases
+### RotorHazard Install-Manager aliases
 ### Aliases can be used in a terminal window ###
 #       ALIAS                           WHAT IT DOES
 alias rh="cd ~/RotorHazard/src/server && python3 server.py"    # starts the RH-server
@@ -18,4 +18,4 @@ alias rld="source ~/.bashrc"                                   # reloads aliases
 
 ### Every manual addition or change to aliases should be followed by a "source ~/.bashrc" command
 ### Reboot will also cause changes to be implemented.
-### end of OTA aliases
+### end of RotorHazard Install-Manager aliases

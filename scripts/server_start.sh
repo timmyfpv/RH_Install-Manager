@@ -45,7 +45,7 @@ python3 server.py || error_handling
 
 # shellcheck disable=SC2034
 
-# reload_ota() #  doesn't work
+# reload_rhim() #  doesn't work
 # {
 # kill -9 $(pidof python3 update.py)
 # python3 update.py

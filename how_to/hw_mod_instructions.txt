@@ -32,7 +32,7 @@ Software steps – on the Pi:
     7. Go through first time flashing procedure according to instructions seen on the screen.
     8. Enter Automatic flashing and perform a flashing so you confirm that it is and will be working in the future
     Now you can close your timer enclosure for good if there were not any errors.
-    9. You may also use OTA software to install or update RotorHazard server software.
+    9. You may also use Install-Manager software to install or update RotorHazard server software.
     Another options like smart hotspot setup are also included.
 
    New auto-numbering mod:
