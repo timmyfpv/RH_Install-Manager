@@ -4,7 +4,6 @@ green="\033[92m"
 red="\033[91m"
 endc="\033[0m"
 
-
 ssh_enabling() {
   sudo systemctl enable ssh || return 1
   sudo systemctl start ssh || return 1
@@ -37,7 +36,7 @@ spi_enabling() {
 [SPI enabled - RH_Install-Manager]
 dtparam=spi=on
 " | sudo tee -a /boot/config.txt || return 1
-  sudo sed -i 's/^blacklist spi-bcm2708/#blacklist spi-bcm2708/' /etc/modprobe.d/raspi-blacklist.conf || return 1
+  sudo sed -i 's/^blacklist spi-bcm2708/#blacklist spi-bcm2708/' /etc/modprobe.d/raspi-blacklist.conf >>/dev/null 2>&1
   printf "
      $green -- SPI ENABLED -- $endc
 
@@ -64,7 +63,7 @@ spi_error() {
 }
 
 i2c_enabling() {
-if [[ $(~/RH_Install-Manager/scripts/pi_model_check.sh) == "pi_4"  ]]; then
+  if [[ $(~/RH_Install-Manager/scripts/pi_model_check.sh) == "pi_4" ]]; then
     echo "
 Raspberry Pi 4 chipset found
     "
@@ -73,8 +72,8 @@ Raspberry Pi 4 chipset found
 dtparam=i2c_arm=on
   " | sudo tee -a /boot/config.txt || return 1
 
-else
-  echo "
+  else
+    echo "
 [I2C enabled - RH_Install-Manager]
 dtparam=i2c_baudrate=75000
 core_freq=250
@@ -83,7 +82,7 @@ i2c-dev
 dtparam=i2c1=on
 dtparam=i2c_arm=on
   " | sudo tee -a /boot/config.txt || return 1
-  sudo sed -i 's/^blacklist i2c-bcm2708/#blacklist i2c-bcm2708/' /etc/modprobe.d/raspi-blacklist.conf || return 1
+    sudo sed -i 's/^blacklist i2c-bcm2708/#blacklist i2c-bcm2708/' /etc/modprobe.d/raspi-blacklist.conf || return 1
 
   fi
   printf "

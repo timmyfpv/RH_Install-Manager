@@ -5,6 +5,9 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+322.35.5b1
+1. Better SPI enabling protocol
+
 322.35.5b
 1. Code refactored due to new software name
 
