@@ -5,6 +5,9 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+322.35.5b2
+1. RotorHazard 4.0.0-beta.5 installation and update support added
+
 322.35.5b1
 1. Better SPI enabling protocol
 
