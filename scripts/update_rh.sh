@@ -16,7 +16,6 @@ time_warning_show() {
 
 sudo -H python3 -m pip install --upgrade pip
 sudo apt-get update && sudo apt-get --with-new-pkgs upgrade -y
-sudo -H pip3 install pillow
 sudo apt-get install libjpeg-dev ntp htop iptables -y
 sudo apt autoremove -y
 sudo chmod -R 777 "/home/${1}/RotorHazard" # to ensure smooth operation if files in RH directory were edited etc. and permissions changed
@@ -54,8 +53,11 @@ cp /home/"${1}"/RotorHazard_"${upgradeDate}"/src/server/database.db /home/"${1}"
 cp /home/"${1}"/RotorHazard_"${upgradeDate}"/src/server/database.db /home/"${1}"/backup_RH_data >/dev/null 2>&1 &
 cd /home/"${1}"/RotorHazard/src/server || exit
 time_warning_show
-sudo pip3 install --upgrade --no-cache-dir -r requirements.txt
-
+cd ~/RotorHazard/src/server
+python -m venv venv
+source venv/bin/activate
+pip3 install --upgrade --no-cache-dir -r requirements.txt
+pip3 install cffi pillow
 
 ### python 3 transition handling ###
 

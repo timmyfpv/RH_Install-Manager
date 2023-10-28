@@ -5,7 +5,9 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
-4
+400.35.5b5
+1. RotorHazard 4.0.0 installation and update support added
+2. vend installation method implemented
 
 322.35.5b2
 1. RotorHazard 4.0.0-beta.5 installation and update support added
