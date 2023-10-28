@@ -34,7 +34,10 @@ rm temp.zip
 rm ~/wget* >/dev/null 2>&1
 mv /home/"${1}"/RotorHazard-* /home/"${1}"/RotorHazard || exit 1
 add_ons_info_show
-sudo -H pip3 install -r /home/"${1}"/RotorHazard/src/server/requirements.txt
+cd ~/RotorHazard/src/server
+python -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
 sudo chmod 777 -R /home/"${1}"/RotorHazard/src/server
 cd /home/"${1}" || exit
 
