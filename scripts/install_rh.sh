@@ -32,7 +32,7 @@ rm temp.zip
 rm ~/wget* >/dev/null 2>&1
 mv /home/"${1}"/RotorHazard-* /home/"${1}"/RotorHazard || exit 1
 add_ons_info_show
-cd ~/RotorHazard/src/server
+cd ~/RotorHazard/src/server || echo "$red missing RotorHazard directory"
 python -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
@@ -43,14 +43,14 @@ cd /home/"${1}" || exit
 # added because of the broken Adafruit_GPIO compatibility on Raspbian 11 Bullseye
 (sudo sed -i 's/UNKNOWN          = 0/UNKNOWN          = 1/' /usr/local/lib/python3*/dist-packages/Adafruit_GPIO/Platform.py && \
 printf "\n $green Adafruit_GPIO compatibility is now OK $endc \n\n\n" && sleep 1) || \
-(printf "$red \nAdafruit_GPIO compatibility fix error\n\n\n $endc" && sleep 2)
+(printf "$endc \nAdafruit_GPIO compatibility file probably missing \n\n $endc" && sleep 2)
 
 java_installation()
 {
 if [[ $(~/RH_Install-Manager/scripts/pi_model_check.sh) == "pi_zero"  ]]; then
   sudo apt-get install openjdk-8-jdk-headless -y
 else
-  sudo apt-get install openjdk-11-jdk-headless -y
+  sudo apt-get install openjdk-17-jdk-headless -y
 fi
 }
 

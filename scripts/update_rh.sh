@@ -52,7 +52,7 @@ cp /home/"${1}"/RotorHazard_"${upgradeDate}"/src/server/database.db /home/"${1}"
 cp /home/"${1}"/RotorHazard_"${upgradeDate}"/src/server/database.db /home/"${1}"/backup_RH_data >/dev/null 2>&1 &
 cd /home/"${1}"/RotorHazard/src/server || exit
 time_warning_show
-cd ~/RotorHazard/src/server
+cd ~/RotorHazard/src/server || echo "$red missing RotorHazard directory"
 python -m venv venv
 source venv/bin/activate
 pip3 install --upgrade --no-cache-dir -r requirements.txt
@@ -143,7 +143,7 @@ fi
 # added because of the broken Adafruit_GPIO compatibility on Raspbian 11 Bullseye
 (sudo sed -i 's/UNKNOWN          = 0/UNKNOWN          = 1/' /usr/local/lib/python3*/dist-packages/Adafruit_GPIO/Platform.py && \
 printf "\n $green Adafruit_GPIO compatibility is now OK $endc \n\n") || \
-(printf "$red \nAdafruit_GPIO compatibility fix error\n\n $endc" && sleep 2)
+(printf "$endc \nAdafruit_GPIO compatibility file probably missing \n\n $endc" && sleep 2)
 
 # port forwarding
 if ! grep -q "sudo iptables -A PREROUTING -t nat -p tcp --dport 8080 -j REDIRECT --to-ports 80" /etc/rc.local; then
