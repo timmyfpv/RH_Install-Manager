@@ -7,7 +7,7 @@
 1. Wizard install/update of RotorHazard server software:
     - Choose which version of RotorHazard to install
     - Preserves existing RotorHazard config file
-    - Backup of existing RH install
+    - Backup of existing RotorHazard install
     - Automatically performs much of the RotorHazard specific Pi setup steps
     - Automatically detects used Pi model and performs system setup accordingly
 
@@ -62,13 +62,13 @@ You may also read [update notes](/docs/update-notes.txt) - new features are pres
 
 ##
 
-## Commands to download the software onto Raspberry Pi (or Linux):
+## Downloading the software onto Raspberry Pi (or Linux):
 
-#### Automatic download:
+### Automatic download:
 
     curl -sSL https://raw.githubusercontent.com/RotorHazard/Install-Manager/stable/scripts/auto_download.sh | bash
 
-#### Manual download:
+#### Manual download - if you want:
 
     cd ~
     wget https://codeload.github.com/RotorHazard/Install-Manager/zip/stable -O temprhim.zip
@@ -76,7 +76,7 @@ You may also read [update notes](/docs/update-notes.txt) - new features are pres
     rm temprhim.zip
     mv RH_Install-Manager-* RH_Install-Manager
 
-#### Commands to open the software after successful installation:
+### Commands to open the software after successful installation:
 
 (Note:  This software will automatically install all necessary dependencies)
 
@@ -97,10 +97,10 @@ You may also read [update notes](/docs/update-notes.txt) - new features are pres
     chmod +x ~/RH_Install-Manager/rhim.sh
 
 <br/>
-We assume in our instructions and provided setup process that you already have your Raspbian OS set up. <br/>
+We assume in our instructions and provided setup process that you already have your Raspberry Pi OS set up. <br/>
 If not, please follow those instructions: 
 
-[Raspbian setup instructions](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
+[Raspberry Pi OS setup instructions](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
 <br/><br/>
 This software works best with Raspbian Buster or newer (due to native python3.6+ support).
 
@@ -109,13 +109,13 @@ Read more about supported python and OS versions [here](/docs/python36_help.txt)
 
 In case of any issues - consider checking out [FAQ section](/docs/FAQ.md).
 
-### ~~ *Toss a coin to a Coder* section ~~
+## ~~ *Toss a coin to a Coder* section ~~
 
 <br/>
 I started this project as a way to help the community. I also found it very interesting and meaningful to explore new territories and do the best I can so end user can be satisfied to as high degree as possible. We spent long hours on testing, coding and troubleshooting. If you feel that this work was valuable and you want to say "thank you" that way, you can use
 
 [PayPal donation link](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ULZYQPB38C8UQ&source=url).
-Every amount is appreciated. Remember that our help and contribution is NOT conditional :)
+Every amount is appreciated. it will be spend on new testing equipment or just a coffee or beer :) Remember that our help and contribution is NOT conditional :)
 <br/>
 <br/>
 
