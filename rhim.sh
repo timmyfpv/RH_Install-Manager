@@ -35,10 +35,10 @@ open_software_alias_check() {
 alias rhim="cd ~/RH_Install-Manager && sh ./rhim.sh"                        # opens RH_Install-Manager software' >> ../.bashrc
   fi
 
-  if ! grep -q "alias rh=" ../.bashrc; then
+  if ! grep -q "activate && python server.py" ../.bashrc; then
     echo '
 #[added during RH_Install-Manager setup]
-alias rh="cd ~/RotorHazard/src/server && python3 server.py"   # starts RH-server' >> ../.bashrc
+alias rh="cd ~/RotorHazard/src/server && source venv/bin/activate && python server.py"   # starts RH-server' >> ../.bashrc
   fi
 }
 

@@ -72,6 +72,15 @@ Raspberry Pi 4 chipset found
 dtparam=i2c_arm=on
   " | sudo tee -a /boot/config.txt || return 1
 
+  elif [[ $(~/RH_Install-Manager/scripts/pi_model_check.sh) == "pi_5" ]]; then
+    echo "
+Raspberry Pi 5 chipset found
+    "
+    echo "
+[I2C enabled - RH_Install-Manager]
+dtparam=i2c_arm=on
+  " | sudo tee -a /boot/config.txt || return 1
+
   else
     echo "
 [I2C enabled - RH_Install-Manager]
