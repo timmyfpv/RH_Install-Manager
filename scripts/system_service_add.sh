@@ -1,4 +1,5 @@
 echo "
+
 [Unit]
 Description=RotorHazard Server
 After=multi-user.target
@@ -10,4 +11,5 @@ ExecStart=/home/${1}/RotorHazard/src/server/venv/bin/python server.py
 
 [Install]
 WantedBy=multi-user.target
+
 " | sudo tee -a /lib/systemd/system/rotorhazard.service

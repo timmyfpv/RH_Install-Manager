@@ -63,7 +63,7 @@ sudo rm /lib/systemd/system/rotorhazard.service >/dev/null 2>&1
 # system service add
 echo
 cd /home/"${1}"/RH_Install-Manager/scripts/ || exit
-sudo ./system_service_add.sh "${1}"
+sudo /home/"${1}"/RH_Install-Manager/scripts/system_service_add.sh "${1}"
 echo
 
 sudo chmod 644 /lib/systemd/system/rotorhazard.service
