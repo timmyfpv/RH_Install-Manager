@@ -50,11 +50,11 @@ cp -r /home/"${1}"/RotorHazard_"${upgradeDate}"/src/server/static/image /home/"$
 cp /home/"${1}"/RotorHazard_"${upgradeDate}"/src/server/config.json /home/"${1}"/backup_RH_data >/dev/null 2>&1 &
 cp /home/"${1}"/RotorHazard_"${upgradeDate}"/src/server/database.db /home/"${1}"/RotorHazard/src/server/ >/dev/null 2>&1 &
 cp /home/"${1}"/RotorHazard_"${upgradeDate}"/src/server/database.db /home/"${1}"/backup_RH_data >/dev/null 2>&1 &
-cd /home/"${1}"/RotorHazard/src/server || exit
 time_warning_show
-cd ~/RotorHazard/src/server || echo "$red missing RotorHazard directory"
+cd /home/"${1}"/RotorHazard/src/server || echo "$red missing RotorHazard directory"
 python -m venv venv
 source venv/bin/activate
+pip3 install --upgrade pip
 pip3 install --upgrade --no-cache-dir -r requirements.txt
 pip3 install cffi pillow
 

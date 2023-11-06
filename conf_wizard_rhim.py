@@ -222,7 +222,7 @@ Are you using older, non-i2c hardware flashing mod?
                 config.pins_assignment = 'default'
 
             while True:
-                user_is_beta_tester = input("\nAre you a beta tester? [y/N | default: no]\t\t\t\t").lower()
+                user_is_beta_tester = input("\nAre you a developer or tester? [y/N | default: no]\t\t\t\t").lower()
                 if not user_is_beta_tester:
                     config.beta_tester = False
                     print("defaulted to: no")

@@ -32,9 +32,10 @@ rm temp.zip
 rm ~/wget* >/dev/null 2>&1
 mv /home/"${1}"/RotorHazard-* /home/"${1}"/RotorHazard || exit 1
 add_ons_info_show
-cd ~/RotorHazard/src/server || echo "$red missing RotorHazard directory"
+cd /home/"${1}"/RotorHazard/src/server || echo "$red missing RotorHazard directory"
 python -m venv venv
 source venv/bin/activate
+pip3 install --upgrade pip
 pip3 install -r requirements.txt
 pip3 install cffi pillow
 sudo chmod 777 -R /home/"${1}"/RotorHazard/src/server
@@ -58,21 +59,13 @@ java_installation
 
 # run as a service
 sudo rm /lib/systemd/system/rotorhazard.service >/dev/null 2>&1
-echo
-echo "
-[Unit]
-Description=RotorHazard Server
-After=multi-user.target
 
-[Service]
-User=pi
-WorkingDirectory=/home/pi/RotorHazard/src/server
-ExecStart=/home/pi/RotorHazard/src/server/venv/bin/python server.py
-
-[Install]
-WantedBy=multi-user.target
-" | sudo tee -a /lib/systemd/system/rotorhazard.service
+# system service add
 echo
+cd /home/"${1}"/RH_Install-Manager/scripts/ || exit
+sudo ./system_service_add.sh "${1}"
+echo
+
 sudo chmod 644 /lib/systemd/system/rotorhazard.service
 sudo systemctl daemon-reload
 sudo systemctl enable rotorhazard.service
