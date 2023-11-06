@@ -11,7 +11,7 @@ def com_init(bus_number):
     err_time = 1
     bus = 0
     try:
-        from smbus import SMBus  # works only on Pi
+        from smbus2 import SMBus  # works only on Pi
         bus = SMBus(bus_number)
     except PermissionError as perm_error:
         print(error_msg)
