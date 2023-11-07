@@ -132,17 +132,10 @@ dependencies_check() {
     echo i2c-tools has to be installed && sudo apt install i2c-tools -y
   fi
 
-
   if check_package 'python3-rpi.gpio'; then
     echo python3-rpi.gpio"  "found
   else
     echo python3-rpi.gpio has to be installed && sudo apt install python3-rpi.gpio || echo - only on Pi -
-  fi
-
-  if check_package 'python3-requests'; then
-    echo requests"          "found
-  else
-    echo requests has to be installed && sudo apt install python3-requests
   fi
 
   if check_package 'python3-smbus2'; then
@@ -151,24 +144,6 @@ dependencies_check() {
     echo python3-smbus2 has to be installed && sudo apt install python3-smbus2
   fi
 
-#
-#  if check_python_package 'RPi.GPIO'; then
-#    echo python3-rpi.gpio"  "found
-#  else
-#    echo python3-rpi.gpio has to be installed && pip3 install rpi.gpio || echo - only on Pi -
-#  fi
-#
-#  if check_python_package 'requests'; then
-#    echo requests"          "found
-#  else
-#    echo requests has to be installed && pip3 install requests
-#  fi
-#
-#  if check_python_package 'smbus'; then
-#    echo python3-smbus"     "found
-#  else
-#    echo python3-smbus has to be installed && pip3 install smbus
-#  fi
 
 }
 

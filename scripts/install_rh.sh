@@ -33,7 +33,7 @@ rm ~/wget* >/dev/null 2>&1
 mv /home/"${1}"/RotorHazard-* /home/"${1}"/RotorHazard || exit 1
 add_ons_info_show
 cd /home/"${1}"/RotorHazard/src/server || echo "$red missing RotorHazard directory"
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip3 install --upgrade pip
 pip3 install -r requirements.txt
