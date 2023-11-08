@@ -446,6 +446,7 @@ def show_about(config):
 
     Please configure Manager software using a wizard after reading this page.
 
+
     This wizard will configure this software, not RotorHazard server itself. 
     Things like amount of LEDs or RotorHazard password should be configured 
     separately in {blue}RotorHazard Manager{endc}{bold} - see in Main Menu.
