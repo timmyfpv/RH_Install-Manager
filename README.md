@@ -64,26 +64,24 @@ You may also read [update notes](/docs/update-notes.txt) - new features are pres
 
 ## Downloading the software onto Raspberry Pi (or Linux):
 
-### Automatic download:
+### Automatic download + start:
 
     curl -sSL https://raw.githubusercontent.com/RotorHazard/Install-Manager/stable/scripts/auto_download.sh | bash
 
-#### Manual download - if you want:
+### Commands to open the software:
+
+####
+
+    cd ~/RH_Install-Manager
+    ./rhim.sh
+
+#### Manual download - if you want (same as automatic):
 
     cd ~
     wget https://codeload.github.com/RotorHazard/Install-Manager/zip/stable -O temprhim.zip
     unzip temprhim.zip
     rm temprhim.zip
     mv RH_Install-Manager-* RH_Install-Manager
-
-### Commands to open the software after successful installation:
-
-(Note:  This software will automatically install all necessary dependencies)
-
-####
-
-    cd ~/RH_Install-Manager
-    ./rhim.sh
 
 ##### In case of errors - please try:
 
