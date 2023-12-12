@@ -278,16 +278,16 @@ def main_window(config):
         Additional dependencies and libraries also will be installed or updated.
         Current database, configs and custom bitmaps will stay on their place.
          
-        Please update this (Manager) software, before updating RotorHazard server.
+        Please update this (Manager) software, before updating RotorHazard.
         
         Server version currently installed: {server} {bold}{update_prompt} {bold}
         
         
-        You can change below configuration in configuration wizard in Main Menu:
+        You can change below configuration in Configuration Wizard in Main Menu:
         
-        Source of the software is set to {underline}{blue}{server_version}{endc}{bold} version.
+        Source of the software is set to version: {underline}{blue}{server_version}{endc}{bold}
         
-        Username that you entered: {underline}{blue}{user}{endc}{bold}.
+        Username that you entered: {underline}{blue}{user}{endc}{bold}
         
         
         RotorHazard configuration state: {config_soft}

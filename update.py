@@ -507,7 +507,7 @@ def main_menu(config):
                             
                         3 - Additional features{configured}
 
-                        4 - Configuration wizard{endc}{bold}{yellow}
+                        4 - Configuration Wizard{endc}{bold}{yellow}
 
                         e - Exit to Raspberry OS{endc}
 
