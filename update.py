@@ -496,8 +496,8 @@ def main_menu(config):
         logo_top(config.debug_mode)
         rh_update_prompt = rh_update_check(config)
         if not config_check():
-            conf_color = Bcolors.GREEN,
-            conf_arrow = """ <- go here"""
+            conf_color = Bcolors.GREEN
+            conf_arrow = "   <- go here first"
         else:
             conf_color, conf_arrow = '', ''
         main_menu_content = """
