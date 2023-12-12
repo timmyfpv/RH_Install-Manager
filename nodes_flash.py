@@ -500,7 +500,7 @@ def flashing_menu(config):
         logo_top(config.debug_mode)
         node_menu = """\n
 
-                          {rmh}FLASHING MENU{endc}
+                          {rmh}FLASHING MENU{endc} {bold}{red}(for Arduino-based PCBs){endc}
 
 
        {green}{bold}1 - Flash each node automatically{endc}{bold}

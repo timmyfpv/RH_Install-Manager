@@ -64,7 +64,7 @@ You may also read [update notes](/docs/update-notes.txt) - new features are pres
 
 ## Downloading the software onto Raspberry Pi (or Linux):
 
-### Automatic download + start:
+### Automatic download:
 
     curl -sSL https://raw.githubusercontent.com/RotorHazard/Install-Manager/stable/scripts/auto_download.sh | bash
 
