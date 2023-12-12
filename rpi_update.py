@@ -277,17 +277,18 @@ def main_window(config):
         You can automatically install and update RotorHazard timing software. 
         Additional dependencies and libraries also will be installed or updated.
         Current database, configs and custom bitmaps will stay on their place.
-        Source of the software is set to {underline}{blue}{server_version}{endc}{bold} version from the official 
-        RotorHazard repository.
          
         Please update this (Manager) software, before updating RotorHazard server.
-        Also make sure that you are logged as user {underline}{blue}{user}{endc}{bold} and that you don't have 
-        other terminal windows opened - especially in RotorHazard directory.
-        
-        You can change those in configuration wizard in Main Menu.
-        
         
         Server version currently installed: {server} {bold}{update_prompt} {bold}
+        
+        
+        You can change below configuration in configuration wizard in Main Menu:
+        
+        Source of the software is set to {underline}{blue}{server_version}{endc}{bold} version.
+        
+        Username that you entered: {underline}{blue}{user}{endc}{bold}.
+        
         
         RotorHazard configuration state: {config_soft}
             
