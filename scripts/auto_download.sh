@@ -19,7 +19,7 @@ sleep 2
   cd ~ || return 1
   mv RH_Install-Manager*/ RH_Install-Manager.old/ > /dev/null 2>&1
   mv temprhim.zip temprhim.zip.old > /dev/null 2>&1
-  wget https://codeload.github.com/RotorHazard/Install-Manager/zip/main -O temprhim.zip || return 1 #TODO change to stable!!
+  wget https://codeload.github.com/RotorHazard/Install-Manager/zip/stable -O temprhim.zip || return 1
   unzip temprhim.zip || return 1
   rm temprhim.zip || return 1
   mv RH_Install-Manager-* RH_Install-Manager || return 1
