@@ -13,7 +13,7 @@ add_ons_info_show() {
 
 sudo apt-get update && sudo apt-get --with-new-pkgs upgrade -y
 sudo apt autoremove -y
-sudo apt install wget python3 python*-venv ntp htop libjpeg-dev libffi-dev build-essential git scons swig zip i2c-tools python3-smbus python3-pip python3-dev iptables -y
+sudo apt install wget python3 python*-venv ntp htop libjpeg-dev libffi-dev build-essential git scons swig zip i2c-tools python3-smbus python3-smbus2 python3-pip python3-dev iptables -y
 sudo apt install python3-rpi.gpio -y || echo "-- no python-rpi.gpio module found - available only on Pi --" #is this redundant?
 sudo rm -r /home/"${1}"/temp.zip >/dev/null 2>&1 # in case of weird sys config or previous unsuccessful installations
 cd /home/"${1}" || exit
@@ -32,9 +32,10 @@ rm temp.zip
 rm ~/wget* >/dev/null 2>&1
 mv /home/"${1}"/RotorHazard-* /home/"${1}"/RotorHazard || exit 1
 add_ons_info_show
-cd ~/RotorHazard/src/server || echo "$red missing RotorHazard directory"
-python -m venv venv
+cd /home/"${1}"/RotorHazard/src/server || echo "$red missing RotorHazard directory"
+python3 -m venv venv
 source venv/bin/activate
+pip3 install --upgrade pip
 pip3 install -r requirements.txt
 pip3 install cffi pillow
 sudo chmod 777 -R /home/"${1}"/RotorHazard/src/server
@@ -58,21 +59,10 @@ java_installation
 
 # run as a service
 sudo rm /lib/systemd/system/rotorhazard.service >/dev/null 2>&1
+cd /home/"${1}"/RH_Install-Manager/scripts/ || exit
+sudo /home/"${1}"/RH_Install-Manager/scripts/system_service_add.sh "${1}"
 echo
-echo "
-[Unit]
-Description=RotorHazard Server
-After=multi-user.target
 
-[Service]
-User=pi
-WorkingDirectory=/home/pi/RotorHazard/src/server
-ExecStart=/home/pi/RotorHazard/src/server/venv/bin/python server.py
-
-[Install]
-WantedBy=multi-user.target
-" | sudo tee -a /lib/systemd/system/rotorhazard.service
-echo
 sudo chmod 644 /lib/systemd/system/rotorhazard.service
 sudo systemctl daemon-reload
 sudo systemctl enable rotorhazard.service

@@ -13,6 +13,7 @@ dots7() { # done that way so it work on every terminal
 ##################
 
 print_info_message() {
+  printf "\n"
   printf "dependencies will be auto-detected and installed \n"
   printf "installing dependencies may need 'sudo' password\n\n"
 }
@@ -102,6 +103,18 @@ dependencies_check() {
     echo procps has to be installed && sudo apt install procps -y
   fi
 
+  if check_package 'fonts-symbola'; then
+    echo fonts-symbola"     "found
+  else
+    echo fonts-symbola has to be installed && sudo apt install fonts-symbola -y
+  fi
+
+  if check_package 'i2c-tools'; then
+    echo i2c-tools"         "found
+  else
+    echo i2c-tools has to be installed && sudo apt install i2c-tools -y
+  fi
+
   if check_package 'python3-gpiozero'; then
     echo python3-gpiozero"  "found
   else
@@ -120,34 +133,16 @@ dependencies_check() {
     echo python3-dev has to be installed && sudo apt install python3-dev -y
   fi
 
-  if check_package 'fonts-symbola'; then
-    echo fonts-symbola"     "found
+  if check_package 'python3-smbus2'; then
+    echo python3-smbus2"    "found
   else
-    echo fonts-symbola has to be installed && sudo apt install fonts-symbola -y
+    echo python3-smbus2 has to be installed && sudo apt install python3-smbus2
   fi
 
-  if check_package 'i2c-tools'; then
-    echo i2c-tools"         "found
-  else
-    echo i2c-tools has to be installed && sudo apt install i2c-tools -y
-  fi
-
-  if check_python_package 'RPi.GPIO'; then
+  if check_package 'python3-rpi.gpio'; then
     echo python3-rpi.gpio"  "found
   else
-    echo python3-rpi.gpio has to be installed && pip3 install rpi.gpio || echo - only on Pi -
-  fi
-
-  if check_python_package 'requests'; then
-    echo requests"          "found
-  else
-    echo requests has to be installed && pip3 install requests
-  fi
-
-  if check_python_package 'smbus'; then
-    echo python3-smbus"     "found
-  else
-    echo python3-smbus has to be installed && pip3 install smbus
+    echo python3-rpi.gpio has to be installed && sudo apt install python3-rpi.gpio || echo - only on Pi -
   fi
 
 }

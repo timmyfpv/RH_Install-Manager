@@ -120,7 +120,7 @@ def end_update(config, server_configured_flag, server_installed_flag):
         print(f"""
                 {configure}
     
-                r - Reboot - recommended, not a must
+                r - Reboot - STRONGLY recommended before using the timer
                 
                 s - Start RH server now {clearing_color}
                 
@@ -277,17 +277,18 @@ def main_window(config):
         You can automatically install and update RotorHazard timing software. 
         Additional dependencies and libraries also will be installed or updated.
         Current database, configs and custom bitmaps will stay on their place.
-        Source of the software is set to {underline}{blue}{server_version}{endc}{bold} version from the official 
-        RotorHazard repository.
          
-        Please update this (Manager) software, before updating RotorHazard server.
-        Also make sure that you are logged as user {underline}{blue}{user}{endc}{bold} and that you don't have 
-        other terminal windows opened - especially in RotorHazard directory.
-        
-        You can change those in configuration wizard in Main Menu.
-        
+        Please update this (Manager) software, before updating RotorHazard.
         
         Server version currently installed: {server} {bold}{update_prompt} {bold}
+        
+        
+        You can change below configuration in Configuration Wizard in Main Menu:
+        
+        Source of the software is set to version: {underline}{blue}{server_version}{endc}{bold}
+        
+        Username that you entered: {underline}{blue}{user}{endc}{bold}
+        
         
         RotorHazard configuration state: {config_soft}
             

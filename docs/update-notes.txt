@@ -5,6 +5,11 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+400.35.5c
+1. Better configuration process after installation
+2. More readable Manager part of menu + descriptive menus
+3. smbus dependency converted to smbus2
+
 400.35.5b8
 1. venv in a service implemented
 2. Pi 5 detection added

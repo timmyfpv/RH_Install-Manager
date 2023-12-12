@@ -58,14 +58,14 @@ def do_config(old_config):
 Please type your configuration data. It can be modified later.
 If you want to use value given as default, just hit 'Enter'.
 """)
-        pi_user_name = input("\nWhat is your user name on the Raspberry Pi? [default: pi]\t\t")
+        pi_user_name = input("\nWhat is your user name on the Raspberry Pi (host)? [default: pi]\t\t")
         if not pi_user_name:
             config.pi_user = 'pi'
             print("defaulted to: 'pi'")
         else:
             config.pi_user = pi_user_name
         while True:
-            version = input(f"\nChoose RotorHazard version? \
+            version = input(f"\nChoose the RotorHazard version you want to use? \
 [{Bcolors.UNDERLINE}stable{Bcolors.ENDC} | beta | main]\t\t\t").lower()
             if not version:
                 config.rh_version = 'stable'
@@ -222,7 +222,7 @@ Are you using older, non-i2c hardware flashing mod?
                 config.pins_assignment = 'default'
 
             while True:
-                user_is_beta_tester = input("\nAre you a beta tester? [y/N | default: no]\t\t\t\t").lower()
+                user_is_beta_tester = input("\nAre you a developer or a software tester? [y/N | default: no]\t\t\t\t").lower()
                 if not user_is_beta_tester:
                     config.beta_tester = False
                     print("defaulted to: no")

@@ -500,7 +500,7 @@ def flashing_menu(config):
         logo_top(config.debug_mode)
         node_menu = """\n
 
-                          {rmh}FLASHING MENU{endc}
+                          {rmh}FLASHING MENU{endc}{bold}{red}(for Arduino-based PCBs){endc}
 
 
        {green}{bold}1 - Flash each node automatically{endc}{bold}
@@ -515,7 +515,7 @@ def flashing_menu(config):
 
             {yellow}e - Exit to main menu{endc}\n
             """.format(bold=Bcolors.BOLD_S, green=Bcolors.GREEN_S, yellow=Bcolors.YELLOW_S,
-                       endc=Bcolors.ENDC, red=Bcolors.RED_S, underline=Bcolors.UNDERLINE_S,
+                       endc=Bcolors.ENDC, red=Bcolors.RED, underline=Bcolors.UNDERLINE_S,
                        rmh=Bcolors.RED_MENU_HEADER)
         print(node_menu)
         sleep(0.1)
