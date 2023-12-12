@@ -120,7 +120,7 @@ def end_update(config, server_configured_flag, server_installed_flag):
         print(f"""
                 {configure}
     
-                r - Reboot - recommended, not a must
+                r - Reboot - STRONGLY recommended before using the timer
                 
                 s - Start RH server now {clearing_color}
                 

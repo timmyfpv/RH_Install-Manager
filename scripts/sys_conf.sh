@@ -125,7 +125,7 @@ uart_enabling() {
 [UART enabled - RH_Install-Manager]
 enable_uart=1
   " | sudo tee -a /boot/config.txt || return 1
-  sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt || return 1
+  sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt || return 1
   printf "
      $green -- UART ENABLED -- $endc
 
