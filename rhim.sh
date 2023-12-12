@@ -21,7 +21,7 @@ check_for_new_rhim() {
 
   if ! test -f .first_time_here; then
     wget https://raw.githubusercontent.com/RotorHazard/Install-Manager/stable/version.txt -q -O .new_rhim_version_check_file.txt
-    diff version.txt .new_rhim_version_check_file.txt >.new_rhim_version_diff_file
+    diff version.txt .new_rhim_version_check_file.txt > .new_rhim_version_diff_file
   else
     sudo apt update || printf "repositories have not been updated \n"
   fi
@@ -32,13 +32,13 @@ open_software_alias_check() {
   if ! grep -q "alias rhim=" ../.bashrc; then
     echo '
 #[added during RH_Install-Manager setup]
-alias rhim="cd ~/RH_Install-Manager && sh ./rhim.sh"                        # opens RH_Install-Manager software' >>../.bashrc
+alias rhim="cd ~/RH_Install-Manager && sh ./rhim.sh"                        # opens RH_Install-Manager software' >> ../.bashrc
   fi
 
   if ! grep -q "activate && python server.py" ../.bashrc; then
     echo '
 #[added during RH_Install-Manager setup]
-alias rh="cd ~/RotorHazard/src/server && source venv/bin/activate && python server.py"   # starts RH-server' >>../.bashrc
+alias rh="cd ~/RotorHazard/src/server && source venv/bin/activate && python server.py"   # starts RH-server' >> ../.bashrc
   fi
 }
 
