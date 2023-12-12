@@ -23,17 +23,15 @@ sleep 2
   unzip temprhim.zip || return 1
   rm temprhim.zip || return 1
   mv RH_Install-Manager-* RH_Install-Manager || return 1
-  cd ~/RH_Install-Manager
 
   printf "
 $green
-Program downloaded successfully. It will open now...
+Program downloaded successfully. To open the program now type:
 $endc
+cd ~/RH_Install-Manager
+./rhim.sh
 
 "
-sleep 3
-
-./rhim.sh
 
 }
 
