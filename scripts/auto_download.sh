@@ -25,9 +25,6 @@ sleep 2
   mv RH_Install-Manager-* RH_Install-Manager || return 1
   cd ~/RH_Install-Manager
 
-
-  ./rhim.sh
-
   printf "
 $green
 Program downloaded successfully. It will open now...
@@ -35,6 +32,9 @@ $endc
 
 "
 sleep 3
+
+./rhim.sh
+
 }
 
 script || printf "

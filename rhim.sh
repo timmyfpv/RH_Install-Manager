@@ -13,6 +13,7 @@ dots7() { # done that way so it work on every terminal
 ##################
 
 print_info_message() {
+  printf "\n"
   printf "dependencies will be auto-detected and installed \n"
   printf "installing dependencies may need 'sudo' password\n\n"
 }
