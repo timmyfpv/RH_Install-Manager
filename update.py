@@ -20,7 +20,7 @@ def config_check():
     if not os.path.exists("./updater-config.json"):
         prompt = """
           {prompt}  Looks that you haven't set up config file yet.  {endc}
-          {prompt}  Please enter configuration wizard - point 4     {endc}""" \
+          {prompt}  Please enter Configuration Wizard - point 4     {endc}""" \
             .format(prompt=Bcolors.PROMPT, endc=Bcolors.ENDC)
         print(prompt)
         return False
@@ -206,7 +206,7 @@ def welcome_screen(config):
         if selection == 'n':
             os.system("rm ./.first_time_here")
             first_time_flag = False  # done that way so after configuration user won't be redirected back here
-            show_about(config)
+#            show_about(config) # enter wizard manually is better due to non stick conig
         if selection == 'f':  # helpful when troubleshooting, going further without changing the folder contents
             first_time_flag = False
             show_about(config)
@@ -495,7 +495,11 @@ def main_menu(config):
         clear_the_screen()
         logo_top(config.debug_mode)
         rh_update_prompt = rh_update_check(config)
-        conf_color = Bcolors.GREEN if config_check() is False else ''
+        if not config_check():
+            conf_color = Bcolors.GREEN,
+            conf_arrow = """ <- go here"""
+        else:
+            conf_color, conf_arrow = '', ''
         main_menu_content = """
 
                                 {rmf}MAIN MENU{endc}
@@ -505,15 +509,15 @@ def main_menu(config):
                             {blue}{bold}
                         2 - Nodes flash and update {endc}{bold}
                             
-                        3 - Additional features{configured}
+                        3 - Additional features{config_color}
 
-                        4 - Configuration Wizard{endc}{bold}{yellow}
+                        4 - Configuration Wizard{config_arrow}{endc}{bold}{yellow}
 
                         e - Exit to Raspberry OS{endc}
 
                 """.format(bold=Bcolors.BOLD_S, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, green=Bcolors.GREEN,
-                           blue=Bcolors.BLUE, yellow=Bcolors.YELLOW_S, red=Bcolors.RED, configured=conf_color,
-                           rmf=Bcolors.RED_MENU_HEADER, rh_update_prompt=rh_update_prompt)
+                           blue=Bcolors.BLUE, yellow=Bcolors.YELLOW_S, red=Bcolors.RED, config_color=conf_color,
+                           rmf=Bcolors.RED_MENU_HEADER, rh_update_prompt=rh_update_prompt, config_arrow=conf_arrow)
         print(main_menu_content)
         selection = input()
         if selection == '1':
