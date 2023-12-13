@@ -13,6 +13,5 @@ nohup*
 /venv
 /updater-config.json
 test.py
-.first_time_here
 .new_rhim_version_check_file.txt
 .new_rhim_version_diff_file
