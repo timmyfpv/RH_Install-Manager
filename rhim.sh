@@ -90,6 +90,13 @@ dependencies_check() {
     echo cowsay"            "found
   fi
 
+  which jq >/dev/null
+  if [ $? -gt 0 ]; then
+    echo jq has to be installed && sudo apt install jq -y
+  else
+    echo jq"                "found
+  fi
+
   which pip3 >/dev/null
   if [ $? -gt 0 ]; then
     echo pip3 package has to be installed && sudo apt install python3-pip -y

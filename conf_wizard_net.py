@@ -2,6 +2,9 @@ import os
 from modules import load_config, clear_the_screen, logo_top, Bcolors
 from net_and_ap_man_conf import net_and_ap_conf
 
+def modern_ap(config):
+    print("here")
+
 
 def confirm_auto_hotspot(config):
     while True:
@@ -54,9 +57,11 @@ def conf_wizard_net(config):
                             {rmh}NETWORKING MENU{endc}{bold}
 
                         
-                        1 - Setup hotspot - always on
+                        1 - Setup hotspot (Bookworm - recommended!)
+                        
+                        2 - Setup hotspot - always on (Bullseye and older)
 
-                        2 - Setup automatic hotspot/wifi 
+                        3 - Setup automatic hotspot/wifi (Bullseye and older)
 
                 {yellow}e - Exit to main menu {endc}
 
@@ -64,8 +69,10 @@ def conf_wizard_net(config):
         print(features_menu_content)
         selection = input()
         if selection == '1':
-            net_and_ap_conf(config)
+            modern_ap(config)
         elif selection == '2':
+            net_and_ap_conf(config)
+        elif selection == '3':
             confirm_auto_hotspot(config)
         elif selection == 'e':
             break
