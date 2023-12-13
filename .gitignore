@@ -15,3 +15,4 @@ nohup*
 test.py
 .new_rhim_version_check_file.txt
 .new_rhim_version_diff_file
+.first_time_here
