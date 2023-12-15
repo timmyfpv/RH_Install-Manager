@@ -43,7 +43,7 @@ def display_and_confirm_config(ssid, password):
 
     confirm_save = input("\t\t\tDo you want to save this configuration? (y/n): ").lower()
     if confirm_save != 'y':
-        print("Exiting the script without saving the configuration.")
+        print("Exiting without saving the configuration.")
         exit()
 
 
@@ -56,15 +56,17 @@ def save_config_to_json(ssid, password):
     with open("ap-config.json", "w") as json_file:
         json.dump(config_data, json_file, indent=4)
 
-    print("Hotspot configuration data has been saved.")
     sleep(2)
 
 
 def save_config_os(ssid, password):
+    os.system("sudo nmcli con delete hotspot")
     os.system(f"sudo nmcli con add con-name hotspot ifname wlan0 type wifi ssid {ssid}")
     os.system(f"sudo nmcli con modify hotspot wifi-sec.key-mgmt wpa-psk")
-    os.system(f"sudo nmcli con modify hotspot wifi-sec.psk {password}")
+    os.system(f"sudo nmcli con modify hotspot wifi-sec.psk '{password}'")
     os.system(f"sudo nmcli con modify hotspot 802-11-wireless.mode ap 802-11-wireless.band bg ipv4.method shared")
+    print("Hotspot configuration data has been saved.")
+
 
 
 def ap_config():
@@ -76,6 +78,7 @@ def ap_config():
     display_and_confirm_config(ssid, password)
     save_config_to_json(ssid, password)
     save_config_os(ssid, password)
+
 
 
 def main():
