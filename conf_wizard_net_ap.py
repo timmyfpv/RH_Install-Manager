@@ -68,17 +68,15 @@ def save_config_os(ssid, password):
     print("Hotspot configuration data has been saved.")
 
 
-
 def ap_config():
     clear_the_screen()
     logo_top(False)
     check_existing_config()
     ssid = get_user_input("SSID (hotspot name)")
-    password = get_user_input("Password")
+    password = get_user_input("Password (min. 8 characters)")
     display_and_confirm_config(ssid, password)
     save_config_to_json(ssid, password)
     save_config_os(ssid, password)
-
 
 
 def main():
