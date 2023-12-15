@@ -53,10 +53,10 @@ def self_update(config):
         make_directories_accessible(config)
         os.system(
             "cp ~/.rhim_markers/old_RH_Install-Manager/updater-config.json ~/RH_Install-Manager/updater-config.json "
-            "|| echo 'no config file'")
+            " > /dev/null 2>&1")
         os.system(
             "cp ~/.rhim_markers/old_RH_Install-Manager/ap-config.json ~/RH_Install-Manager/ap-config.json "
-            "|| echo 'no AP config file'")
+            " > /dev/null 2>&1")
         # it had some bug with shutil - can be changed when resolved
         if new_version_name != old_version_name:
             os.system("echo RHIM was updated > ~/.rhim_markers/.was_updated_new")
