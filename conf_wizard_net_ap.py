@@ -6,9 +6,23 @@ from modules import clear_the_screen, logo_top
 
 
 def conf_check():
+    home_dir = str(Path.home())
     conf_now_flag = 1
-    if os.path.exists(f"./ap-config.json"):
-        print("\n\tLooks like you have AccessPoint already configured.")
+    ap_config = {}  # Initialize ap_config as an empty dictionary
+
+    if os.path.exists(f"{home_dir}/RH_Install-Manager/ap-config.json"):
+        with open(f"{home_dir}/RH_Install-Manager/ap-config.json", "r") as json_file:
+            ap_config = json.load(json_file)
+
+        ssid = ap_config.get("WIFI", {}).get("SSID")
+        password = ap_config.get("WIFI", {}).get("PASSWORD")
+
+        print("""\n\tLooks like you have AccessPoint already configured.
+              \n\n\t\tCurrent configuration:""")
+        print(f"\n\n\t\tSSID (hotspot name): {ssid}")
+        print(f"\n\t\tPassword (password): {password}")
+        print("\n\n")
+
         while True:
             cont_conf = input("\n\tOverwrite and continue anyway? [y/n]\t\t").lower()
             if not cont_conf:
@@ -26,32 +40,35 @@ def conf_check():
     return conf_now_flag
 
 
+def save_config_os(ssid, password):
+    os.system("sudo nmcli con delete hotspot")
+    os.system(f"sudo nmcli con add con-name hotspot ifname wlan0 type wifi ssid {ssid}")
+    os.system(f"sudo nmcli con modify hotspot wifi-sec.key-mgmt wpa-psk")
+    os.system(f"sudo nmcli con modify hotspot wifi-sec.psk '{password}'")
+    os.system(f"sudo nmcli con modify hotspot 802-11-wireless.mode ap 802-11-wireless.band bg ipv4.method shared")
+    print("\n\n\tHotspot configuration data has been saved\n")
+    sleep(3)
+
+
 def do_config():
     clear_the_screen()
     logo_top(False)
-
-    def save_config_os(ssid, password):
-        os.system("sudo nmcli con delete hotspot")
-        os.system(f"sudo nmcli con add con-name hotspot ifname wlan0 type wifi ssid {ssid}")
-        os.system(f"sudo nmcli con modify hotspot wifi-sec.key-mgmt wpa-psk")
-        os.system(f"sudo nmcli con modify hotspot wifi-sec.psk '{password}'")
-        os.system(f"sudo nmcli con modify hotspot 802-11-wireless.mode ap 802-11-wireless.band bg ipv4.method shared")
-        print("\n\n\t\t\tHotspot configuration data has been saved\n")
-        sleep(3)
 
     home_dir = str(Path.home())
     conf_now_flag = conf_check()
 
     if conf_now_flag:
+        clear_the_screen()
+        logo_top(False)
         ap_config = {}
 
         print("""\n
             Enter hotspot configuration:
 """)
 
-        ap_config["WIFI"] = {}
         ssid = input("\n\t\tEnter SSID:                         ")
-        ap_config["WIFI"]["SSID"] = ssid
+        ap_config["WIFI"] = {"SSID": ssid}
+
         while True:
             password = input("\n\t\tEnter Password (min. 8 characters): ")
             if len(password) < 8:
