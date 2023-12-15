@@ -11,7 +11,10 @@ def com_init(bus_number):
     err_time = 1
     bus = 0
     try:
-        from smbus2 import SMBus  # works only on Pi
+        from smbus2 import SMBus  # works only on Bookworm
+        bus = SMBus(bus_number)
+    except ModuleNotFoundError as no_mod_err:
+        from smbus import SMBus  # for legacy OSes
         bus = SMBus(bus_number)
     except PermissionError as perm_error:
         print(error_msg)
@@ -20,10 +23,6 @@ def com_init(bus_number):
     except NameError as name_error:
         print(error_msg)
         print(name_error)
-        sleep(err_time)
-    except ModuleNotFoundError as no_mod_err:
-        print(error_msg)
-        print(no_mod_err)
         sleep(err_time)
     finally:
         return bus
