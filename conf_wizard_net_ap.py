@@ -5,34 +5,29 @@ import json
 import os
 
 
-# def conf_new_ap():
-#     if os.path.exists(f"./ap-config.json"):
-#         print("\n\tLooks that you have Access Point already configured."
-#               "Do you want to change the configuration?")
-#         print("Current configuration:")
-
-
 def check_existing_config():
     if os.path.exists("ap-config.json"):
         with open("ap-config.json", "r") as json_file:
             current_config = json.load(json_file)
-            print("\n\t\t\tYou already configured the hotspot")
+            print("\n\t\t\tYou already configured the hotspot\n")
             print("\t\t\tCurrent Configuration:")
             for key, value in current_config.items():
                 print(f"\t\t\t{key}: {value}")
 
         change_config = input("\n\t\t\tDo you want to change the existing configuration? (y/n): ").lower()
         if change_config != 'y':
-            print("\t\t\tExiting without making changes.")
+            print("\t\t\tExiting without making changes\n")
             sleep(2)
             exit()
         clear_the_screen()
         logo_top(False)
 
 
-def get_user_input(variable_name):
+def get_user_input():
     print("\n\n")
-    return input(f"\t\t\tEnter {variable_name}: ")
+    ssid = input("\t\t\tEnter SSID (hotspot name):               ")
+    password = input("\t\t\tEnter Password (min. 8 characters):      ")
+    return ssid, password
 
 
 def display_and_confirm_config(ssid, password):
@@ -42,8 +37,9 @@ def display_and_confirm_config(ssid, password):
     print("\n\n")
 
     confirm_save = input("\t\t\tDo you want to save this configuration? (y/n): ").lower()
+    print("\n")
     if confirm_save != 'y':
-        print("Exiting without saving the configuration.")
+        print("Exiting without saving the configuration")
         exit()
 
 
@@ -56,8 +52,6 @@ def save_config_to_json(ssid, password):
     with open("ap-config.json", "w") as json_file:
         json.dump(config_data, json_file, indent=4)
 
-    sleep(2)
-
 
 def save_config_os(ssid, password):
     os.system("sudo nmcli con delete hotspot")
@@ -65,15 +59,15 @@ def save_config_os(ssid, password):
     os.system(f"sudo nmcli con modify hotspot wifi-sec.key-mgmt wpa-psk")
     os.system(f"sudo nmcli con modify hotspot wifi-sec.psk '{password}'")
     os.system(f"sudo nmcli con modify hotspot 802-11-wireless.mode ap 802-11-wireless.band bg ipv4.method shared")
-    print("Hotspot configuration data has been saved.")
+    print("\n\n\t\t\tHotspot configuration data has been saved\n")
+    sleep(3)
 
 
 def ap_config():
     clear_the_screen()
     logo_top(False)
     check_existing_config()
-    ssid = get_user_input("SSID (hotspot name)")
-    password = get_user_input("Password (min. 8 characters)")
+    ssid, password = get_user_input()
     display_and_confirm_config(ssid, password)
     save_config_to_json(ssid, password)
     save_config_os(ssid, password)
