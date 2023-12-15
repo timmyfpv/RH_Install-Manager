@@ -1,7 +1,8 @@
 import os
 from modules import load_config, clear_the_screen, logo_top, Bcolors
 from net_and_ap_man_conf import net_and_ap_conf
-from conf_wizard_net_ap import conf_new_ap
+from conf_wizard_net_ap import ap_config
+
 
 def confirm_auto_hotspot(config):
     while True:
@@ -66,7 +67,7 @@ def conf_wizard_net(config):
         print(features_menu_content)
         selection = input()
         if selection == '1':
-            conf_new_ap(config)
+            ap_config()
         elif selection == '2':
             net_and_ap_conf(config)
         elif selection == '3':
