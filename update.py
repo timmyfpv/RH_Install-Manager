@@ -403,7 +403,7 @@ def features_menu(config):
 
                         1 - Enable serial protocol {endc}{bold}
 
-                        2 - Access Point and Internet (experimental on bookwork os)
+                        2 - Access Point and Internet
 
                         3 - Show actual Pi's GPIO
 
