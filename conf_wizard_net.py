@@ -55,11 +55,11 @@ def conf_wizard_net(config):
                             {rmh}NETWORKING MENU{endc}{bold}
 
                         
-                        1 - Setup hotspot (Bookworm - beta)
+                        1 - Setup hotspot - always on (Bookworm)
                         
-                        2 - Setup hotspot - always on (Bullseye and older)
+                        2 - Setup hotspot - always on (Bullseye/Buster)
 
-                        3 - Setup automatic hotspot/Wi-Fi (Bullseye and older)
+                        3 - Setup automatic hotspot/Wi-Fi (Bullseye/Buster)
 
                 {yellow}e - Exit to main menu {endc}
 

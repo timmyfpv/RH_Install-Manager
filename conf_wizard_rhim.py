@@ -66,7 +66,7 @@ If you want to use value given as default, just hit 'Enter'.
             config.pi_user = pi_user_name
         while True:
             version = input(f"\nChoose the RotorHazard version you want to use? \
-[{Bcolors.UNDERLINE}stable{Bcolors.ENDC} | beta | main]\t\t\t").lower()
+[{Bcolors.UNDERLINE}stable{Bcolors.ENDC} | beta | main]\t\t").lower()
             if not version:
                 config.rh_version = 'stable'
                 print("defaulted to: 'stable'")

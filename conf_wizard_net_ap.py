@@ -37,11 +37,32 @@ def conf_check():
             else:
                 print("\nToo big fingers :( wrong command. Try again! :)")
 
+    else:
+        while True:
+            confirm_conf = input("""
+            
+    Please note that this action will disable Wi-Fi
+    client mode on your Raspberry.
+    
+    Do you want to continue? [Y/n]\t\t""").lower()
+            if not confirm_conf:
+                print("Answer defaulted to: yes")
+                break
+            elif confirm_conf[0] == 'y':
+                conf_now_flag = True
+                break
+            elif confirm_conf[0] == 'n':
+                conf_now_flag = False
+                break
+            else:
+                print("\nToo big fingers :( wrong command. Try again! :)")
+
     return conf_now_flag
 
 
 def save_config_os(ssid, password):
-    os.system("sudo nmcli con delete hotspot")
+    os.system("sudo nmcli con delete preconfigured > /dev/null 2>&1")
+    os.system("sudo nmcli con delete hotspot > /dev/null 2>&1")
     os.system(f"sudo nmcli con add con-name hotspot ifname wlan0 type wifi ssid {ssid}")
     os.system(f"sudo nmcli con modify hotspot wifi-sec.key-mgmt wpa-psk")
     os.system(f"sudo nmcli con modify hotspot wifi-sec.psk '{password}'")
@@ -62,9 +83,7 @@ def do_config():
         logo_top(False)
         ap_config = {}
 
-        print("""\n
-            Enter hotspot configuration:
-""")
+        print("""\n\t\t\tEnter hotspot configuration:\n""")
 
         ssid = input("\n\t\tEnter SSID:                         ")
         ap_config["WIFI"] = {"SSID": ssid}
