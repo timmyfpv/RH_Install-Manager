@@ -3,11 +3,16 @@ import os
 import json
 from pathlib import Path
 from modules import clear_the_screen, logo_top
+import subprocess
 
 
 def conf_check():
     home_dir = str(Path.home())
     conf_now_flag = 1
+    ethernet_ip_os = "ifconfig eth0 | grep -oP 'inet \K\S+' || echo 'no wired connection'"
+    ethernet_ip = (subprocess.check_output(ethernet_ip_os, shell=True, text=True)).strip()
+    hotspot_ip_os = "ifconfig wlan0 | grep -oP 'inet \K\S+' || echo 'no wireless connection'"
+    wlan_ip = (subprocess.check_output(hotspot_ip_os, shell=True, text=True)).strip()
     ap_config = {}  # Initialize ap_config as an empty dictionary
 
     if os.path.exists(f"{home_dir}/RH_Install-Manager/ap-config.json"):
@@ -19,12 +24,14 @@ def conf_check():
 
         print("""\n\tLooks like you have AccessPoint already configured.
               \n\n\t\tCurrent configuration:""")
+        print(f"\n\t\tEthernet IP: {ethernet_ip}")
+        print(f"\n\t\tHotspot IP:  {wlan_ip}")
         print(f"\n\n\t\tSSID (hotspot name): {ssid}")
         print(f"\n\t\tPassword (password): {password}")
         print("\n\n")
 
         while True:
-            cont_conf = input("\n\tOverwrite and continue anyway? [y/n]\t\t").lower()
+            cont_conf = input("\tOverwrite and continue anyway? [y/n]\t\t").lower()
             if not cont_conf:
                 print("Answer defaulted to: yes")
                 break
@@ -39,12 +46,18 @@ def conf_check():
 
     else:
         while True:
-            confirm_conf = input("""
+            print("""
             
-    Please note that this action will disable Wi-Fi
-    client mode on your Raspberry.
+        Please note that this action will disable Wi-Fi client mode 
+        on your Raspberry.
+            """)
+            print("""\n\t\tCurrent configuration:""")
+            print(f"\n\t\tEthernet IP: {ethernet_ip}")
+            print(f"\n\t\tWi-Fi IP:    {wlan_ip}")
+            confirm_conf = input("""
     
-    Do you want to continue? [Y/n]\t\t""").lower()
+        Do you want to continue? [Y/n]\t\t""").lower()
+
             if not confirm_conf:
                 print("Answer defaulted to: yes")
                 break
