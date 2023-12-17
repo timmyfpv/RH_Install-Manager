@@ -81,8 +81,7 @@ def conf_check():
 
 
 def save_config_os(ssid, password):
-    os.system("sudo nmcli con delete preconfigured > /dev/null 2>&1")
-    os.system("sudo nmcli con delete hotspot > /dev/null 2>&1")
+    os.system("sudo nmcli connection delete $(sudo nmcli -t -f NAME,TYPE con show | awk -F: '/:802-11-wireless$/ {print $1}') > /dev/null 2>&1")
     os.system(f"sudo nmcli con add con-name hotspot ifname wlan0 type wifi ssid {ssid}")
     os.system(f"sudo nmcli con modify hotspot wifi-sec.key-mgmt wpa-psk")
     os.system(f"sudo nmcli con modify hotspot wifi-sec.psk '{password}'")
