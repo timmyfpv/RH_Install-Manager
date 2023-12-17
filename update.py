@@ -510,7 +510,7 @@ def main_menu(config):
 
                             {blue}{bold}  
                         1 - RotorHazard Manager {rh_update_prompt} 
-                            {bold}
+                            {endc}{bold}
                         2 - Nodes flash and update {endc}{bold}
                             
                         3 - Additional features{config_color}
