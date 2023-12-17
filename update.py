@@ -402,7 +402,7 @@ def features_menu(config):
         logo_top(config.debug_mode)
         features_menu_content = """
 
-                                {rmf}FEATURES MENU{endc}{blue}{bold}
+                                {rmf}FEATURES MENU{endc}{bold}
 
 
                         1 - Enable serial protocol {endc}{bold}
@@ -510,7 +510,7 @@ def main_menu(config):
 
                             {blue}{bold}  
                         1 - RotorHazard Manager {rh_update_prompt} 
-                            {blue}{bold}
+                            {bold}
                         2 - Nodes flash and update {endc}{bold}
                             
                         3 - Additional features{config_color}
