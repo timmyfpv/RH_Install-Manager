@@ -17,6 +17,8 @@ def show_ip():
 def conf_check():
     home_dir = str(Path.home())
     conf_now_flag = 1
+    ethernet_ip, wlan_ip = show_ip()
+
     ap_config = {}  # Initialize ap_config as an empty dictionary
 
     if os.path.exists(f"{home_dir}/RH_Install-Manager/ap-config.json"):
