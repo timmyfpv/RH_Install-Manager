@@ -146,6 +146,12 @@ dependencies_check() {
     echo python3-smbus2 has to be installed && sudo apt install python3-smbus2
   fi
 
+  if check_package 'python3-smbus'; then
+    echo python3-smbus2"    "found
+  else
+    echo python3-smbus has to be installed && sudo apt install python3-smbus
+  fi
+
   if check_package 'python3-rpi.gpio'; then
     echo python3-rpi.gpio"  "found
   else
