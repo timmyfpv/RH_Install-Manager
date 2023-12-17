@@ -6,13 +6,17 @@ from modules import clear_the_screen, logo_top
 import subprocess
 
 
-def conf_check():
-    home_dir = str(Path.home())
-    conf_now_flag = 1
+def show_ip():
     ethernet_ip_os = "ifconfig eth0 | grep -oP 'inet \K\S+' || echo 'no wired connection'"
     ethernet_ip = (subprocess.check_output(ethernet_ip_os, shell=True, text=True)).strip()
     hotspot_ip_os = "ifconfig wlan0 | grep -oP 'inet \K\S+' || echo 'no wireless connection'"
     wlan_ip = (subprocess.check_output(hotspot_ip_os, shell=True, text=True)).strip()
+    return ethernet_ip, wlan_ip
+
+
+def conf_check():
+    home_dir = str(Path.home())
+    conf_now_flag = 1
     ap_config = {}  # Initialize ap_config as an empty dictionary
 
     if os.path.exists(f"{home_dir}/RH_Install-Manager/ap-config.json"):
@@ -21,12 +25,13 @@ def conf_check():
 
         ssid = ap_config.get("WIFI", {}).get("SSID")
         password = ap_config.get("WIFI", {}).get("PASSWORD")
+        ethernet_ip, wlan_ip = show_ip()
 
         print("""\n\tLooks like you have AccessPoint already configured.
               \n\n\t\tCurrent configuration:""")
         print(f"\n\t\tEthernet IP: {ethernet_ip}")
-        print(f"\n\t\tHotspot IP:  {wlan_ip}")
-        print(f"\n\n\t\tSSID (hotspot name): {ssid}")
+        print(f"\n\t\tHotspot IP:  {wlan_ip}\n")
+        print(f"\n\t\tSSID (hotspot name): {ssid}")
         print(f"\n\t\tPassword (password): {password}")
         print("\n\n")
 
@@ -98,7 +103,7 @@ def do_config():
 
         print("""\n\t\t\tEnter hotspot configuration:\n""")
 
-        ssid = input("\n\t\tEnter SSID:                         ")
+        ssid = input("\n\t\tEnter SSID (hotspot name):          ")
         ap_config["WIFI"] = {"SSID": ssid}
 
         while True:
@@ -128,7 +133,15 @@ def do_config():
             with open(f"{home_dir}/RH_Install-Manager/ap-config.json", "w") as json_file:
                 json.dump(ap_config, json_file, indent=4)
             save_config_os(ssid, password)
-            sleep(1)
+            clear_the_screen()
+            logo_top(False)
+            ethernet_ip, wlan_ip = show_ip()
+            print("""\n\n\t\tCurrent configuration: """)
+            print(f"\n\t\tEthernet IP: {ethernet_ip}")
+            print(f"\n\t\tHotspot IP:  {wlan_ip}")
+            print(f"\n\n\t\tSSID (hotspot name): {ssid}")
+            print(f"\n\t\tPassword (password): {password}\n\n")
+            input("\nHit Enter to exit this screen")
             conf_now_flag = 0
         if selection in ['change', 'n', 'no']:
             conf_now_flag = 1
