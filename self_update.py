@@ -43,16 +43,20 @@ def self_update(config):
         #   shutil.copyfile("~/.rhim_markers/old_RH_Install-Manager/updater-config.json", "~/RH_Install-Manager/updater-config.json")
         new_version_name = get_rhim_version(True)
         print(f"""
+        
+        RotorHazard Manager updated to version {new_version_name}
+        
+                You can check update-notes.
     
-    RotorHazard Manager updated to version {new_version_name}
-    
-            You can check update-notes.
-
-            """)
+                """)
         sleep(1)
         make_directories_accessible(config)
         os.system(
-            "cp ~/.rhim_markers/old_RH_Install-Manager/updater-config.json ~/RH_Install-Manager/updater-config.json")
+            "cp ~/.rhim_markers/old_RH_Install-Manager/updater-config.json ~/RH_Install-Manager/updater-config.json "
+            " > /dev/null 2>&1")
+        os.system(
+            "cp ~/.rhim_markers/old_RH_Install-Manager/ap-config.json ~/RH_Install-Manager/ap-config.json "
+            " > /dev/null 2>&1")
         # it had some bug with shutil - can be changed when resolved
         if new_version_name != old_version_name:
             os.system("echo RHIM was updated > ~/.rhim_markers/.was_updated_new")
