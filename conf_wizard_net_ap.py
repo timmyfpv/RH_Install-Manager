@@ -38,7 +38,7 @@ def conf_check():
         print("\n\n")
 
         while True:
-            cont_conf = input("\tOverwrite and continue anyway? [y/n]\t\t").lower()
+            cont_conf = input("\tOverwrite and continue anyway? [Y/n]\t\t").lower()
             if not cont_conf:
                 print("Answer defaulted to: yes")
                 break
@@ -143,7 +143,7 @@ def do_config():
             print(f"\n\t\tHotspot IP:  {wlan_ip}")
             print(f"\n\n\t\tSSID (hotspot name): {ssid}")
             print(f"\n\t\tPassword (password): {password}\n\n")
-            input("\nHit Enter to exit this screen")
+            input("\n\tHit Enter to exit this screen")
             conf_now_flag = 0
         if selection in ['change', 'n', 'no']:
             conf_now_flag = 1
