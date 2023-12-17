@@ -33,11 +33,15 @@ def attribute_error_handling():
     AttributeError
 
     Looks that you may have some configuration mismatch. 
-    Check entered username and other parameters in config wizard.
+    
+    It is also likely that {underline}reboot is required{endc} so interfaces
+    like UART and I2C can be reloaded.
+    
+    Check entered username and other parameters in Config Wizard.
 
     You may also try to re-open this program with './rhim.sh' command.
 
-    """
+    """.format(underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC)
     print(err_msg)
     input("\n\n\tHit Enter to continue and next check your configuration.")
     clear_the_screen()
@@ -398,7 +402,7 @@ def features_menu(config):
         logo_top(config.debug_mode)
         features_menu_content = """
 
-                                {rmf}FEATURES MENU{endc}{blue}{bold}
+                                {rmf}FEATURES MENU{endc}{bold}
 
 
                         1 - Enable serial protocol {endc}{bold}
@@ -506,7 +510,7 @@ def main_menu(config):
 
                             {blue}{bold}  
                         1 - RotorHazard Manager {rh_update_prompt} 
-                            {blue}{bold}
+                            {endc}{bold}
                         2 - Nodes flash and update {endc}{bold}
                             
                         3 - Additional features{config_color}

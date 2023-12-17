@@ -147,7 +147,7 @@ dependencies_check() {
   fi
 
   if check_package 'python3-smbus'; then
-    echo python3-smbus2"    "found
+    echo python3-smbus"     "found
   else
     echo python3-smbus has to be installed && sudo apt install python3-smbus
   fi
