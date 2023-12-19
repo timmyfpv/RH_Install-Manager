@@ -8,6 +8,27 @@ import json
 import time
 import requests
 from types import SimpleNamespace as Namespace, SimpleNamespace
+import socket
+import subprocess
+
+
+def get_host_info():
+    ip_list = []
+    try:
+        hostname = socket.gethostname()
+        #        print(f"Hostname: {hostname}")
+
+        ip_addresses = subprocess.check_output(['hostname', '-I']).decode('utf-8').strip().split()
+        #        print("IP Addresses:")
+        for ip in ip_addresses:
+            #            print(f"  {ip}")
+            ip_list.append(ip)
+
+    except Exception as e:
+        print("No hostname info")
+        hostname = "no hostname"
+
+    return hostname, ip_list
 
 
 def clear_the_screen():
@@ -62,18 +83,22 @@ def check_if_string_is_in_file(file_name, string_to_search):
 
 
 def logo_top(linux_testing):
+    hostname = str(get_host_info()[0])
+    ip1 = str("IP: " + get_host_info()[1][0])
+    ip2 = str("IP: " + get_host_info()[1][1])
+    ip3 = str("IP: " + get_host_info()[1][2])
     debug_status = f"{Bcolors.PROMPT}Debug 'PC' version - sim mode{Bcolors.ENDC}" if linux_testing else 29 * ' '
     print("""
-    
-    #######################################################################
-    ###                                                                 ###
-    ###    {orange}{bold}        RotorHazard             {endc}         ###
-    ###                                                                 ###
-    ###          {bold}        Install-Manager      {endc}              ###
-    ###                 {place_for_debug_status_here}                   ###
-    #######################################################################
+
+    ##############################################   
+    ##                                          ##      Hostname: {hostname}  
+    ## {orange}{bold}RotorHazard        {endc}  ##       
+    ##                                          ##      {ip1}             
+    ##{bold}       Install-Manager {endc}       ##      {ip2}             
+    ##      {place_for_debug_status_here}       ##      {ip3}             
+    ##############################################      
     """.format(bold=Bcolors.BOLD_S, endc=Bcolors.ENDC_S, place_for_debug_status_here=debug_status,
-               yellow=Bcolors.YELLOW_S, orange=Bcolors.ORANGE_S))
+               yellow=Bcolors.YELLOW_S, orange=Bcolors.ORANGE_S, hostname=hostname, ip1=ip1, ip2=ip2, ip3=ip3))
 
 
 class Bcolors:
@@ -109,9 +134,9 @@ class Bcolors:
 
 def internet_check():
     print("""
-    
+
         Please wait - checking internet connection state....
-        
+
     """)
     internet_flag = False
     for i in range(3):
