@@ -20,7 +20,7 @@ def get_host_info():
         for ip in ip_addresses:
             ip_list.append(ip)
         if len(ip_addresses) == 0:
-            ip_list.append("no IP info")
+            ip_list.append("0")
         if len(ip_addresses) == 1:
             ip_list.append("0")
         if len(ip_addresses) == 2:
@@ -85,9 +85,9 @@ def check_if_string_is_in_file(file_name, string_to_search):
 
 def logo_top(linux_testing):
     hostname = str(get_host_info()[0])
-    ip1 = str("IP: " + get_host_info()[1][0]) if get_host_info()[1][0] is not "0" else ""
-    ip2 = str("IP: " + get_host_info()[1][1]) if get_host_info()[1][1] is not "0" else ""
-    ip3 = str("IP: " + get_host_info()[1][2]) if get_host_info()[1][2] is not "0" else ""
+    ip1 = str("IP: " + get_host_info()[1][0]) if get_host_info()[1][0] != "0" else "no IP info"
+    ip2 = str("IP: " + get_host_info()[1][1]) if get_host_info()[1][1] != "0" else ""
+    ip3 = str("IP: " + get_host_info()[1][2]) if get_host_info()[1][2] != "0" else ""
     debug_status = f"{Bcolors.PROMPT}Debug 'PC' version - sim mode{Bcolors.ENDC}" if linux_testing else 29 * ' '
     print("""
 
