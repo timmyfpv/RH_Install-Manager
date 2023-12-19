@@ -5,6 +5,9 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+401.35.5d4
+1. RotorHazard 4.0.1 installation and update support added
+
 400.35.5d
 1. AccessPoint option added - Bookworm compatible
 2. jq dependency added
