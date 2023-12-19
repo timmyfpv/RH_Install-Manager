@@ -19,6 +19,10 @@ def get_host_info():
         ip_addresses = subprocess.check_output(['hostname', '-I']).decode('utf-8').strip().split()
         for ip in ip_addresses:
             ip_list.append(ip)
+        if len(ip_addresses) == 1:
+            ip_list.append(0)
+        if len(ip_addresses) == 2:
+            ip_list.append(0)
 
     except Exception as e:
         hostname = "no hostname info"
@@ -79,19 +83,19 @@ def check_if_string_is_in_file(file_name, string_to_search):
 
 def logo_top(linux_testing):
     hostname = str(get_host_info()[0])
-    ip1 = str("IP: " + get_host_info()[1][0])
-    ip2 = str("IP: " + get_host_info()[1][1])
-    ip3 = str("IP: " + get_host_info()[1][2])
+    ip1 = str("IP: " + get_host_info()[1][0]) if get_host_info()[1][0] is not 0 else ""
+    ip2 = str("IP: " + get_host_info()[1][1]) if get_host_info()[1][1] is not 0 else ""
+    ip3 = str("IP: " + get_host_info()[1][2]) if get_host_info()[1][2] is not 0 else ""
     debug_status = f"{Bcolors.PROMPT}Debug 'PC' version - sim mode{Bcolors.ENDC}" if linux_testing else 29 * ' '
     print("""
 
-    ############################################   
-    ##                                        ##      Hostname: {hostname}  
-    ## {orange}{bold}RotorHazard      {endc}  ##       
-    ##                                        ##      {ip1}             
-    ##{bold}       Install-Manager {endc}     ##      {ip2}             
-    ##      {place_for_debug_status_here}     ##      {ip3}             
-    ############################################      
+   ############################################   
+   ##                                        ##    Hostname: {hostname}  
+   ## {orange}{bold}RotorHazard      {endc}  ##      
+   ##                                        ##    {ip1}             
+   ##{bold}       Install-Manager {endc}     ##    {ip2}             
+   ##      {place_for_debug_status_here}     ##    {ip3}             
+   ############################################    
     """.format(bold=Bcolors.BOLD_S, endc=Bcolors.ENDC_S, place_for_debug_status_here=debug_status,
                yellow=Bcolors.YELLOW_S, orange=Bcolors.ORANGE_S, hostname=hostname, ip1=ip1, ip2=ip2, ip3=ip3))
 
