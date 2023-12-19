@@ -87,13 +87,13 @@ def logo_top(linux_testing):
     debug_status = f"{Bcolors.PROMPT}Debug 'PC' version - sim mode{Bcolors.ENDC}" if linux_testing else 29 * ' '
     print("""
 
-   ############################################   
-   ##                                        ##    Hostname: {hostname}  
-   ## {orange}{bold}RotorHazard      {endc}  ##      
-   ##                                        ##    {ip1}             
-   ##{bold}       Install-Manager {endc}     ##    {ip2}             
-   ##      {place_for_debug_status_here}     ##    {ip3}             
-   ############################################    
+  ############################################   
+  ##                                        ##  Hostname: {hostname}  
+  ## {orange}{bold}RotorHazard      {endc}  ##      
+  ##                                        ##  {ip1}             
+  ##{bold}       Install-Manager {endc}     ##  {ip2}             
+  ##      {place_for_debug_status_here}     ##  {ip3}             
+  ############################################    
     """.format(bold=Bcolors.BOLD_S, endc=Bcolors.ENDC_S, place_for_debug_status_here=debug_status,
                yellow=Bcolors.YELLOW_S, orange=Bcolors.ORANGE_S, hostname=hostname, ip1=ip1, ip2=ip2, ip3=ip3))
 
