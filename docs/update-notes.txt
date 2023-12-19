@@ -5,6 +5,9 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+401.35.5d5
+1. Hostnames shown in upper part of the screen
+
 401.35.5d4
 1. RotorHazard 4.0.1 installation and update support added
 
