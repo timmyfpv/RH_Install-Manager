@@ -19,12 +19,8 @@ def get_host_info():
         ip_addresses = subprocess.check_output(['hostname', '-I']).decode('utf-8').strip().split()
         for ip in ip_addresses:
             ip_list.append(ip)
-        if len(ip_addresses) == 0:
-            ip_list.append("0")
-        if len(ip_addresses) == 1:
-            ip_list.append("0")
-        if len(ip_addresses) == 2:
-            ip_list.append("0")
+        for i in range(3):
+            ip_list.append("0") # so at least ip_list have at least 3 arguments - due to return function
 
     except Exception as e:
         hostname = "no hostname info"
