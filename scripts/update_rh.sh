@@ -32,8 +32,6 @@ sudo rm -r /home/"${1}"/temp.zip >/dev/null 2>&1 # in case of weird sys config o
 cd /home/"${1}" || exit
 git clone -c advice.detachedHead=false -b "${2}" https://github.com/RotorHazard/RotorHazard.git
 rm ~/wget* >/dev/null 2>&1
-mv /home/"${1}"/RotorHazard-* /home/"${1}"/RotorHazard
-sudo rm temp.zip
 sudo mkdir /home/"${1}"/backup_RH_data >/dev/null 2>&1
 sudo chmod 777 -R /home/"${1}"/RotorHazard/src/server
 sudo chmod 777 -R /home/"${1}"/RotorHazard_"${upgradeDate}"
