@@ -28,7 +28,6 @@ fi
 cd /home/"${1}" || exit
 git clone -c advice.detachedHead=false -b "${2}" https://github.com/RotorHazard/RotorHazard.git
 rm ~/wget* >/dev/null 2>&1
-mv /home/"${1}"/RotorHazard-* /home/"${1}"/RotorHazard || exit 1
 add_ons_info_show
 cd /home/"${1}"/RotorHazard/src/server || echo "$red missing RotorHazard directory"
 python3 -m venv venv
