@@ -26,9 +26,7 @@ if [ -d "/home/${1}/RotorHazard-${2}" ]; then
   mv "/home/${1}/RotorHazard-${2}" "/home/${1}/RotorHazard_${2}_$(date +%Y%m%d%H%M)" || exit 1
 fi
 cd /home/"${1}" || exit
-wget https://codeload.github.com/RotorHazard/RotorHazard/zip/"${2}" -O temp.zip
-unzip temp.zip
-rm temp.zip
+git clone -c advice.detachedHead=false -b "${2}" https://github.com/RotorHazard/RotorHazard.git
 rm ~/wget* >/dev/null 2>&1
 mv /home/"${1}"/RotorHazard-* /home/"${1}"/RotorHazard || exit 1
 add_ons_info_show

@@ -30,8 +30,7 @@ if [ -d "/home/${1}/RotorHazard-*" ]; then
 fi
 sudo rm -r /home/"${1}"/temp.zip >/dev/null 2>&1 # in case of weird sys config or previous unsuccessful installations
 cd /home/"${1}" || exit
-wget https://codeload.github.com/RotorHazard/RotorHazard/zip/"${2}" -O temp.zip
-unzip temp.zip
+git clone -c advice.detachedHead=false -b "${2}" https://github.com/RotorHazard/RotorHazard.git
 rm ~/wget* >/dev/null 2>&1
 mv /home/"${1}"/RotorHazard-* /home/"${1}"/RotorHazard
 sudo rm temp.zip
