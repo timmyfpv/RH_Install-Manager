@@ -1,5 +1,6 @@
 from pathlib import Path
 import platform
+import os
 
 
 # removes old aliases, especially doubled ones and bad leftovers from ~/.bashrc file
@@ -25,10 +26,20 @@ def aliases_clean(start, end, file_name, *words):
             return False
 
 
+def virtual_env_check(file_path, word):
+    with open(file_path, 'r') as file:
+        content = file.read()
+        if word in content:
+            print('virtual env already setup')
+        else:
+            os.system("echo 'VIRTUAL_ENV_DISABLE_PROMPT = 1' >> ~/.bashrc")
+
+
 def main():
     home_dir = str(Path.home())
     Path(f"{home_dir}/.rhim_markers").mkdir(exist_ok=True)
     aliases_clean('Shortcut', 'After', f'{home_dir}/.bashrc', 'uu', 'updateupdater', '# #')
+    virtual_env_check(r'~/.bashrc', 'VIRTUAL_ENV_DISABLE_PROMPT')
 
 
 if __name__ == "__main__":
