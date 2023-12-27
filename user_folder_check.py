@@ -33,7 +33,7 @@ def virtual_env_check(file_path, word):
             print('virtual env already setup')
         else:
             os.system("echo 'VIRTUAL_ENV_DISABLE_PROMPT = 1' >> ~/.bashrc")
-            os.system("source ~/.venv/bin/activate' >> ~/.bashrc")
+            os.system("echo 'source ~/.venv/bin/activate' >> ~/.bashrc")
 
 
 
