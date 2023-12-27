@@ -39,7 +39,7 @@ def main():
     home_dir = str(Path.home())
     Path(f"{home_dir}/.rhim_markers").mkdir(exist_ok=True)
     aliases_clean('Shortcut', 'After', f'{home_dir}/.bashrc', 'uu', 'updateupdater', '# #')
-    virtual_env_check(r'~/.bashrc', 'VIRTUAL_ENV_DISABLE_PROMPT')
+    virtual_env_check(f'{home_dir}/.bashrc', 'VIRTUAL_ENV_DISABLE_PROMPT')
 
 
 if __name__ == "__main__":
