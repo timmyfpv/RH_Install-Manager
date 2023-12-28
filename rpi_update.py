@@ -168,7 +168,7 @@ def end_installation(config):
             break
 
 
-def installation(conf_allowed, config):
+def installation(conf_allowed, config, git_flag):
     rhim_config = load_rhim_sys_markers(config.user)
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
     clear_the_screen()
@@ -206,7 +206,7 @@ def installation(conf_allowed, config):
         rhim_config.sys_config_done, rhim_config.uart_support_added = True, True
         # UART enabling added here so user won't have to reboot Pi again after doing it in Features Menu
         write_rhim_sys_markers(rhim_config, config.user)
-        os.system(f"./scripts/install_rh.sh {config.user} {check_preferred_rh_version(config)[0]}")
+        os.system(f"./scripts/install_rh.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
         input("\n\n\npress Enter to continue")
         clear_the_screen()
         print(installation_completed)
@@ -214,7 +214,7 @@ def installation(conf_allowed, config):
         end_installation(config.user)
 
 
-def update(config):
+def update(config, git_flag):
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
     internet_flag = internet_check()
     if not internet_flag:
@@ -240,7 +240,10 @@ def update(config):
             selection = input()
             if selection == 'i':
                 conf_allowed = True
-                installation(conf_allowed, config)
+                installation(conf_allowed, config, "")
+            elif selection == 'igit':
+                conf_allowed = True
+                installation(conf_allowed, config, "git")
             elif selection == 'a':
                 clear_the_screen()
                 return
@@ -249,7 +252,7 @@ def update(config):
         else:
             clear_the_screen()
             print(f"\n\n\t{Bcolors.BOLD}Updating existing installation - please wait...{Bcolors.ENDC}\n\n")
-            os.system(f"./scripts/update_rh.sh {config.user} {check_preferred_rh_version(config)[0]}")
+            os.system(f"./scripts/update_rh.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
             config_flag, config_soft = check_rotorhazard_config_status(config)
             server_installed_flag, server_version_name = get_rotorhazard_server_version(config)
             os.system("sudo chmod -R 777 ~/RotorHazard")
@@ -257,6 +260,24 @@ def update(config):
 
 
 def main_window(config):
+    def system_already_configured_prompt():
+        clear_the_screen()
+        already_installed_prompt = """{bold}
+
+           Looks like you already have your system configured.{endc}{bold}
+
+           If so, please perform installation without sys. config.
+
+
+        {green}i - Force installation without sys. config. {endc}{bold}
+
+               c - Force installation and system config. {yellow}
+
+               a - Abort both {endc}
+               """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
+                          yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S)
+        print(already_installed_prompt)
+
     while True:
         rh_config_text, rh_config_flag = check_rotorhazard_config_status(config)
         clear_the_screen()
@@ -332,29 +353,17 @@ def main_window(config):
             else:
                 print("Please install the RotorHazard server first")
                 sleep(2)
-        elif selection == 'i':
+        elif selection == 'i' or selection == 'igit':
             # rh_found_flag = os.path.exists(f"/home/{config.user}/RotorHazard")
             if sys_configured_flag:
-                clear_the_screen()
-                already_installed_prompt = """{bold}
-                
-        Looks like you already have your system configured.{endc}{bold}
-        
-        If so, please perform installation without sys. config.
-                
-                            
-     {green}i - Force installation without sys. config. {endc}{bold}
-            
-            c - Force installation and system config. {yellow}
-            
-            a - Abort both {endc}
-            """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
-                       yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S)
-                print(already_installed_prompt)
+                system_already_configured_prompt()
                 selection = input()
                 if selection == 'i':
                     conf_allowed = False
-                    installation(conf_allowed, config)
+                    installation(conf_allowed, config, "")
+                elif selection == 'igit':
+                    conf_allowed = False
+                    installation(conf_allowed, config, "git")
                 elif selection == 'c':
                     confirm_valid_options = ['y', 'yes', 'n', 'no', 'abort', 'a']
                     while True:
@@ -365,7 +374,7 @@ def main_window(config):
                             print("\ntoo big fingers :( wrong command. try again! :)")
                     if confirm == 'y' or confirm == 'yes':
                         conf_allowed = True
-                        installation(conf_allowed, config)
+                        installation(conf_allowed, config, "")
                     elif confirm in ['n', 'no', 'abort', 'a']:
                         pass
                 elif selection == 'a':
@@ -375,9 +384,12 @@ def main_window(config):
                     break
             else:
                 conf_allowed = True
-                installation(conf_allowed, config)
+                git_flag = "git" if selection == "igit" else ""
+                installation(conf_allowed, config, git_flag)
         elif selection == 'u':
-            update(config)
+            update(config, "")
+        elif selection == 'ugit':
+            update(config, "git")
         elif selection == 'e':
             clear_the_screen()
             os.chdir(f"/home/{config.user}/RH_Install-Manager")
