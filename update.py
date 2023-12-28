@@ -12,7 +12,7 @@ from nodes_update_old import nodes_update as old_flash_gpio
 
 
 def compatibility():  # adds compatibility and fixes with previous versions
-    from prev_comp import main as prev_comp
+    from user_folder_check import main as prev_comp
     prev_comp()
 
 
