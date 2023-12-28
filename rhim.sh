@@ -15,7 +15,7 @@ dots7() { # done that way so it work on every terminal
 print_info_message() {
   printf "\n"
   printf "dependencies will be auto-detected and installed \n"
-  printf "installing dependencies may need 'sudo' password\n\n"
+  printf "installing dependencies may need 'sudo' password\n"
 }
 
 check_for_new_rhim() {
@@ -25,6 +25,18 @@ check_for_new_rhim() {
     diff version.txt .new_rhim_version_check_file.txt > .new_rhim_version_diff_file
   else
     sudo apt update || printf "repositories have not been updated \n"
+  fi
+}
+
+check_for_python_venv_flag() {
+
+  if test -f .python_venv_flag; then
+    printf "preparing python virtual environment\n\n"
+    python -m venv ~/.venv
+    source /.venv/bin/activate
+    rm .python_venv_flag >/dev/null 2>&1
+  else
+    printf "python virtual environment already prepared \n\n"
   fi
 }
 
@@ -129,16 +141,16 @@ dependencies_check() {
     echo i2c-tools has to be installed && sudo apt install i2c-tools -y
   fi
 
+  if check_python_package 'requests'; then
+    echo requests"          "found
+  else
+    echo requests has to be installed && pip3 install requests
+  fi
+
   if check_package 'python3-gpiozero'; then
     echo python3-gpiozero"  "found
   else
     echo python3-gpiozero has to be installed && sudo apt install python3-gpiozero -y
-  fi
-
-  if check_package 'python3-requests'; then
-    echo python3-requests"  "found
-  else
-    echo python3-requests has to be installed && sudo apt install python3-requests -y
   fi
 
   if check_package 'python3-dev'; then
@@ -159,16 +171,17 @@ dependencies_check() {
     echo python3-smbus has to be installed && sudo apt install python3-smbus
   fi
 
-  if check_package 'python3-rpi.gpio'; then
-    echo python3-rpi.gpio"  "found
+  if check_python_package 'RPi.GPIO'; then
+    echo RPi.GPIO"          "found
   else
-    echo python3-rpi.gpio has to be installed && sudo apt install python3-rpi.gpio || echo - only on Pi -
+    echo RPi.GPIO has to be installed && pip3 install RPi.GPIO || echo - only on Pi -
   fi
 
 }
 
 print_info_message
 check_for_new_rhim
+check_for_python_venv_flag
 open_software_alias_check &
 dependencies_check &
 wait
