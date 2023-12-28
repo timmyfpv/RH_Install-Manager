@@ -3,6 +3,7 @@
 green="\033[92m"
 red="\033[91m"
 endc="\033[0m"
+underline="\033[4m"
 
 ssh_enabling() {
   sudo systemctl enable ssh || return 1
@@ -128,7 +129,7 @@ enable_uart=1
   " | sudo tee -a /boot/config.txt || return 1
   sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt
   sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt
-  echo "console serial output disabled - requires reboot
+  echo "console serial output disabled - '$underline'requires reboot'$endc'
   "
 sleep 2
 
