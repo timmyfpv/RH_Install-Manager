@@ -35,6 +35,8 @@ if [ "$3" == "git" ]; then
 else
   wget https://codeload.github.com/RotorHazard/RotorHazard/zip/"${2}" -O temp.zip
   unzip temp.zip
+  rm ~/wget* >/dev/null 2>&1
+  mv /home/"${1}"/RotorHazard-* /home/"${1}"/RotorHazard
   sudo rm temp.zip
 fi
 sudo mkdir /home/"${1}"/backup_RH_data >/dev/null 2>&1
