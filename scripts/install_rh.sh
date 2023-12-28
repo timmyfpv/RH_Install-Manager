@@ -17,6 +17,7 @@ sudo apt install wget python3 python*-venv ntp htop libjpeg-dev libffi-dev build
 sudo apt install python3-rpi.gpio -y || echo "-- no python-rpi.gpio module found - available only on Pi --" #is this redundant?
 sudo rm -r /home/"${1}"/temp.zip >/dev/null 2>&1 # in case of weird sys config or previous unsuccessful installations
 cd /home/"${1}" || exit
+python -m venv .venv
 if [ -d "/home/${1}/RotorHazard" ]; then
   # Control will enter here if $DIRECTORY exists.
   mv "/home/${1}/RotorHazard" "/home/${1}/RotorHazard_$(date +%Y%m%d%H%M)" || exit 1
@@ -36,8 +37,8 @@ else
 fi
 add_ons_info_show
 cd /home/"${1}"/RotorHazard/src/server || echo "$red missing RotorHazard directory"
-python3 -m venv venv
-source venv/bin/activate
+#python3 -m venv venv
+#source venv/bin/activate
 pip3 install --upgrade pip
 pip3 install -r requirements.txt
 pip3 install cffi pillow
