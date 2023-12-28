@@ -150,12 +150,11 @@ def end_update(config, server_configured_flag, server_installed_flag):
 def end_installation(config):
     while True:
         print(f"""
-    
+      
+            r - Reboot - {Bcolors.UNDERLINE}STRONGLY{Bcolors.ENDC} recommended after configuring
             {Bcolors.GREEN}
-            c - Configure RH server now - recommended {Bcolors.ENDC}
-            
-            r - Reboot - STRONGLY recommended after configuring
-                        
+            c - Configure RH server now {Bcolors.ENDC}
+                                    
             e - Exit now{Bcolors.ENDC}""")
 
         selection = input()
@@ -168,50 +167,95 @@ def end_installation(config):
             break
 
 
+def end_of_part_1():
+    while True:
+        print(f"""
+            {Bcolors.GREEN}
+            r - Reboot - do it now {Bcolors.ENDC}
+
+            e - Exit now""")
+
+        selection = input()
+        if selection == 'r':
+            os.system("sudo reboot")
+        elif selection == 'e':
+            return
+
+
+def first_part_of_installation_done_check(config):
+    rhim_config = load_rhim_sys_markers(config.user)
+    return True if rhim_config.first_part_of_install is True else True
+
+
 def installation(conf_allowed, config, git_flag):
+    first_part_completed = """
+
+
+                ######################################################
+                ##                                                  ##
+                ##{bold}{green} First part completed  {thumbs}{endc}##
+                ##                                                  ##
+                ######################################################
+
+
+            Please reboot the system now.
+                        """.format(thumbs="👍👍👍     ", bold=Bcolors.BOLD_S,
+                                   endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
+    installation_completed = """
+
+
+                ######################################################
+                ##                                                  ##
+                ##{bold}{green}Installation completed {thumbs}{endc}##
+                ##                                                  ##
+                ######################################################
+
+
+            Please reboot the system after installation.
+                        """.format(thumbs="👍👍👍     ", bold=Bcolors.BOLD_S,
+                                   endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     rhim_config = load_rhim_sys_markers(config.user)
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
     clear_the_screen()
     internet_flag = internet_check()
+    first_part_of_installation_done_flag = first_part_of_installation_done_check(config)
     if not internet_flag:
         print(f"\n\t{Bcolors.RED}Looks like you don't have internet connection. Installation canceled.{Bcolors.ENDC}")
         sleep(2)
     else:
-        print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
-        sleep(2)
-        clear_the_screen()
-        print(f"\n\n\t{Bcolors.BOLD}Installation process has been started - please wait...{Bcolors.ENDC}\n\n")
-        installation_completed = """
-        
-        
-            ######################################################
-            ##                                                  ##
-            ##{bold}{green}Installation completed {thumbs}{endc}##
-            ##                                                  ##
-            ######################################################
-
-
-        After rebooting you can confirm by typing 'sudo raspi-config' 
-        if I2C, SPI and SSH protocols are active.
-                    """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S,
-                               endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
-
-        if conf_allowed:
-            if not config.debug_mode:
-                os.system("./scripts/sys_conf.sh all")
-            else:
-                os.system("./scripts/sys_conf.sh ssh")
-                print("\n\nsimulation mode - SPI, I2C and UART won't be configured\n\n\n")
-                sleep(3)
-        rhim_config.sys_config_done, rhim_config.uart_support_added = True, True
-        # UART enabling added here so user won't have to reboot Pi again after doing it in Features Menu
-        write_rhim_sys_markers(rhim_config, config.user)
-        os.system(f"./scripts/install_rh.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
-        input("\n\n\npress Enter to continue")
-        clear_the_screen()
-        print(installation_completed)
-        os.system("sudo chmod 777 -R ~/RotorHazard")
-        end_installation(config.user)
+        if first_part_of_installation_done_flag is False:
+            print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
+            sleep(2)
+            clear_the_screen()
+            print(f"\n\n\t{Bcolors.BOLD}Installation process has been started - please wait...{Bcolors.ENDC}\n\n")
+            if conf_allowed:
+                if not config.debug_mode:
+                    os.system("./scripts/sys_conf.sh all")
+                else:
+                    os.system("./scripts/sys_conf.sh ssh")
+                    print("\n\nsimulation mode - SPI, I2C and UART won't be configured\n\n\n")
+                    sleep(3)
+            rhim_config.sys_config_done, rhim_config.uart_support_added, rhim_config.first_part_of_install = True, True, True
+            # UART enabling added here so user won't have to reboot Pi again after doing it in Features Menu
+            write_rhim_sys_markers(rhim_config, config.user)
+            os.system(f"./scripts/install_rh_part_1.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
+            input("\n\n\npress Enter to continue")
+            clear_the_screen()
+            print(first_part_completed)
+            end_of_part_1()
+        else:
+            print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
+            sleep(2)
+            clear_the_screen()
+            print(f"\n\n\t{Bcolors.BOLD}Second part of installation has been started - please wait...{Bcolors.ENDC}\n\n")
+            os.system(f"./scripts/install_rh_part_2.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
+            input("\n\n\npress Enter to continue")
+            clear_the_screen()
+            print(installation_completed)
+            os.system("sudo chmod 777 -R ~/RotorHazard")
+            end_installation(config.user)
+            rhim_config.second_part_of_install = True
+            write_rhim_sys_markers(rhim_config, config.user)
 
 
 def update(config, git_flag):

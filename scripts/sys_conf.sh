@@ -129,7 +129,7 @@ enable_uart=1
   " | sudo tee -a /boot/config.txt || return 1
   sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt
   sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt
-  echo "console serial output disabled -$red requires reboot $endc
+  echo "console serial output disabled --> $red requires reboot $endc
   "
 sleep 2
 
