@@ -30,8 +30,13 @@ if [ -d "/home/${1}/RotorHazard-*" ]; then
 fi
 sudo rm -r /home/"${1}"/temp.zip >/dev/null 2>&1 # in case of weird sys config or previous unsuccessful installations
 cd /home/"${1}" || exit
-git clone -c advice.detachedHead=false -b "${2}" https://github.com/RotorHazard/RotorHazard.git
-rm ~/wget* >/dev/null 2>&1
+if [ "$3" == "git" ]; then
+  git clone -c advice.detachedHead=false -b "${2}" https://github.com/RotorHazard/RotorHazard.git
+else
+  wget https://codeload.github.com/RotorHazard/RotorHazard/zip/"${2}" -O temp.zip
+  unzip temp.zip
+  sudo rm temp.zip
+fi
 sudo mkdir /home/"${1}"/backup_RH_data >/dev/null 2>&1
 sudo chmod 777 -R /home/"${1}"/RotorHazard/src/server
 sudo chmod 777 -R /home/"${1}"/RotorHazard_"${upgradeDate}"
