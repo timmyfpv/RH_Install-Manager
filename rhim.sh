@@ -62,6 +62,13 @@ dependencies_check() {
     fi
   }
 
+  which git >/dev/null
+  if [ $? -gt 0 ]; then
+    echo git has to be installed && sudo apt install git -y
+  else
+    echo git"               "found # those  cure my ocd
+  fi
+
   which python3 >/dev/null
   if [ $? -gt 0 ]; then
     echo python3 has to be installed && sudo apt install python3 -y
