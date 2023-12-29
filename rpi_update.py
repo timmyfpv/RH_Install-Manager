@@ -120,7 +120,7 @@ def end_update(config, server_configured_flag, server_installed_flag):
         print(f"""
                 {configure}
     
-                r - Reboot - STRONGLY recommended before using the timer
+                r - Reboot - recommended before using the timer
                 
                 s - Start RotorHazard server now {clearing_color}
                 
@@ -150,7 +150,7 @@ def end_update(config, server_configured_flag, server_installed_flag):
 def end_installation(config):
     while True:
         print(f"""
-                {Bcolors.GREEM}      
+                {Bcolors.GREEN}      
                 r - Reboot - {Bcolors.UNDERLINE}STRONGLY{Bcolors.ENDC} recommended 
 
                 c - Configure RotorHazard server now
@@ -308,9 +308,9 @@ def main_window(config):
         clear_the_screen()
         already_installed_prompt = """{bold}
 
-           Looks like you already have your system configured.{endc}{bold}
+           Looks like you already have your system configured.{endc}
 
-           If so, please perform installation without sys. config.
+           If so, please perform installation without sys. config.{endc}
 
 
 
@@ -408,10 +408,12 @@ def main_window(config):
                 selection = input()
                 if selection == 'i':
                     rhim_config.first_part_of_install = True
+                    write_rhim_sys_markers(rhim_config, config.user)
                     conf_allowed = False
                     installation(conf_allowed, config, "")
                 elif selection == 'igit':
                     rhim_config.first_part_of_install = True
+                    write_rhim_sys_markers(rhim_config, config.user)
                     conf_allowed = False
                     installation(conf_allowed, config, "git")
                 elif selection == 'c':
@@ -424,6 +426,7 @@ def main_window(config):
                             print("\ntoo big fingers :( wrong command. try again! :)")
                     if confirm == 'y' or confirm == 'yes':
                         rhim_config.first_part_of_install = True
+                        write_rhim_sys_markers(rhim_config, config.user)
                         conf_allowed = True
                         installation(conf_allowed, config, "")
                     elif confirm in ['n', 'no', 'abort', 'a']:
