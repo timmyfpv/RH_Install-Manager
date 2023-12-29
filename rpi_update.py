@@ -408,10 +408,12 @@ def main_window(config):
                 selection = input()
                 if selection == 'i':
                     rhim_config.first_part_of_install = False
+                    write_rhim_sys_markers(rhim_config, config.user)
                     conf_allowed = False
                     installation(conf_allowed, config, "")
                 elif selection == 'igit':
                     rhim_config.first_part_of_install = False
+                    write_rhim_sys_markers(rhim_config, config.user)
                     conf_allowed = False
                     installation(conf_allowed, config, "git")
                 elif selection == 'c':
