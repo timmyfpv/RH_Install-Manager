@@ -151,7 +151,7 @@ def end_installation(config):
     while True:
         print(f"""
                 {Bcolors.GREEN}      
-                r - Reboot - {Bcolors.UNDERLINE}STRONGLY{Bcolors.ENDC} recommended 
+                r - Reboot - {Bcolors.UNDERLINE}STRONGLY{Bcolors.ENDC} {Bcolors.GREEN}recommended {Bcolors.ENDC}
 
                 c - Configure RotorHazard server now
                                     
@@ -306,7 +306,7 @@ def update(config, git_flag):
 def main_window(config):
     def system_already_configured_prompt():
         clear_the_screen()
-        already_installed_prompt = """{bold}
+        already_configured_prompt = """{bold}
 
            Looks like you already have your system configured.{endc}
 
@@ -321,7 +321,7 @@ def main_window(config):
                a - Abort both {endc}
                """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
                           yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S)
-        print(already_installed_prompt)
+        print(already_configured_prompt)
 
     while True:
         rh_config_text, rh_config_flag = check_rotorhazard_config_status(config)
@@ -407,13 +407,11 @@ def main_window(config):
                 system_already_configured_prompt()
                 selection = input()
                 if selection == 'i':
-                    rhim_config.first_part_of_install = True
-                    write_rhim_sys_markers(rhim_config, config.user)
+                    rhim_config.first_part_of_install = False
                     conf_allowed = False
                     installation(conf_allowed, config, "")
                 elif selection == 'igit':
-                    rhim_config.first_part_of_install = True
-                    write_rhim_sys_markers(rhim_config, config.user)
+                    rhim_config.first_part_of_install = False
                     conf_allowed = False
                     installation(conf_allowed, config, "git")
                 elif selection == 'c':
@@ -425,7 +423,6 @@ def main_window(config):
                         else:
                             print("\ntoo big fingers :( wrong command. try again! :)")
                     if confirm == 'y' or confirm == 'yes':
-                        rhim_config.first_part_of_install = True
                         write_rhim_sys_markers(rhim_config, config.user)
                         conf_allowed = True
                         installation(conf_allowed, config, "")
