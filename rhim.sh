@@ -31,9 +31,9 @@ check_for_new_rhim() {
 check_for_python_venv_flag() {
 
   if test -f .python_venv_flag; then
-    printf "preparing python virtual environment\n\n"
+    printf "please wait - preparing python virtual environment\n\n"
     python -m venv ~/.venv
-    source /.venv/bin/activate
+    source ~/.venv/bin/activate
     rm .python_venv_flag >/dev/null 2>&1
   else
     printf "python virtual environment already prepared \n\n"
@@ -139,6 +139,12 @@ dependencies_check() {
     echo i2c-tools"         "found
   else
     echo i2c-tools has to be installed && sudo apt install i2c-tools -y
+  fi
+
+  if check_python_package 'wheel'; then
+    echo wheel"             "found
+  else
+    echo wheel has to be installed && pip3 install wheel
   fi
 
   if check_python_package 'requests'; then
