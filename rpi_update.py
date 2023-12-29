@@ -122,7 +122,7 @@ def end_update(config, server_configured_flag, server_installed_flag):
     
                 r - Reboot - STRONGLY recommended before using the timer
                 
-                s - Start RH server now {clearing_color}
+                s - Start RotorHazard server now {clearing_color}
                 
                 o - Clear old RotorHazard installations{Bcolors.YELLOW}
                 
@@ -152,10 +152,10 @@ def end_installation(config):
         print(f"""
       
             r - Reboot - {Bcolors.UNDERLINE}STRONGLY{Bcolors.ENDC} recommended 
-            {Bcolors.GREEN}
-            c - Configure RH server now {Bcolors.ENDC}
+
+            c - Configure RotorHazard server now
                                     
-            e - Exit now{Bcolors.ENDC}""")
+            e - Exit now""")
 
         selection = input()
         if selection == 'r':
@@ -191,24 +191,24 @@ def installation(conf_allowed, config, git_flag):
     first_part_completed = """
 
 
-                ######################################################
-                ##                                                  ##
-                ##{bold}{green} First part completed  {thumbs}{endc}##
-                ##                                                  ##
-                ######################################################
+            ######################################################
+            ##                                                  ##
+            ##{bold}{green} First part completed  {thumbs}{endc}##
+            ##                                                  ##
+            ######################################################
 
 
-            Please reboot the system now.
-                        """.format(thumbs="👍👍👍     ", bold=Bcolors.BOLD_S,
+            Please reboot now and connect to the timer again.
+                        """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S,
                                    endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     installation_completed = """
 
 
-                ######################################################
-                ##                                                  ##
-                ##{bold}{green}Installation completed {thumbs}{endc}##
-                ##                                                  ##
-                ######################################################
+            ######################################################
+            ##                                                  ##
+            ##{bold}{green}Installation completed {thumbs}{endc}##
+            ##                                                  ##
+            ######################################################
 
 
             Please reboot the system after installation.
@@ -235,7 +235,7 @@ def installation(conf_allowed, config, git_flag):
                     os.system("./scripts/sys_conf.sh ssh")
                     print("\n\nsimulation mode - SPI, I2C and UART won't be configured\n\n\n")
                     sleep(3)
-            rhim_config.sys_config_done, rhim_config.uart_support_added, rhim_config.first_part_of_install = True, True, True
+            rhim_config.uart_support_added, rhim_config.first_part_of_install = True, True
             # UART enabling added here so user won't have to reboot Pi again after doing it in Features Menu
             write_rhim_sys_markers(rhim_config, config.user)
             os.system(f"./scripts/install_rh_part_1.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
@@ -254,7 +254,7 @@ def installation(conf_allowed, config, git_flag):
             print(installation_completed)
             os.system("sudo chmod 777 -R ~/RotorHazard")
             end_installation(config.user)
-            rhim_config.second_part_of_install = True
+            rhim_config.second_part_of_install, rhim_config.sys_config_done = True, True
             write_rhim_sys_markers(rhim_config, config.user)
 
 
@@ -313,6 +313,7 @@ def main_window(config):
            If so, please perform installation without sys. config.
 
 
+
         {green}i - Force installation without sys. config. {endc}{bold}
 
                c - Force installation and system config. {yellow}
@@ -369,9 +370,9 @@ def main_window(config):
         else:
             configure = "c - Configure RotorHazard server"
         if not server_installed_flag:
-            install = f"{Bcolors.GREEN}i - Install software from scratch{Bcolors.ENDC}"
+            install = f"{Bcolors.GREEN}i - Install RotorHazard software{Bcolors.ENDC}"
         else:
-            install = "i - Install software from scratch"
+            install = "i - Install RotorHazard software"
         print("""
                     {install}
                     
@@ -403,9 +404,11 @@ def main_window(config):
                 system_already_configured_prompt()
                 selection = input()
                 if selection == 'i':
+                    rhim_config.first_part_of_install = True
                     conf_allowed = False
                     installation(conf_allowed, config, "")
                 elif selection == 'igit':
+                    rhim_config.first_part_of_install = True
                     conf_allowed = False
                     installation(conf_allowed, config, "git")
                 elif selection == 'c':
@@ -417,6 +420,7 @@ def main_window(config):
                         else:
                             print("\ntoo big fingers :( wrong command. try again! :)")
                     if confirm == 'y' or confirm == 'yes':
+                        rhim_config.first_part_of_install = True
                         conf_allowed = True
                         installation(conf_allowed, config, "")
                     elif confirm in ['n', 'no', 'abort', 'a']:
