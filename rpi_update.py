@@ -150,12 +150,12 @@ def end_update(config, server_configured_flag, server_installed_flag):
 def end_installation(config):
     while True:
         print(f"""
-      
-            r - Reboot - {Bcolors.UNDERLINE}STRONGLY{Bcolors.ENDC} recommended 
+                {Bcolors.GREEM}      
+                r - Reboot - {Bcolors.UNDERLINE}STRONGLY{Bcolors.ENDC} recommended 
 
-            c - Configure RotorHazard server now
+                c - Configure RotorHazard server now
                                     
-            e - Exit now""")
+                e - Exit now""")
 
         selection = input()
         if selection == 'r':
@@ -171,9 +171,9 @@ def end_of_part_1():
     while True:
         print(f"""
             {Bcolors.GREEN}
-            r - Reboot - do it now {Bcolors.ENDC}
+               r - Reboot - do it now {Bcolors.ENDC}
 
-            e - Exit now""")
+               e - Exit now""")
 
         selection = input()
         if selection == 'r':
@@ -370,7 +370,10 @@ def main_window(config):
         else:
             configure = "c - Configure RotorHazard server"
         if not server_installed_flag:
-            install = f"{Bcolors.GREEN}i - Install RotorHazard software{Bcolors.ENDC}"
+            if rhim_config.first_part_of_install is False:
+                install = f"{Bcolors.GREEN}i - Install RotorHazard software{Bcolors.ENDC}"
+            else:
+                install = f"{Bcolors.GREEN}i - Continue RotorHazard software installation{Bcolors.ENDC}"
         else:
             install = "i - Install RotorHazard software"
         print("""
