@@ -212,7 +212,7 @@ def installation(conf_allowed, config, git_flag):
 
 
             Please reboot the system after installation.
-                        """.format(thumbs="👍👍👍     ", bold=Bcolors.BOLD_S,
+                        """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S,
                                    endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     rhim_config = load_rhim_sys_markers(config.user)
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
