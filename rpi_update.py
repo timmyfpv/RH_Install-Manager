@@ -65,7 +65,7 @@ def get_rotorhazard_server_version(config):
 
 
 def rh_update_check(config):
-    update_prompt = f"{Bcolors.RED}-> pending stable update{Bcolors.ENDC}"
+    update_prompt = f"{Bcolors.RED}! PENDING STABLE UPDATE !{Bcolors.ENDC}"
     # above is showed only when stable version is newer than current
     raw_installed_rh_server = get_rotorhazard_server_version(config)[1]  # 3.0.0-dev2
     installed_rh_server = raw_installed_rh_server.split("-")[0]  # 3.0.0
@@ -87,7 +87,7 @@ def check_rotorhazard_config_status(config):
         config_soft = f"{Bcolors.GREEN}configured{Bcolors.ENDC} 👍"
         config_flag = True
     else:
-        config_soft = f"{Bcolors.YELLOW}{Bcolors.UNDERLINE}not configured{Bcolors.ENDC} 👎👎👎"
+        config_soft = f"{Bcolors.YELLOW}({Bcolors.UNDERLINE}not configured{Bcolors.ENDC} 👎)"
         config_flag = False
     return config_soft, config_flag
 
@@ -273,7 +273,7 @@ def update(config, git_flag):
 
     Looks like you don't have RotorHazard server software installed for now. 
 
-    If so please install your server software first.{Bcolors.ENDC}{Bcolors.GREEN} 
+    Please install your server software first.{Bcolors.ENDC}{Bcolors.GREEN} 
           
         
         i - Install the software - recommended{Bcolors.ENDC}
@@ -310,15 +310,17 @@ def main_window(config):
 
            Looks like you already have your system configured.
 
-           If so, please perform installation without sys. config.{endc}
+           Consider performing installation without system config
+           or update existing installation from the previous menu.{endc} 
 
 
 
-        {green}i - Force installation without sys. config. {endc}
 
-               c - Force installation and system config. {yellow}
+        {green}i - Force installation without sys. config {endc}
 
-               a - Abort both {endc}
+               c - Force installation and system config {yellow}
+
+               a - Abort both, go to the previous menu {endc}
                """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
                           yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S)
         print(already_configured_prompt)
@@ -346,17 +348,15 @@ def main_window(config):
          
         Please update this (Manager) software, before updating RotorHazard.
         
-        Server version currently installed: {server} {bold}{update_prompt} {bold}
+        Server version currently installed: {server} {bold}{bold}{config_soft}
         
+        {update_prompt}
         
         You can change below configuration in Configuration Wizard in Main Menu:
-        
-        Source of the software is set to version: {underline}{blue}{server_version}{endc}{bold}
-        
-        Username that you entered: {underline}{blue}{user}{endc}{bold}
-        
-        
-        RotorHazard configuration state: {config_soft}
+        {bold}
+        Source of the software is set to version: {endc}{underline}{blue}{server_version}{endc}
+        {bold}
+        Username that you entered:{endc} {underline}{blue}{user}
             
             """.format(bold=Bcolors.BOLD, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, blue=Bcolors.BLUE,
                        yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE,
@@ -422,6 +422,8 @@ def main_window(config):
                             print("\ntoo big fingers :( wrong command. try again! :)")
                     if confirm == 'y' or confirm == 'yes':
                         conf_allowed = True
+                        rhim_config.uart_support_added, rhim_config.first_part_of_install = False, False
+                        write_rhim_sys_markers(rhim_config, config.user)
                         installation(conf_allowed, config, "")
                     elif confirm in ['n', 'no', 'abort', 'a']:
                         pass
