@@ -16,3 +16,5 @@ test.py
 .new_rhim_version_check_file.txt
 .new_rhim_version_diff_file
 ap-config.json
+.python_venv_flag
+.first_time_here
