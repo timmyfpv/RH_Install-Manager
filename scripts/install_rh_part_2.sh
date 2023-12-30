@@ -24,7 +24,7 @@ else
   rm ~/wget* >/dev/null 2>&1
   mv /home/"${1}"/RotorHazard-* /home/"${1}"/RotorHazard || exit 1
 fi
-printf "\n\n   Installing additional software may take few minutes \n\n\n"
+printf "\n\n   Installing additional software - may take few minutes \n\n\n"
 cd /home/"${1}"/RotorHazard/src/server || echo "$red missing RotorHazard directory"
 pip3 install --upgrade pip
 pip3 install -r requirements.txt

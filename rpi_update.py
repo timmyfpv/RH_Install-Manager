@@ -308,7 +308,7 @@ def main_window(config):
         clear_the_screen()
         already_configured_prompt = """{bold}
 
-           Looks like you already have your system configured.
+           Looks like your system is already configured.
 
            Consider performing installation without system config
            or update existing installation from the previous menu.{endc} 
@@ -316,11 +316,11 @@ def main_window(config):
 
 
 
-        {green}i - Force installation without sys. config {endc}
+        {green}i - Force installation without system config {endc}
 
                c - Force installation and system config {yellow}
 
-               a - Abort both, go to the previous menu {endc}
+               a - Abort both, go to the MainMenu {endc}
                """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
                           yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S)
         print(already_configured_prompt)
@@ -356,7 +356,7 @@ def main_window(config):
         {bold}
         Source of the software is set to version: {endc}{underline}{blue}{server_version}{endc}
         {bold}
-        Username that you entered:{endc} {underline}{blue}{user}
+        Username that you entered:{endc} {underline}{blue}{user}{endc}
             
             """.format(bold=Bcolors.BOLD, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, blue=Bcolors.BLUE,
                        yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE,
