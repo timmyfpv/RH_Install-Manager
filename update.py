@@ -497,7 +497,7 @@ def main_menu(config):
     while True:
         clear_the_screen()
         logo_top(config.debug_mode)
-        rh_update_prompt = rh_update_check(config)
+        rh_update_prompt = rh_update_check(config)[1]
         if not config_check():
             conf_color = Bcolors.GREEN
             conf_arrow = "  <- go here first"

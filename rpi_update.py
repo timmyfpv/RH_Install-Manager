@@ -263,30 +263,27 @@ def update(config, git_flag):
         clear_the_screen()
         confirm_stable_update_screen = """{bold}
 
-                   Looks like there is the stable update available.
+               Looks like there is the stable update available.{endc}
 
-                   For now, you have selected {previous_rh_source}{endc} as an update source
-                   Would you like to switch to the stable version and update?  
+               For now, you have selected {underline}{previous_rh_source}{endc} as an update source
+               Would you like to switch to the stable version and update?  
 
 
 
-                {green}y - Yes, switch to stable update and proceed {endc}
+            {green}Y - Yes, switch to stable update and proceed {endc}
 
-                       n - No, just update with existing update source
+                   n - No, just update with existing update source
 
-                       a - Abort both, go to the Main Menu {endc}
+                   a - Abort both, go to the Main Menu {endc}
                        """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
                                   yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S, previous_rh_source=check_preferred_rh_version(config)[0])
         print(confirm_stable_update_screen)
         selection = input()
-        if selection == 'y':
-            clear_the_screen()
+        if selection in ['y', 'Y', '']:
             return True
         elif selection == 'n':
-            clear_the_screen()
             return False
         elif selection == 'a':
-            clear_the_screen()
             return
 
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
@@ -308,7 +305,7 @@ def update(config, git_flag):
         
         i - Install the software - recommended{Bcolors.ENDC}
 
-        a - Abort {Bcolors.ENDC}
+        a - Abort 
 
 """)
             selection = input()
@@ -353,9 +350,9 @@ def main_window(config):
 
         {green}i - Force installation without system config {endc}
 
-               c - Force installation and system config {yellow}
+               c - Force installation and system config 
 
-               a - Abort both, go to the Main Menu {endc}
+               a - Abort both, go to the Main Menu
                """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
                           yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S)
         print(already_configured_prompt)
@@ -404,6 +401,10 @@ def main_window(config):
             configure = "c - Reconfigure RotorHazard server"
         else:
             configure = "c - Configure RotorHazard server"
+        if rh_update_check(config)[0] is True:
+            update_text = f"{Bcolors.GREEN}u - Update existing installation{Bcolors.ENDC}"
+        else:
+            update_text = "u - Update existing installation"
         if not rhim_config.second_part_of_install:
             if rhim_config.first_part_of_install is False:
                 install = f"{Bcolors.GREEN}i - Install RotorHazard software{Bcolors.ENDC}"
@@ -416,13 +417,13 @@ def main_window(config):
                     
                     {configure}
                     
-                    u - Update existing installation 
+                    {update} 
                     
                     s - Start RotorHazard server now{yellow}
                         
                     e - Exit to Main Menu{endc}
                     
-                """.format(yellow=Bcolors.YELLOW, endc=Bcolors.ENDC, configure=configure, install=install))
+                """.format(yellow=Bcolors.YELLOW, endc=Bcolors.ENDC, configure=configure, install=install, update=update_text))
         selection = input()
         if selection == 'c':
             if server_installed_flag:
