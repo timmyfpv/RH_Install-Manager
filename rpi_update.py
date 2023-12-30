@@ -58,10 +58,10 @@ def get_rotorhazard_server_version(config):
                     current_server_version_name = line.strip().split('=')[1].strip()
                     current_server_version_name = current_server_version_name.split('#')[0].replace('"', '').strip()
                     server_installed_flag = True
-                    non_stable_flag = True if 'dev' or 'beta' in line else ''
+                    non_stable_flag = True if 'dev' in line or 'beta' in line else False
                     break
     else:
-        current_server_version_name = '0'  # string so string operations like .split can be perfomed
+        current_server_version_name = '0'  # string so string operations like .split can be performed
         server_installed_flag = False
     return server_installed_flag, current_server_version_name, non_stable_flag
 
@@ -74,7 +74,8 @@ def rh_update_check(config):
     installed_rh_server_number = int(installed_rh_server.replace(".", ""))  # 300
     server_installed_flag = get_rotorhazard_server_version(config)[0]  # check if RH is installed
     non_stable_source = get_rotorhazard_server_version(config)[2]
-    newest_possible_rh_version = int(check_preferred_rh_version(config)[1])  # derived from Install-Manager version name 232.25.3h -> 232
+    newest_possible_rh_version = int(
+        check_preferred_rh_version(config)[1])  # derived from Install-Manager version name 232.25.3h -> 232
     if installed_rh_server_number < newest_possible_rh_version and server_installed_flag:
         rh_update_available_flag = True
     else:
@@ -243,7 +244,8 @@ def installation(conf_allowed, config, git_flag):
             rhim_config.uart_support_added, rhim_config.first_part_of_install = True, True
             # UART enabling added here so user won't have to reboot Pi again after doing it in Features Menu
             write_rhim_sys_markers(rhim_config, config.user)
-            os.system(f"./scripts/install_rh_part_1.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
+            os.system(
+                f"./scripts/install_rh_part_1.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
             input("\n\n\npress Enter to continue")
             clear_the_screen()
             print(first_part_completed)
@@ -252,8 +254,10 @@ def installation(conf_allowed, config, git_flag):
             print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(2)
             clear_the_screen()
-            print(f"\n\n\t{Bcolors.BOLD}Second part of installation has been started - please wait...{Bcolors.ENDC}\n\n")
-            os.system(f"./scripts/install_rh_part_2.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
+            print(
+                f"\n\n\t{Bcolors.BOLD}Second part of installation has been started - please wait...{Bcolors.ENDC}\n\n")
+            os.system(
+                f"./scripts/install_rh_part_2.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
             input("\n\n\npress Enter to continue")
             clear_the_screen()
             print(installation_completed)
@@ -305,9 +309,10 @@ def update(config, git_flag):
                 clear_the_screen()
                 confirm_stable_update_screen = """{bold}
     
-                Looks like there is the stable update available.{endc}
+                Looks like there is the stable update available, 
+                newer than currently installed version.{endc}
     
-                For now, you have selected {underline}{previous_rh_source}{endc} as an update source
+                For now, you have selected {yellow}{underline}{previous_rh_source}{endc} as an update source.
                 Would you like to switch to the stable version for this update?  
     
     
@@ -429,7 +434,8 @@ def main_window(config):
                         
                     e - Exit to Main Menu{endc}
                     
-                """.format(yellow=Bcolors.YELLOW, endc=Bcolors.ENDC, configure=configure, install=install, update=update_text))
+                """.format(yellow=Bcolors.YELLOW, endc=Bcolors.ENDC, configure=configure, install=install,
+                           update=update_text))
         selection = input()
         if selection == 'c':
             if server_installed_flag:
