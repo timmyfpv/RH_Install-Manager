@@ -38,7 +38,7 @@ def check_preferred_rh_version(config):
     else:  # in case of 'custom' version selected in wizard
         server_version = config.rh_version
 
-    return server_version, no_dots_preferred_rh_version
+    return server_version, no_dots_preferred_rh_version, stable_release_name
 
 
 # TODO I would like to move th tags out of being hard-coded here.
@@ -65,7 +65,7 @@ def get_rotorhazard_server_version(config):
 
 
 def rh_update_check(config):
-    update_prompt = f"{Bcolors.RED}! PENDING STABLE UPDATE !{Bcolors.ENDC}"
+    stable_update_prompt = f"{Bcolors.RED}! PENDING STABLE UPDATE !{Bcolors.ENDC}"
     # above is showed only when stable version is newer than current
     raw_installed_rh_server = get_rotorhazard_server_version(config)[1]  # 3.0.0-dev2
     installed_rh_server = raw_installed_rh_server.split("-")[0]  # 3.0.0
@@ -77,9 +77,9 @@ def rh_update_check(config):
     else:
         rh_update_available_flag = False
     if rh_update_available_flag:
-        return update_prompt
+        return True, stable_update_prompt
     else:
-        return ''
+        return False, ''
 
 
 def check_rotorhazard_config_status(config):
@@ -259,6 +259,36 @@ def installation(conf_allowed, config, git_flag):
 
 
 def update(config, git_flag):
+    def new_stable_update_screen():
+        clear_the_screen()
+        confirm_stable_update_screen = """{bold}
+
+                   Looks like there is the stable update available.
+
+                   For now, you have selected {previous_rh_source}{endc} as an update source
+                   Would you like to switch to the stable version and update?  
+
+
+
+                {green}y - Yes, switch to stable update and proceed {endc}
+
+                       n - No, just update with existing update source
+
+                       a - Abort both, go to the Main Menu {endc}
+                       """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
+                                  yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S, previous_rh_source=check_preferred_rh_version(config)[0])
+        print(confirm_stable_update_screen)
+        selection = input()
+        if selection == 'y':
+            clear_the_screen()
+            return True
+        elif selection == 'n':
+            clear_the_screen()
+            return False
+        elif selection == 'a':
+            clear_the_screen()
+            return
+
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
     internet_flag = internet_check()
     if not internet_flag:
@@ -294,9 +324,14 @@ def update(config, git_flag):
             else:
                 return
         else:
+            new_stable_update_screen() if rh_update_check(config)[0] is True else ''
+            if new_stable_update_screen() is False:
+                preffered_rh_version = check_preferred_rh_version(config)[0]
+            else:
+                preffered_rh_version = check_preferred_rh_version(config)[2]
             clear_the_screen()
             print(f"\n\n\t{Bcolors.BOLD}Updating existing installation - please wait...{Bcolors.ENDC}\n\n")
-            os.system(f"./scripts/update_rh.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
+            os.system(f"./scripts/update_rh.sh {config.user} {preffered_rh_version} {git_flag}")
             config_flag, config_soft = check_rotorhazard_config_status(config)
             server_installed_flag, server_version_name = get_rotorhazard_server_version(config)
             os.system("sudo chmod -R 777 ~/RotorHazard")
@@ -333,7 +368,7 @@ def main_window(config):
             colored_server_version_name = f"{Bcolors.GREEN}{server_version_name}{Bcolors.ENDC}"
         else:
             colored_server_version_name = f'{Bcolors.YELLOW}{Bcolors.UNDERLINE}not found{Bcolors.ENDC}'
-        update_prompt = rh_update_check(config)
+        update_prompt = rh_update_check(config)[1]
         rhim_config = load_rhim_sys_markers(config.user)
         sys_configured_flag = rhim_config.sys_config_done
         configured_server_target = check_preferred_rh_version(config)[0]
