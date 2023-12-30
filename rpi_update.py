@@ -369,7 +369,7 @@ def main_window(config):
             configure = "c - Reconfigure RotorHazard server"
         else:
             configure = "c - Configure RotorHazard server"
-        if not server_installed_flag:
+        if not rhim_config.second_part_of_install:
             if rhim_config.first_part_of_install is False:
                 install = f"{Bcolors.GREEN}i - Install RotorHazard software{Bcolors.ENDC}"
             else:
@@ -422,7 +422,7 @@ def main_window(config):
                             print("\ntoo big fingers :( wrong command. try again! :)")
                     if confirm == 'y' or confirm == 'yes':
                         conf_allowed = True
-                        rhim_config.uart_support_added, rhim_config.first_part_of_install, rhim_config.sys_config_done = False, False, False
+                        rhim_config.second_part_of_install, rhim_config.first_part_of_install, rhim_config.sys_config_done = False, False, False
                         write_rhim_sys_markers(rhim_config, config.user)
                         installation(conf_allowed, config, "")
                     elif confirm in ['n', 'no', 'abort', 'a']:
