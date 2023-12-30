@@ -6,6 +6,15 @@ red="\033[91m"
 green="\033[92m"
 endc="\033[0m"
 
+if [ -d "/home/${1}/RotorHazard" ]; then
+  # Control will enter here if $DIRECTORY exists.
+  mv "/home/${1}/RotorHazard" "/home/${1}/RotorHazard_$(date +%Y%m%d%H%M)" || exit 1
+fi
+if [ -d "/home/${1}/RotorHazard-${2}" ]; then
+  # Control will enter here if $DIRECTORY exists.
+  mv "/home/${1}/RotorHazard-${2}" "/home/${1}/RotorHazard_${2}_$(date +%Y%m%d%H%M)" || exit 1
+fi
+
 cd /home/"${1}" || exit
 if [ "$3" == "git" ]; then
   git clone -c advice.detachedHead=false -b "${2}" https://github.com/RotorHazard/RotorHazard.git

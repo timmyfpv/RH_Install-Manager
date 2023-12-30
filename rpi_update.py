@@ -308,13 +308,13 @@ def main_window(config):
         clear_the_screen()
         already_configured_prompt = """{bold}
 
-           Looks like you already have your system configured.{endc}
+           Looks like you already have your system configured.
 
            If so, please perform installation without sys. config.{endc}
 
 
 
-        {green}i - Force installation without sys. config. {endc}{bold}
+        {green}i - Force installation without sys. config. {endc}
 
                c - Force installation and system config. {yellow}
 
@@ -407,13 +407,9 @@ def main_window(config):
                 system_already_configured_prompt()
                 selection = input()
                 if selection == 'i':
-                    rhim_config.first_part_of_install = False
-                    write_rhim_sys_markers(rhim_config, config.user)
                     conf_allowed = False
                     installation(conf_allowed, config, "")
                 elif selection == 'igit':
-                    rhim_config.first_part_of_install = False
-                    write_rhim_sys_markers(rhim_config, config.user)
                     conf_allowed = False
                     installation(conf_allowed, config, "git")
                 elif selection == 'c':
@@ -425,7 +421,6 @@ def main_window(config):
                         else:
                             print("\ntoo big fingers :( wrong command. try again! :)")
                     if confirm == 'y' or confirm == 'yes':
-                        write_rhim_sys_markers(rhim_config, config.user)
                         conf_allowed = True
                         installation(conf_allowed, config, "")
                     elif confirm in ['n', 'no', 'abort', 'a']:
