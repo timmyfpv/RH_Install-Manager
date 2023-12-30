@@ -125,13 +125,13 @@ def end_update(config, server_configured_flag, server_installed_flag):
             old_installations_were_found = True
         print(f"""
                 {configure}
-    
+
                 r - Reboot - recommended before using the timer
-                
+
                 s - Start RotorHazard server now {clearing_color}
-                
+
                 o - Clear old RotorHazard installations{Bcolors.YELLOW}
-                
+
                 e - Exit now{Bcolors.ENDC}""")
         selection = input()
         if selection == 'r':
@@ -160,7 +160,7 @@ def end_installation(config):
                 r - Reboot - {Bcolors.UNDERLINE}STRONGLY{Bcolors.ENDC} {Bcolors.GREEN}recommended {Bcolors.ENDC}
 
                 c - Configure RotorHazard server now
-                                    
+
                 e - Exit now""")
 
         selection = input()
@@ -283,8 +283,8 @@ def update(config, git_flag):
     Looks like you don't have RotorHazard server software installed for now. 
 
     Please install your server software first.{Bcolors.ENDC}{Bcolors.GREEN} 
-          
-        
+
+
         i - Install the software - recommended{Bcolors.ENDC}
 
         a - Abort 
@@ -308,19 +308,19 @@ def update(config, git_flag):
             if rh_update_check(config)[0] is True and config.rh_version != 'stable':
                 clear_the_screen()
                 confirm_stable_update_screen = """{bold}
-    
+
                 Looks like there is the stable update available, 
                 newer than currently installed version.{endc}
-    
+
                 For now, you have selected {yellow}{underline}{previous_rh_source}{endc} as an update source.
                 Would you like to switch to the stable version for this update?  
-    
-    
-    
+
+
+
             {green}Y - Yes, switch to stable update and proceed {endc}
-    
+
                    n - No, just update with existing update source
-    
+
                    a - Abort both, go to the previous menu {endc}
                                """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
                                           yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S,
@@ -388,19 +388,19 @@ def main_window(config):
         You can automatically install and update RotorHazard timing software. 
         Additional dependencies and libraries also will be installed or updated.
         Current database, configs and custom bitmaps will stay on their place.
-         
+
         Please update this (Manager) software, before updating RotorHazard.
-        
+
         Server version currently installed: {server} {bold}{bold}{config_soft}
-        
+
         {update_prompt}
         {bold}
         You can change below configuration in Configuration Wizard in Main Menu:
-        
+
         Source of the software is set to version: {endc}{underline}{blue}{server_version}{endc}
         {bold}
         Username that you entered:{endc} {underline}{blue}{user}{endc}
-            
+
             """.format(bold=Bcolors.BOLD, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, blue=Bcolors.BLUE,
                        yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE,
                        server_version=configured_server_target, user=config.user, config_soft=rh_config_text,
@@ -425,15 +425,15 @@ def main_window(config):
             install = "i - Install RotorHazard software"
         print("""
                     {install}
-                    
+
                     {configure}
-                    
+
                     {update} 
-                    
+
                     s - Start RotorHazard server now{yellow}
-                        
+
                     e - Exit to Main Menu{endc}
-                    
+
                 """.format(yellow=Bcolors.YELLOW, endc=Bcolors.ENDC, configure=configure, install=install,
                            update=update_text))
         selection = input()
