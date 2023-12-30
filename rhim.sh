@@ -31,7 +31,7 @@ check_for_new_rhim() {
 check_for_python_venv_flag() {
 
 if [ -f .python_venv_flag ] && [ ! -d ~/.venv ]; then
-    printf "preparing Python venv\n\n"
+    printf "preparing python venv\n\n"
     python -m venv ~/.venv || (printf "\nusing python3 command\n" && python3 -m venv ~/.venv)
     source ~/.venv/bin/activate # this line doesn't affect anything but here as a reference
     rm .python_venv_flag >/dev/null 2>&1
@@ -49,10 +49,10 @@ open_software_alias_check() {
 alias rhim="cd ~/RH_Install-Manager && sh ./rhim.sh"                        # opens RH_Install-Manager software' >>../.bashrc
   fi
 
-  if ! grep -q "activate && python server.py" ../.bashrc; then
+  if ! grep -q "~/.venv/bin/activate" ../.bashrc; then
     echo '
 #[added during RH_Install-Manager setup]
-alias rh="cd ~/RotorHazard/src/server && source venv/bin/activate && python server.py"   # starts RH-server' >>../.bashrc
+alias rh="cd ~/RotorHazard/src/server && source ~/.venv/bin/activate && python server.py"   # starts RH-server' >>../.bashrc
   fi
 }
 

@@ -332,7 +332,7 @@ def main_window(config):
         if server_installed_flag:
             colored_server_version_name = f"{Bcolors.GREEN}{server_version_name}{Bcolors.ENDC}"
         else:
-            colored_server_version_name = f'{Bcolors.YELLOW}{Bcolors.UNDERLINE}installation not found{Bcolors.ENDC}'
+            colored_server_version_name = f'{Bcolors.YELLOW}{Bcolors.UNDERLINE}not found{Bcolors.ENDC}'
         update_prompt = rh_update_check(config)
         rhim_config = load_rhim_sys_markers(config.user)
         sys_configured_flag = rhim_config.sys_config_done
