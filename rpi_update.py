@@ -320,7 +320,7 @@ def main_window(config):
 
                c - Force installation and system config {yellow}
 
-               a - Abort both, go to the MainMenu {endc}
+               a - Abort both, go to the Main Menu {endc}
                """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
                           yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S)
         print(already_configured_prompt)
@@ -351,9 +351,9 @@ def main_window(config):
         Server version currently installed: {server} {bold}{bold}{config_soft}
         
         {update_prompt}
-        
-        You can change below configuration in Configuration Wizard in Main Menu:
         {bold}
+        You can change below configuration in Configuration Wizard in Main Menu:
+        
         Source of the software is set to version: {endc}{underline}{blue}{server_version}{endc}
         {bold}
         Username that you entered:{endc} {underline}{blue}{user}{endc}
@@ -422,7 +422,7 @@ def main_window(config):
                             print("\ntoo big fingers :( wrong command. try again! :)")
                     if confirm == 'y' or confirm == 'yes':
                         conf_allowed = True
-                        rhim_config.uart_support_added, rhim_config.first_part_of_install = False, False
+                        rhim_config.uart_support_added, rhim_config.first_part_of_install, rhim_config.sys_config_done = False, False, False
                         write_rhim_sys_markers(rhim_config, config.user)
                         installation(conf_allowed, config, "")
                     elif confirm in ['n', 'no', 'abort', 'a']:

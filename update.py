@@ -195,7 +195,7 @@ def welcome_screen(config):
     If you found any bug - please report it via GitHub or Facebook. {endc}{bold}        
 
 
-    Wish you good experience. Enjoy!
+    Wish you a good experience. Enjoy!
 
 
                                                             Pawel F.                                                
@@ -210,7 +210,6 @@ def welcome_screen(config):
         if selection == 'n':
             os.system("rm ./.first_time_here")
             first_time_flag = False  # done that way so after configuration user won't be redirected back here
-#            show_about(config) # enter wizard manually is better due to non stick conig
         if selection == 'f':  # helpful when troubleshooting, going further without changing the folder contents
             first_time_flag = False
             show_about(config)
