@@ -38,7 +38,7 @@ def check_preferred_rh_version(config):
     else:  # in case of 'custom' version selected in wizard
         server_version = config.rh_version
 
-    return server_version, no_dots_preferred_rh_version
+    return server_version, no_dots_preferred_rh_version, stable_release_name
 
 
 # TODO I would like to move th tags out of being hard-coded here.
@@ -49,37 +49,43 @@ def check_preferred_rh_version(config):
 def get_rotorhazard_server_version(config):
     server_py = Path(f"/home/{config.user}/RotorHazard/src/server/server.py")
     server_installed_flag = False
+    non_stable_flag = False
     if server_py.exists():
         with open(server_py, 'r') as open_file:
             for line in open_file:
                 if line.startswith('RELEASE_VERSION'):
                     # RELEASE_VERSION = "2.2.0 (dev 1)" # Public release version code
-                    server_version_name = line.strip().split('=')[1].strip()
-                    server_version_name = server_version_name.split('#')[0].replace('"', '').strip()
+                    current_server_version_name = line.strip().split('=')[1].strip()
+                    current_server_version_name = current_server_version_name.split('#')[0].replace('"', '').strip()
                     server_installed_flag = True
+                    non_stable_flag = True if 'dev' in line or 'beta' in line else False
                     break
     else:
-        server_version_name = '0'  # string so string operations like .split can be perfomed
+        current_server_version_name = '0'  # string so string operations like .split can be performed
         server_installed_flag = False
-    return server_installed_flag, server_version_name
+    return server_installed_flag, current_server_version_name, non_stable_flag
 
 
 def rh_update_check(config):
-    update_prompt = f"{Bcolors.RED}! PENDING STABLE UPDATE !{Bcolors.ENDC}"
+    stable_update_prompt = f"{Bcolors.RED}! PENDING STABLE UPDATE !{Bcolors.ENDC}"
     # above is showed only when stable version is newer than current
     raw_installed_rh_server = get_rotorhazard_server_version(config)[1]  # 3.0.0-dev2
     installed_rh_server = raw_installed_rh_server.split("-")[0]  # 3.0.0
     installed_rh_server_number = int(installed_rh_server.replace(".", ""))  # 300
     server_installed_flag = get_rotorhazard_server_version(config)[0]  # check if RH is installed
-    newest_possible_rh_version = int(check_preferred_rh_version(config)[1])  # derived from Install-Manager version name 232.25.3h -> 232
-    if installed_rh_server_number < newest_possible_rh_version and server_installed_flag is True:
+    non_stable_source = get_rotorhazard_server_version(config)[2]
+    newest_possible_rh_version = int(
+        check_preferred_rh_version(config)[1])  # derived from Install-Manager version name 232.25.3h -> 232
+    if installed_rh_server_number < newest_possible_rh_version and server_installed_flag:
         rh_update_available_flag = True
     else:
         rh_update_available_flag = False
+    if installed_rh_server_number == newest_possible_rh_version and server_installed_flag and non_stable_source:
+        rh_update_available_flag = True
     if rh_update_available_flag:
-        return update_prompt
+        return True, stable_update_prompt
     else:
-        return ''
+        return False, ''
 
 
 def check_rotorhazard_config_status(config):
@@ -238,7 +244,8 @@ def installation(conf_allowed, config, git_flag):
             rhim_config.uart_support_added, rhim_config.first_part_of_install = True, True
             # UART enabling added here so user won't have to reboot Pi again after doing it in Features Menu
             write_rhim_sys_markers(rhim_config, config.user)
-            os.system(f"./scripts/install_rh_part_1.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
+            os.system(
+                f"./scripts/install_rh_part_1.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
             input("\n\n\npress Enter to continue")
             clear_the_screen()
             print(first_part_completed)
@@ -247,8 +254,10 @@ def installation(conf_allowed, config, git_flag):
             print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(2)
             clear_the_screen()
-            print(f"\n\n\t{Bcolors.BOLD}Second part of installation has been started - please wait...{Bcolors.ENDC}\n\n")
-            os.system(f"./scripts/install_rh_part_2.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
+            print(
+                f"\n\n\t{Bcolors.BOLD}Second part of installation has been started - please wait...{Bcolors.ENDC}\n\n")
+            os.system(
+                f"./scripts/install_rh_part_2.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
             input("\n\n\npress Enter to continue")
             clear_the_screen()
             print(installation_completed)
@@ -278,7 +287,7 @@ def update(config, git_flag):
         
         i - Install the software - recommended{Bcolors.ENDC}
 
-        a - Abort {Bcolors.ENDC}
+        a - Abort 
 
 """)
             selection = input()
@@ -294,11 +303,45 @@ def update(config, git_flag):
             else:
                 return
         else:
+            change_update_to_stable = False
+            preferred_rh_version = check_preferred_rh_version(config)[0]
+            if rh_update_check(config)[0] is True and config.rh_version != 'stable':
+                clear_the_screen()
+                confirm_stable_update_screen = """{bold}
+    
+                Looks like there is the stable update available, 
+                newer than currently installed version.{endc}
+    
+                For now, you have selected {yellow}{underline}{previous_rh_source}{endc} as an update source.
+                Would you like to switch to the stable version for this update?  
+    
+    
+    
+            {green}Y - Yes, switch to stable update and proceed {endc}
+    
+                   n - No, just update with existing update source
+    
+                   a - Abort both, go to the previous menu {endc}
+                               """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
+                                          yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S,
+                                          previous_rh_source=check_preferred_rh_version(config)[0])
+                print(confirm_stable_update_screen)
+                selection = input()
+                if selection in ['y', 'Y', '']:
+                    change_update_to_stable = True
+                elif selection == 'n':
+                    change_update_to_stable = False
+                elif selection == 'a':
+                    return
+                if change_update_to_stable is False:
+                    preferred_rh_version = check_preferred_rh_version(config)[0]
+                else:
+                    preferred_rh_version = check_preferred_rh_version(config)[2]
             clear_the_screen()
             print(f"\n\n\t{Bcolors.BOLD}Updating existing installation - please wait...{Bcolors.ENDC}\n\n")
-            os.system(f"./scripts/update_rh.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
+            os.system(f"./scripts/update_rh.sh {config.user} {preferred_rh_version} {git_flag}")
             config_flag, config_soft = check_rotorhazard_config_status(config)
-            server_installed_flag, server_version_name = get_rotorhazard_server_version(config)
+            server_installed_flag, server_version_name, _ = get_rotorhazard_server_version(config)
             os.system("sudo chmod -R 777 ~/RotorHazard")
             end_update(config, config_flag, server_installed_flag)
 
@@ -318,9 +361,9 @@ def main_window(config):
 
         {green}i - Force installation without system config {endc}
 
-               c - Force installation and system config {yellow}
+               c - Force installation and system config 
 
-               a - Abort both, go to the Main Menu {endc}
+               a - Abort both, go to the Main Menu
                """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
                           yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S)
         print(already_configured_prompt)
@@ -328,12 +371,12 @@ def main_window(config):
     while True:
         rh_config_text, rh_config_flag = check_rotorhazard_config_status(config)
         clear_the_screen()
-        server_installed_flag, server_version_name = get_rotorhazard_server_version(config)
+        server_installed_flag, server_version_name, _ = get_rotorhazard_server_version(config)
         if server_installed_flag:
             colored_server_version_name = f"{Bcolors.GREEN}{server_version_name}{Bcolors.ENDC}"
         else:
             colored_server_version_name = f'{Bcolors.YELLOW}{Bcolors.UNDERLINE}not found{Bcolors.ENDC}'
-        update_prompt = rh_update_check(config)
+        update_prompt = rh_update_check(config)[1]
         rhim_config = load_rhim_sys_markers(config.user)
         sys_configured_flag = rhim_config.sys_config_done
         configured_server_target = check_preferred_rh_version(config)[0]
@@ -369,6 +412,10 @@ def main_window(config):
             configure = "c - Reconfigure RotorHazard server"
         else:
             configure = "c - Configure RotorHazard server"
+        if rh_update_check(config)[0] is True:
+            update_text = f"{Bcolors.GREEN}{Bcolors.UNDERLINE}u - Update existing installation{Bcolors.ENDC}"
+        else:
+            update_text = "u - Update existing installation"
         if not rhim_config.second_part_of_install:
             if rhim_config.first_part_of_install is False:
                 install = f"{Bcolors.GREEN}i - Install RotorHazard software{Bcolors.ENDC}"
@@ -381,13 +428,14 @@ def main_window(config):
                     
                     {configure}
                     
-                    u - Update existing installation 
+                    {update} 
                     
                     s - Start RotorHazard server now{yellow}
                         
                     e - Exit to Main Menu{endc}
                     
-                """.format(yellow=Bcolors.YELLOW, endc=Bcolors.ENDC, configure=configure, install=install))
+                """.format(yellow=Bcolors.YELLOW, endc=Bcolors.ENDC, configure=configure, install=install,
+                           update=update_text))
         selection = input()
         if selection == 'c':
             if server_installed_flag:

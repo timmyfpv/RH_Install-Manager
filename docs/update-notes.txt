@@ -5,6 +5,9 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+401.35.6b
+1. Better stable update pending handling
+
 401.35.6a
 1. Newer venv implementation added
 2. Optional (hidden) git clone instead of wget methods
