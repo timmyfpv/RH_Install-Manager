@@ -8,7 +8,7 @@
 401.35.6a
 1. Newer venv implementation added
 2. Optional (hidden) git clone instead of wget methods
-3. Minor code and prompts tweaks
+3. Minor code, scripts and prompts tweaks
 
 401.35.5d5
 1. Hostnames shown in upper part of the screen

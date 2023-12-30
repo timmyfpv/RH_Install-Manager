@@ -6,15 +6,10 @@ red="\033[91m"
 green="\033[92m"
 endc="\033[0m"
 
-if [ -d "/home/${1}/RotorHazard" ]; then
-  # Control will enter here if $DIRECTORY exists.
-  mv "/home/${1}/RotorHazard" "/home/${1}/RotorHazard_$(date +%Y%m%d%H%M)" || exit 1
-fi
-if [ -d "/home/${1}/RotorHazard-${2}" ]; then
-  # Control will enter here if $DIRECTORY exists.
-  mv "/home/${1}/RotorHazard-${2}" "/home/${1}/RotorHazard_${2}_$(date +%Y%m%d%H%M)" || exit 1
-fi
+sudo /home/${1}/scripts/move_old_rh_dirs.sh
 
+sudo dpkg --configure -a
+sudo apt --fix-broken install
 cd /home/"${1}" || exit
 if [ "$3" == "git" ]; then
   git clone -c advice.detachedHead=false -b "${2}" https://github.com/RotorHazard/RotorHazard.git
@@ -33,17 +28,16 @@ sudo chmod 777 -R /home/"${1}"/RotorHazard/src/server
 cd /home/"${1}" || exit
 
 # added because of the broken Adafruit_GPIO compatibility on Raspbian 11 Bullseye
-(sudo sed -i 's/UNKNOWN          = 0/UNKNOWN          = 1/' /usr/local/lib/python3*/dist-packages/Adafruit_GPIO/Platform.py && \
-printf "\n $green Adafruit_GPIO compatibility is now OK $endc \n\n\n" && sleep 1) || \
-(printf "$endc \nAdafruit_GPIO compatibility file probably missing \n\n $endc" && sleep 2)
+(sudo sed -i 's/UNKNOWN          = 0/UNKNOWN          = 1/' /usr/local/lib/python3*/dist-packages/Adafruit_GPIO/Platform.py &&
+  printf "\n $green Adafruit_GPIO compatibility is now OK $endc \n\n\n" && sleep 1) ||
+  (printf "$endc \nAdafruit_GPIO compatibility file probably missing \n\n $endc" && sleep 2)
 
-java_installation()
-{
-if [[ $(~/RH_Install-Manager/scripts/pi_model_check.sh) == "pi_zero"  ]]; then
-  sudo apt-get install openjdk-8-jdk-headless -y
-else
-  sudo apt-get install openjdk-17-jdk-headless -y
-fi
+java_installation() {
+  if [[ $(~/RH_Install-Manager/scripts/pi_model_check.sh) == "pi_zero" ]]; then
+    sudo apt-get install openjdk-8-jdk-headless -y
+  else
+    sudo apt-get install openjdk-17-jdk-headless -y
+  fi
 }
 
 java_installation
@@ -58,7 +52,6 @@ sudo chmod 644 /lib/systemd/system/rotorhazard.service
 sudo systemctl daemon-reload
 sudo systemctl enable rotorhazard.service
 echo
-
 
 # port forwarding
 cd /home/"${1}"/RH_Install-Manager/scripts/ || exit
