@@ -6,7 +6,7 @@ red="\033[91m"
 green="\033[92m"
 endc="\033[0m"
 
-sudo /home/${1}/scripts/move_old_rh_dirs.sh
+sudo /home/${1}/RH_Install-Manager/scripts/move_old_rh_dirs.sh
 
 sudo dpkg --configure -a
 sudo apt --fix-broken install
