@@ -259,33 +259,6 @@ def installation(conf_allowed, config, git_flag):
 
 
 def update(config, git_flag):
-    def new_stable_update_screen():
-        clear_the_screen()
-        confirm_stable_update_screen = """{bold}
-
-               Looks like there is the stable update available.{endc}
-
-               For now, you have selected {underline}{previous_rh_source}{endc} as an update source
-               Would you like to switch to the stable version and update?  
-
-
-
-            {green}Y - Yes, switch to stable update and proceed {endc}
-
-                   n - No, just update with existing update source
-
-                   a - Abort both, go to the Main Menu {endc}
-                       """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
-                                  yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S, previous_rh_source=check_preferred_rh_version(config)[0])
-        print(confirm_stable_update_screen)
-        selection = input()
-        if selection in ['y', 'Y', '']:
-            return True
-        elif selection == 'n':
-            return False
-        elif selection == 'a':
-            return
-
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
     internet_flag = internet_check()
     if not internet_flag:
@@ -321,11 +294,39 @@ def update(config, git_flag):
             else:
                 return
         else:
-            new_stable_update_screen() if rh_update_check(config)[0] is True else ''
-            if new_stable_update_screen() is False:
-                preffered_rh_version = check_preferred_rh_version(config)[0]
-            else:
-                preffered_rh_version = check_preferred_rh_version(config)[2]
+            change_update_to_stable = False
+            preffered_rh_version = check_preferred_rh_version(config)[0]
+            if rh_update_check(config)[0] is True and config.rh_version != 'stable':
+                clear_the_screen()
+                confirm_stable_update_screen = """{bold}
+    
+                Looks like there is the stable update available.{endc}
+    
+                For now, you have selected {underline}{previous_rh_source}{endc} as an update source
+                Would you like to switch to the stable version for this update?  
+    
+    
+    
+            {green}Y - Yes, switch to stable update and proceed {endc}
+    
+                   n - No, just update with existing update source
+    
+                   a - Abort both, go to the previous menu {endc}
+                               """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
+                                          yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S,
+                                          previous_rh_source=check_preferred_rh_version(config)[0])
+                print(confirm_stable_update_screen)
+                selection = input()
+                if selection in ['y', 'Y', '']:
+                    change_update_to_stable = True
+                elif selection == 'n':
+                    change_update_to_stable = False
+                elif selection == 'a':
+                    return
+                if change_update_to_stable is False:
+                    preffered_rh_version = check_preferred_rh_version(config)[0]
+                else:
+                    preffered_rh_version = check_preferred_rh_version(config)[2]
             clear_the_screen()
             print(f"\n\n\t{Bcolors.BOLD}Updating existing installation - please wait...{Bcolors.ENDC}\n\n")
             os.system(f"./scripts/update_rh.sh {config.user} {preffered_rh_version} {git_flag}")
@@ -402,7 +403,7 @@ def main_window(config):
         else:
             configure = "c - Configure RotorHazard server"
         if rh_update_check(config)[0] is True:
-            update_text = f"{Bcolors.GREEN}u - Update existing installation{Bcolors.ENDC}"
+            update_text = f"{Bcolors.GREEN}{Bcolors.UNDERLINE}u - Update existing installation{Bcolors.ENDC}"
         else:
             update_text = "u - Update existing installation"
         if not rhim_config.second_part_of_install:
