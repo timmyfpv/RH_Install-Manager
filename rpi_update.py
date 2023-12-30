@@ -49,19 +49,21 @@ def check_preferred_rh_version(config):
 def get_rotorhazard_server_version(config):
     server_py = Path(f"/home/{config.user}/RotorHazard/src/server/server.py")
     server_installed_flag = False
+    non_stable_flag = False
     if server_py.exists():
         with open(server_py, 'r') as open_file:
             for line in open_file:
                 if line.startswith('RELEASE_VERSION'):
                     # RELEASE_VERSION = "2.2.0 (dev 1)" # Public release version code
-                    server_version_name = line.strip().split('=')[1].strip()
-                    server_version_name = server_version_name.split('#')[0].replace('"', '').strip()
+                    current_server_version_name = line.strip().split('=')[1].strip()
+                    current_server_version_name = current_server_version_name.split('#')[0].replace('"', '').strip()
                     server_installed_flag = True
+                    non_stable_flag = True if 'dev' or 'beta' in line else ''
                     break
     else:
-        server_version_name = '0'  # string so string operations like .split can be perfomed
+        current_server_version_name = '0'  # string so string operations like .split can be perfomed
         server_installed_flag = False
-    return server_installed_flag, server_version_name
+    return server_installed_flag, current_server_version_name, non_stable_flag
 
 
 def rh_update_check(config):
@@ -71,11 +73,14 @@ def rh_update_check(config):
     installed_rh_server = raw_installed_rh_server.split("-")[0]  # 3.0.0
     installed_rh_server_number = int(installed_rh_server.replace(".", ""))  # 300
     server_installed_flag = get_rotorhazard_server_version(config)[0]  # check if RH is installed
+    non_stable_source = get_rotorhazard_server_version(config)[2]
     newest_possible_rh_version = int(check_preferred_rh_version(config)[1])  # derived from Install-Manager version name 232.25.3h -> 232
-    if installed_rh_server_number < newest_possible_rh_version and server_installed_flag is True:
+    if installed_rh_server_number < newest_possible_rh_version and server_installed_flag:
         rh_update_available_flag = True
     else:
         rh_update_available_flag = False
+    if installed_rh_server_number == newest_possible_rh_version and server_installed_flag and non_stable_source:
+        rh_update_available_flag = True
     if rh_update_available_flag:
         return True, stable_update_prompt
     else:
@@ -295,7 +300,7 @@ def update(config, git_flag):
                 return
         else:
             change_update_to_stable = False
-            preffered_rh_version = check_preferred_rh_version(config)[0]
+            preferred_rh_version = check_preferred_rh_version(config)[0]
             if rh_update_check(config)[0] is True and config.rh_version != 'stable':
                 clear_the_screen()
                 confirm_stable_update_screen = """{bold}
@@ -324,14 +329,14 @@ def update(config, git_flag):
                 elif selection == 'a':
                     return
                 if change_update_to_stable is False:
-                    preffered_rh_version = check_preferred_rh_version(config)[0]
+                    preferred_rh_version = check_preferred_rh_version(config)[0]
                 else:
-                    preffered_rh_version = check_preferred_rh_version(config)[2]
+                    preferred_rh_version = check_preferred_rh_version(config)[2]
             clear_the_screen()
             print(f"\n\n\t{Bcolors.BOLD}Updating existing installation - please wait...{Bcolors.ENDC}\n\n")
-            os.system(f"./scripts/update_rh.sh {config.user} {preffered_rh_version} {git_flag}")
+            os.system(f"./scripts/update_rh.sh {config.user} {preferred_rh_version} {git_flag}")
             config_flag, config_soft = check_rotorhazard_config_status(config)
-            server_installed_flag, server_version_name = get_rotorhazard_server_version(config)
+            server_installed_flag, server_version_name, _ = get_rotorhazard_server_version(config)
             os.system("sudo chmod -R 777 ~/RotorHazard")
             end_update(config, config_flag, server_installed_flag)
 
@@ -361,7 +366,7 @@ def main_window(config):
     while True:
         rh_config_text, rh_config_flag = check_rotorhazard_config_status(config)
         clear_the_screen()
-        server_installed_flag, server_version_name = get_rotorhazard_server_version(config)
+        server_installed_flag, server_version_name, _ = get_rotorhazard_server_version(config)
         if server_installed_flag:
             colored_server_version_name = f"{Bcolors.GREEN}{server_version_name}{Bcolors.ENDC}"
         else:
