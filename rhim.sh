@@ -32,7 +32,7 @@ check_for_python_venv_flag() {
 
 if [ -f .python_venv_flag ] && [ ! -d ~/.venv ]; then
     printf "preparing python venv\n\n"
-    python -m venv ~/.venv || (printf "\nusing python3 command\n" && python3 -m venv ~/.venv)
+    python -m venv ~/.venv || (printf "\nswitched to python3 command\n" && python3 -m venv ~/.venv)
     source ~/.venv/bin/activate # this line doesn't affect anything but here as a reference
     rm .python_venv_flag >/dev/null 2>&1
 else
