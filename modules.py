@@ -1,15 +1,16 @@
+import json
+import os
+import platform
+import socket
+import subprocess
+import sys
+import time
 from pathlib import Path
 from shutil import copyfile
 from time import sleep
-import os
-import platform
-import sys
-import json
-import time
-import requests
 from types import SimpleNamespace as Namespace, SimpleNamespace
-import socket
-import subprocess
+
+import requests
 
 
 def get_host_info():

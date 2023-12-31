@@ -1,9 +1,10 @@
-from time import sleep
-import os
 import json
-from pathlib import Path
-from modules import clear_the_screen, logo_top
+import os
 import subprocess
+from pathlib import Path
+from time import sleep
+
+from modules import clear_the_screen, logo_top
 
 
 def show_ip():

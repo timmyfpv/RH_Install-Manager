@@ -1,7 +1,8 @@
-from time import sleep
 import os
-from nodes_flash_common import com_init, prepare_mate_node, reset_gpio_pin
+from time import sleep
+
 from modules import clear_the_screen, Bcolors, logo_top, load_config
+from nodes_flash_common import com_init, prepare_mate_node, reset_gpio_pin
 
 
 def nodes_addresses():

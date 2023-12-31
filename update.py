@@ -6,9 +6,9 @@ from conf_wizard_net import conf_wizard_net
 from conf_wizard_rhim import conf_rhim
 from modules import clear_the_screen, Bcolors, logo_top, triangle_image_show, rhim_asci_image_show, load_config, \
     load_rhim_sys_markers, write_rhim_sys_markers, get_rhim_version
-from rpi_update import main_window as rpi_update, rh_update_check
 from nodes_flash import flashing_menu
 from nodes_update_old import nodes_update as old_flash_gpio
+from rpi_update import main_window as rpi_update, rh_update_check
 
 
 def compatibility():  # adds compatibility and fixes with previous versions

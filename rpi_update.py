@@ -1,7 +1,8 @@
-import os
 import glob
+import os
 from pathlib import Path
 from time import sleep
+
 from conf_wizard_rh import conf_rh
 from modules import clear_the_screen, Bcolors, triangle_image_show, internet_check, load_rhim_sys_markers, \
     write_rhim_sys_markers, load_config, server_start
@@ -153,7 +154,7 @@ def end_update(config, server_configured_flag, server_installed_flag):
             return
 
 
-def end_installation(config):
+def end_installation():
     while True:
         print(f"""
                 {Bcolors.GREEN}      
@@ -233,7 +234,8 @@ def installation(conf_allowed, config, git_flag):
             print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(2)
             clear_the_screen()
-            print(f"\n\n\t{Bcolors.BOLD}Installation process has been started - please wait...{Bcolors.ENDC}\n\n")
+            print(f"\n\n\t{Bcolors.BOLD}Installation process has been started - please wait...{Bcolors.ENDC}\n")
+            print(f"\n\n\t{Bcolors.BOLD}(please don't interrupt - it may take some time){Bcolors.ENDC}\n\n\n")
             if conf_allowed:
                 if not config.debug_mode:
                     os.system("./scripts/sys_conf.sh all")
@@ -255,14 +257,15 @@ def installation(conf_allowed, config, git_flag):
             sleep(2)
             clear_the_screen()
             print(
-                f"\n\n\t{Bcolors.BOLD}Second part of installation has been started - please wait...{Bcolors.ENDC}\n\n")
+                f"\n\n\t{Bcolors.BOLD}Second part of installation has been started - please wait...{Bcolors.ENDC}\n")
+            print(f"\n\n\t{Bcolors.BOLD}(please don't interrupt - it may take some time){Bcolors.ENDC}\n\n\n")
             os.system(
                 f"./scripts/install_rh_part_2.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
             input("\n\n\npress Enter to continue")
             clear_the_screen()
             print(installation_completed)
             os.system("sudo chmod 777 -R ~/RotorHazard")
-            end_installation(config.user)
+            end_installation()
             rhim_config.second_part_of_install, rhim_config.sys_config_done = True, True
             write_rhim_sys_markers(rhim_config, config.user)
 
@@ -338,7 +341,8 @@ def update(config, git_flag):
                 else:
                     preferred_rh_version = check_preferred_rh_version(config)[2]
             clear_the_screen()
-            print(f"\n\n\t{Bcolors.BOLD}Updating existing installation - please wait...{Bcolors.ENDC}\n\n")
+            print(f"\n\n\t{Bcolors.BOLD}Updating existing installation - please wait...{Bcolors.ENDC}\n")
+            print(f"\n\n\t{Bcolors.BOLD}(please don't interrupt - it may take some time){Bcolors.ENDC}\n\n\n")
             os.system(f"./scripts/update_rh.sh {config.user} {preferred_rh_version} {git_flag}")
             config_flag, config_soft = check_rotorhazard_config_status(config)
             server_installed_flag, server_version_name, _ = get_rotorhazard_server_version(config)
@@ -470,7 +474,8 @@ def main_window(config):
                             print("\ntoo big fingers :( wrong command. try again! :)")
                     if confirm == 'y' or confirm == 'yes':
                         conf_allowed = True
-                        rhim_config.second_part_of_install, rhim_config.first_part_of_install, rhim_config.sys_config_done = False, False, False
+                        (rhim_config.second_part_of_install, rhim_config.first_part_of_install,
+                         rhim_config.sys_config_done) = False, False, False
                         write_rhim_sys_markers(rhim_config, config.user)
                         installation(conf_allowed, config, "")
                     elif confirm in ['n', 'no', 'abort', 'a']:

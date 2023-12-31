@@ -1,6 +1,6 @@
-from pathlib import Path
-import platform
 import os
+import platform
+from pathlib import Path
 
 
 # removes old aliases, especially doubled ones and bad leftovers from ~/.bashrc file

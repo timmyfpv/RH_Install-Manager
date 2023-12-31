@@ -30,14 +30,14 @@ check_for_new_rhim() {
 
 check_for_python_venv_flag() {
 
-if [ -f .python_venv_flag ] && [ ! -d ~/.venv ]; then
+  if [ -f .python_venv_flag ] && [ ! -d ~/.venv ]; then
     printf "preparing python venv\n\n"
-    python -m venv ~/.venv || (printf "\nswitched to python3 command\n" && python3 -m venv ~/.venv)
+    python -m venv ~/.venv || (echo "switched to python3 command" && python3 -m venv ~/.venv)
     source ~/.venv/bin/activate # this line doesn't affect anything but here as a reference
     rm .python_venv_flag >/dev/null 2>&1
-else
+  else
     printf "python venv present\n\n"
-fi
+  fi
 
 }
 
@@ -60,6 +60,16 @@ dependencies_check() {
 
   check_package() {
     if dpkg-query -l "$1" >/dev/null 2>&1; then
+      return 0
+    else
+      return 1
+    fi
+
+  }
+
+  # done this way due to the bug when checking some packages
+  check_package_when_errors() {
+    if dpkg-query -l "$1" | grep ii >/dev/null 2>&1; then
       return 0
     else
       return 1
@@ -160,7 +170,7 @@ dependencies_check() {
     echo python3-gpiozero has to be installed && sudo apt install python3-gpiozero -y
   fi
 
-  if check_package 'python3-requests'; then
+  if check_package_when_errors 'python3-requests'; then
     echo python3-requests"  "found
   else
     echo python3-requests has to be installed && sudo apt install python3-requests -y
