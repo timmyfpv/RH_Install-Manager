@@ -104,7 +104,7 @@ If you want to use value given as default, just hit 'Enter'.
                     print("That pin cannot be used for that purpose")
                 else:
                     print("\nPlease enter correct value!")
-            rh_config["LED"]['LED_PIN'] = int(led_data_pin_nr)
+            rh_config["LED"]['LED_GPIO'] = int(led_data_pin_nr)
 
             while True:
                 led_output_inverted = input("\nIs LED data pin output inverted? [y/N | default: no]\t\t\t").lower()
@@ -135,7 +135,7 @@ If you want to use value given as default, just hit 'Enter'.
             rh_config["LED"]['LED_CHANNEL'] = int(led_channel_nr)
 
             while True:
-                led_strip = input("\nWhat strip type and color ordering are you using? [default: 'GRB']\t\t")
+                led_strip = input("\nWhat strip type and color ordering are you using? [default: 'GRB']\t")
                 if not led_strip:
                     led_strip = 'GRB'
                     print("defaulted to: 'GRB'")
