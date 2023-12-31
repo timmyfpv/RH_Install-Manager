@@ -91,10 +91,10 @@ def rh_update_check(config):
 
 def check_rotorhazard_config_status(config):
     if os.path.exists(f"/home/{config.user}/RotorHazard/src/server/config.json"):
-        config_soft = f"{Bcolors.GREEN}configured{Bcolors.ENDC} 👍"
+        config_soft = f"({Bcolors.GREEN}configured{Bcolors.ENDC} 👍)"
         config_flag = True
     else:
-        config_soft = f"{Bcolors.YELLOW}({Bcolors.UNDERLINE}not configured{Bcolors.ENDC} 👎)"
+        config_soft = f"({Bcolors.YELLOW}{Bcolors.UNDERLINE}not configured{Bcolors.ENDC} 👎)"
         config_flag = False
     return config_soft, config_flag
 
@@ -234,7 +234,7 @@ def installation(conf_allowed, config, git_flag):
             print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(2)
             clear_the_screen()
-            print(f"\n\n\t{Bcolors.BOLD}Installation process has been started - please wait...{Bcolors.ENDC}\n")
+            print(f"\n\n\t{Bcolors.BOLD}Installation process has been started - please wait...{Bcolors.ENDC}")
             print(f"\n\n\t{Bcolors.BOLD}(please don't interrupt - it may take some time){Bcolors.ENDC}\n\n\n")
             if conf_allowed:
                 if not config.debug_mode:
@@ -257,7 +257,7 @@ def installation(conf_allowed, config, git_flag):
             sleep(2)
             clear_the_screen()
             print(
-                f"\n\n\t{Bcolors.BOLD}Second part of installation has been started - please wait...{Bcolors.ENDC}\n")
+                f"\n\n\t{Bcolors.BOLD}Second part of installation has been started - please wait...{Bcolors.ENDC}")
             print(f"\n\n\t{Bcolors.BOLD}(please don't interrupt - it may take some time){Bcolors.ENDC}\n\n\n")
             os.system(
                 f"./scripts/install_rh_part_2.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
@@ -271,6 +271,7 @@ def installation(conf_allowed, config, git_flag):
 
 
 def update(config, git_flag):
+    clear_the_screen()
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
     internet_flag = internet_check()
     if not internet_flag:
@@ -279,7 +280,6 @@ def update(config, git_flag):
     else:
         print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
         sleep(2)
-        clear_the_screen()
         if not os.path.exists(f"/home/{config.user}/RotorHazard"):
             print(f"""{Bcolors.BOLD}
 
@@ -341,7 +341,7 @@ def update(config, git_flag):
                 else:
                     preferred_rh_version = check_preferred_rh_version(config)[2]
             clear_the_screen()
-            print(f"\n\n\t{Bcolors.BOLD}Updating existing installation - please wait...{Bcolors.ENDC}\n")
+            print(f"\n\n\t{Bcolors.BOLD}Updating existing installation - please wait...{Bcolors.ENDC}")
             print(f"\n\n\t{Bcolors.BOLD}(please don't interrupt - it may take some time){Bcolors.ENDC}\n\n\n")
             os.system(f"./scripts/update_rh.sh {config.user} {preferred_rh_version} {git_flag}")
             config_flag, config_soft = check_rotorhazard_config_status(config)
