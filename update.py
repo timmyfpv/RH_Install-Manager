@@ -401,22 +401,22 @@ def features_menu(config):
         logo_top(config.debug_mode)
         features_menu_content = """
 
-                                {rmf}FEATURES MENU{endc}{bold}
+                            {rmf}FEATURES MENU{endc}{bold}
 
 
-                        1 - Enable serial protocol {endc}{bold}
+                    1 - Enable serial protocol {endc}{bold}
 
-                        2 - Access Point and Internet
+                    2 - Access Point and Internet
 
-                        3 - Show actual Pi's GPIO
+                    3 - Show actual Pi's GPIO
 
-                        4 - Add useful aliases
+                    4 - Add useful aliases
 
-                        5 - Update the Install-Manager {endc}{bold}
+                    5 - Update the Install-Manager {endc}{bold}
 
-                        6 - Create a log file{yellow}
+                    6 - Create a log file{yellow}
 
-                        e - Exit to main menu {endc}
+                    e - Exit to main menu {endc}
 
                  """.format(bold=Bcolors.BOLD_S, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC,
                             blue=Bcolors.BLUE, yellow=Bcolors.YELLOW_S, red=Bcolors.RED_S, rmf=Bcolors.RED_MENU_HEADER)
@@ -505,18 +505,18 @@ def main_menu(config):
             conf_color, conf_arrow = '', ''
         main_menu_content = """
 
-                                {rmf}MAIN MENU{endc}
+                            {rmf}MAIN MENU{endc}
 
-                            {blue}{bold}  
-                        1 - RotorHazard Manager {rh_update_prompt} 
-                            {endc}{bold}
-                        2 - Nodes flash and update {endc}{bold}
-                            
-                        3 - Additional features{config_color}
+                        {blue}{bold}  
+                    1 - RotorHazard Manager {rh_update_prompt} 
+                        {endc}{bold}
+                    2 - Nodes flash and update {endc}{bold}
+                        
+                    3 - Additional features{config_color}
 
-                        4 - Configuration Wizard{config_arrow}{endc}{bold}{yellow}
+                    4 - Configuration Wizard{config_arrow}{endc}{bold}{yellow}
 
-                        e - Exit to Raspberry OS{endc}
+                    e - Exit to Raspberry OS{endc}
 
                 """.format(bold=Bcolors.BOLD_S, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, green=Bcolors.GREEN,
                            blue=Bcolors.BLUE, yellow=Bcolors.YELLOW_S, red=Bcolors.RED, config_color=conf_color,

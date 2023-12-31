@@ -5,7 +5,7 @@ from time import sleep
 
 from conf_wizard_rh import conf_rh
 from modules import clear_the_screen, Bcolors, triangle_image_show, internet_check, load_rhim_sys_markers, \
-    write_rhim_sys_markers, load_config, server_start
+    write_rhim_sys_markers, load_config, server_start, host_sys_info
 
 
 def check_preferred_rh_version(config):
@@ -68,7 +68,7 @@ def get_rotorhazard_server_version(config):
 
 
 def rh_update_check(config):
-    stable_update_prompt = f"{Bcolors.RED}! PENDING STABLE UPDATE !{Bcolors.ENDC}"
+    stable_update_prompt = f"{Bcolors.RED}{Bcolors.BOLD}! PENDING STABLE UPDATE !{Bcolors.ENDC}"
     # above is showed only when stable version is newer than current
     raw_installed_rh_server = get_rotorhazard_server_version(config)[1]  # 3.0.0-dev2
     installed_rh_server = raw_installed_rh_server.split("-")[0]  # 3.0.0
@@ -100,13 +100,14 @@ def check_rotorhazard_config_status(config):
 
 
 def show_update_completed():
+    thumbs = "👍👍👍  " if host_sys_info() == "pi" else "👍👍👍     "
     update_completed = """\n\n
         #################################################
         ##                                             ##
         ##{bold}{green}Update completed! {thumbs}{endc}##
         ##                                             ##
         #################################################
-                """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S,
+                """.format(thumbs=thumbs, bold=Bcolors.BOLD_S,
                            endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     return update_completed
 
@@ -195,6 +196,7 @@ def first_part_of_installation_done_check(config):
 
 
 def installation(conf_allowed, config, git_flag):
+    thumbs = "👍👍👍  " if host_info() == "pi" else "👍👍👍     "
     first_part_completed = """
 
 
@@ -206,7 +208,7 @@ def installation(conf_allowed, config, git_flag):
 
 
             Please reboot now and connect to the timer again.
-                        """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S,
+                        """.format(thumbs=thumbs, bold=Bcolors.BOLD_S,
                                    endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     installation_completed = """
 
@@ -219,7 +221,7 @@ def installation(conf_allowed, config, git_flag):
 
 
             Please reboot the system after installation.
-                        """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S,
+                        """.format(thumbs=thumbs, bold=Bcolors.BOLD_S,
                                    endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     rhim_config = load_rhim_sys_markers(config.user)
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
@@ -401,7 +403,7 @@ def main_window(config):
         {bold}
         You can change below configuration in Configuration Wizard in Main Menu:
 
-        Source of the software is set to version: {endc}{underline}{blue}{server_version}{endc}
+        Source of the software is set to version: {endc}{bold}{underline}{blue}{server_version}{endc}
 
             """.format(bold=Bcolors.BOLD, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, blue=Bcolors.BLUE,
                        yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE,

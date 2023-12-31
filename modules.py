@@ -13,6 +13,12 @@ from types import SimpleNamespace as Namespace, SimpleNamespace
 import requests
 
 
+def host_sys_info():
+    host_info = os.system("./scripts/get_host_info.sh")
+    host = "pi" if host_info is True else "non-pi"
+    return host
+
+
 def get_host_info():
     ip_list = []
     try:
