@@ -94,7 +94,7 @@ def check_rotorhazard_config_status(config):
         config_soft = f"{Bcolors.GREEN}-> configured{Bcolors.ENDC} 👍"
         config_flag = True
     else:
-        config_soft = f"{Bcolors.YELLOW}{Bcolors.UNDERLINE}-> not configured{Bcolors.ENDC} 👎"
+        config_soft = f"{Bcolors.YELLOW}-> {Bcolors.UNDERLINE}not configured{Bcolors.ENDC} 👎"
         config_flag = False
     return config_soft, config_flag
 
@@ -330,7 +330,7 @@ def update(config, git_flag):
                                           previous_rh_source=check_preferred_rh_version(config)[0])
                 print(confirm_stable_update_screen)
                 selection = input()
-                if selection in ['y', 'Y', '']:
+                if selection in ['y', 'Y', '', 'ygit']:
                     change_update_to_stable = True
                 elif selection == 'n':
                     change_update_to_stable = False
