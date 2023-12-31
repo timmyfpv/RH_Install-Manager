@@ -15,7 +15,7 @@ import requests
 
 def host_sys_info():
     host_info = os.system("./scripts/get_host_info.sh")
-    host = "pi" if host_info is True else "non-pi"
+    host = True if host_info == 256 else False  # value 256 means 1 was returned by a script
     return host
 
 
