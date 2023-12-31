@@ -1,5 +1,6 @@
-from time import sleep
 import os
+from time import sleep
+
 from modules import clear_the_screen, Bcolors, logo_top, load_config
 from nodes_flash import main as new_flashing
 

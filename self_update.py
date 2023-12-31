@@ -1,5 +1,6 @@
-from time import sleep
 import os
+from time import sleep
+
 # import shutil
 from modules import load_config, dots_show, internet_check, get_rhim_version, Bcolors
 

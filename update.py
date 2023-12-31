@@ -6,13 +6,13 @@ from conf_wizard_net import conf_wizard_net
 from conf_wizard_rhim import conf_rhim
 from modules import clear_the_screen, Bcolors, logo_top, triangle_image_show, rhim_asci_image_show, load_config, \
     load_rhim_sys_markers, write_rhim_sys_markers, get_rhim_version
-from rpi_update import main_window as rpi_update, rh_update_check
 from nodes_flash import flashing_menu
 from nodes_update_old import nodes_update as old_flash_gpio
+from rpi_update import main_window as rpi_update, rh_update_check
 
 
 def compatibility():  # adds compatibility and fixes with previous versions
-    from prev_comp import main as prev_comp
+    from user_folder_check import main as prev_comp
     prev_comp()
 
 
@@ -195,7 +195,7 @@ def welcome_screen(config):
     If you found any bug - please report it via GitHub or Facebook. {endc}{bold}        
 
 
-    Wish you good experience. Enjoy!
+    Wish you a good experience. Enjoy!
 
 
                                                             Pawel F.                                                
@@ -210,7 +210,6 @@ def welcome_screen(config):
         if selection == 'n':
             os.system("rm ./.first_time_here")
             first_time_flag = False  # done that way so after configuration user won't be redirected back here
-#            show_about(config) # enter wizard manually is better due to non stick conig
         if selection == 'f':  # helpful when troubleshooting, going further without changing the folder contents
             first_time_flag = False
             show_about(config)
@@ -498,7 +497,7 @@ def main_menu(config):
     while True:
         clear_the_screen()
         logo_top(config.debug_mode)
-        rh_update_prompt = rh_update_check(config)
+        rh_update_prompt = rh_update_check(config)[1]
         if not config_check():
             conf_color = Bcolors.GREEN
             conf_arrow = "  <- go here first"

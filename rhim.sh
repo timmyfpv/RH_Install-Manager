@@ -15,17 +15,30 @@ dots7() { # done that way so it work on every terminal
 print_info_message() {
   printf "\n"
   printf "dependencies will be auto-detected and installed \n"
-  printf "installing dependencies may need 'sudo' password\n\n"
+  printf "installing dependencies may need 'sudo' password\n"
 }
 
 check_for_new_rhim() {
 
   if ! test -f .first_time_here; then
     wget https://raw.githubusercontent.com/RotorHazard/Install-Manager/stable/version.txt -q -O .new_rhim_version_check_file.txt
-    diff version.txt .new_rhim_version_check_file.txt > .new_rhim_version_diff_file
+    diff version.txt .new_rhim_version_check_file.txt >.new_rhim_version_diff_file
   else
     sudo apt update || printf "repositories have not been updated \n"
   fi
+}
+
+check_for_python_venv_flag() {
+
+  if [ -f .python_venv_flag ] && [ ! -d ~/.venv ]; then
+    printf "preparing python venv\n\n"
+    python -m venv ~/.venv || (echo "switched to python3 command" && python3 -m venv ~/.venv)
+    source ~/.venv/bin/activate # this line doesn't affect anything but here as a reference
+    rm .python_venv_flag >/dev/null 2>&1
+  else
+    printf "python venv present\n\n"
+  fi
+
 }
 
 open_software_alias_check() {
@@ -33,13 +46,13 @@ open_software_alias_check() {
   if ! grep -q "alias rhim=" ../.bashrc; then
     echo '
 #[added during RH_Install-Manager setup]
-alias rhim="cd ~/RH_Install-Manager && sh ./rhim.sh"                        # opens RH_Install-Manager software' >> ../.bashrc
+alias rhim="cd ~/RH_Install-Manager && sh ./rhim.sh"                        # opens RH_Install-Manager software' >>../.bashrc
   fi
 
-  if ! grep -q "activate && python server.py" ../.bashrc; then
+  if ! grep -q "~/.venv/bin/activate" ../.bashrc; then
     echo '
 #[added during RH_Install-Manager setup]
-alias rh="cd ~/RotorHazard/src/server && source venv/bin/activate && python server.py"   # starts RH-server' >> ../.bashrc
+alias rh="cd ~/RotorHazard/src/server && source ~/.venv/bin/activate && python server.py"   # starts RH-server' >>../.bashrc
   fi
 }
 
@@ -54,6 +67,16 @@ dependencies_check() {
 
   }
 
+  # done this way due to the bug when checking some packages
+  check_package_when_errors() {
+    if dpkg-query -l "$1" | grep ii >/dev/null 2>&1; then
+      return 0
+    else
+      return 1
+    fi
+
+  }
+
   check_python_package() {
     if python3 -c "import $1" >/dev/null 2>&1; then
       return 0
@@ -61,6 +84,13 @@ dependencies_check() {
       return 1
     fi
   }
+
+  which git >/dev/null
+  if [ $? -gt 0 ]; then
+    echo git has to be installed && sudo apt install git -y
+  else
+    echo git"               "found # those  cure my ocd
+  fi
 
   which python3 >/dev/null
   if [ $? -gt 0 ]; then
@@ -122,13 +152,25 @@ dependencies_check() {
     echo i2c-tools has to be installed && sudo apt install i2c-tools -y
   fi
 
+  if check_python_package 'wheel'; then
+    echo wheel"             "found
+  else
+    echo wheel has to be installed && pip3 install wheel
+  fi
+
+  if check_python_package 'requests'; then
+    echo requests"          "found
+  else
+    echo requests has to be installed && pip3 install requests
+  fi
+
   if check_package 'python3-gpiozero'; then
     echo python3-gpiozero"  "found
   else
     echo python3-gpiozero has to be installed && sudo apt install python3-gpiozero -y
   fi
 
-  if check_package 'python3-requests'; then
+  if check_package_when_errors 'python3-requests'; then
     echo python3-requests"  "found
   else
     echo python3-requests has to be installed && sudo apt install python3-requests -y
@@ -138,6 +180,12 @@ dependencies_check() {
     echo python3-dev"       "found
   else
     echo python3-dev has to be installed && sudo apt install python3-dev -y
+  fi
+
+  if check_package 'python3-venv'; then
+    echo python3-venv"      "found
+  else
+    echo python3-venv has to be installed && sudo apt install python3-venv -y
   fi
 
   if check_package 'python3-smbus2'; then
@@ -152,10 +200,10 @@ dependencies_check() {
     echo python3-smbus has to be installed && sudo apt install python3-smbus
   fi
 
-  if check_package 'python3-rpi.gpio'; then
-    echo python3-rpi.gpio"  "found
+  if check_python_package 'RPi.GPIO'; then
+    echo RPi.GPIO"          "found
   else
-    echo python3-rpi.gpio has to be installed && sudo apt install python3-rpi.gpio || echo - only on Pi -
+    echo RPi.GPIO has to be installed && pip3 install RPi.GPIO || echo - only on Pi -
   fi
 
 }
@@ -163,6 +211,7 @@ dependencies_check() {
 print_info_message
 check_for_new_rhim
 open_software_alias_check &
-dependencies_check &
+dependencies_check
 wait
+check_for_python_venv_flag
 python3 start_rhim.py

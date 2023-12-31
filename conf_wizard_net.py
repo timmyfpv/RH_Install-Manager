@@ -1,7 +1,8 @@
 import os
+
+from conf_wizard_net_ap import ap_config
 from modules import load_config, clear_the_screen, logo_top, Bcolors
 from net_and_ap_man_conf import net_and_ap_conf
-from conf_wizard_net_ap import ap_config
 
 
 def confirm_auto_hotspot(config):

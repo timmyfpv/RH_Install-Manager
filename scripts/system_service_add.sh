@@ -7,7 +7,7 @@ After=multi-user.target
 [Service]
 User=pi
 WorkingDirectory=/home/${1}/RotorHazard/src/server
-ExecStart=/home/${1}/RotorHazard/src/server/venv/bin/python server.py
+ExecStart=/home/${1}/.venv/bin/python server.py
 
 [Install]
 WantedBy=multi-user.target

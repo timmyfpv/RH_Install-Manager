@@ -45,7 +45,7 @@ You may also read [update notes](/docs/update-notes.txt) - new features are pres
 </br>
 
 ##
-
+![RHIM SCREEN](./resources/rhim_screen.png)
 ### Credits:
 
 [Paweł F.](https://github.com/szafranski) - project idea, first implementations, flashing protocol, initial coding
@@ -86,7 +86,9 @@ You may also read [update notes](/docs/update-notes.txt) - new features are pres
 ##### In case of errors - please try:
 
     First: make sure that you have internet connection established
-    
+    Sometimes this command helps: 
+    sudo dhclient -r && sudo dhclient
+
     Next:
     sudo apt update
     sudo apt upgrade -y

@@ -15,7 +15,7 @@ RotorHazard Install-Manager software will be downloaded automatically
 $endc "
 sleep 2
 
-  (sudo apt update && sudo apt install curl wget unzip -y) || echo "no wget or curl download target"
+  (sudo apt update && sudo apt install curl wget zip unzip -y) || echo "no wget or curl download target"
   cd ~ || return 1
   mv RH_Install-Manager*/ RH_Install-Manager.old/ > /dev/null 2>&1
   mv temprhim.zip temprhim.zip.old > /dev/null 2>&1

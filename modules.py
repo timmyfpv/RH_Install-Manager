@@ -1,15 +1,16 @@
+import json
+import os
+import platform
+import socket
+import subprocess
+import sys
+import time
 from pathlib import Path
 from shutil import copyfile
 from time import sleep
-import os
-import platform
-import sys
-import json
-import time
-import requests
 from types import SimpleNamespace as Namespace, SimpleNamespace
-import socket
-import subprocess
+
+import requests
 
 
 def get_host_info():
@@ -20,7 +21,7 @@ def get_host_info():
         for ip in ip_addresses:
             ip_list.append(ip)
         for i in range(3):
-            ip_list.append("0") # so at least ip_list have at least 3 arguments - due to return function
+            ip_list.append("0")  # so at least ip_list have at least 3 arguments - due to return function
 
     except Exception as e:
         hostname = "no hostname info"
@@ -95,7 +96,8 @@ def logo_top(linux_testing):
   ##  {place_for_debug_status_here}  ##   {ip3}             
   #####################################    
     """.format(bold=Bcolors.BOLD_S, endc=Bcolors.ENDC_S, place_for_debug_status_here=debug_status,
-               yellow=Bcolors.YELLOW_S, orbold=(Bcolors.ORANGE+Bcolors.ORANGE+8*" "), hostname=hostname, ip1=ip1, ip2=ip2, ip3=ip3))
+               yellow=Bcolors.YELLOW_S, orbold=(Bcolors.ORANGE + Bcolors.ORANGE + 8 * " "), hostname=hostname,
+               ip1=ip1, ip2=ip2, ip3=ip3))
 
 
 class Bcolors:

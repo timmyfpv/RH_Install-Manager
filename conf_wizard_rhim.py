@@ -1,8 +1,9 @@
-from time import sleep
 import os
-from types import SimpleNamespace
-from modules import clear_the_screen, Bcolors, logo_top, write_json, load_config
 from pathlib import Path
+from time import sleep
+from types import SimpleNamespace
+
+from modules import clear_the_screen, Bcolors, logo_top, write_json, load_config
 
 '''
 Check if a config file already exists. if it does, 

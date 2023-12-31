@@ -3,6 +3,7 @@
 green="\033[92m"
 red="\033[91m"
 endc="\033[0m"
+underline="\033[4m"
 
 ssh_enabling() {
   sudo systemctl enable ssh || return 1
@@ -120,15 +121,13 @@ i2c_error() {
 
 uart_enabling() {
   sudo cp /boot/cmdline.txt /boot/cmdline.txt.dist
-  sudo cp /boot/firmware/cmdline.txt /boot/firmware/cmdline.txt.dist
-  sudo cp /boot/config.txt /boot/config.txt.dist
+  sudo cp /boot/firmware/cmdline.txt /boot/firmware/cmdline.txt.dist || sudo cp /boot/config.txt /boot/config.txt.dist || return 1
   echo "
 [UART enabled - RH_Install-Manager]
 enable_uart=1
   " | sudo tee -a /boot/config.txt || return 1
-  sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt
-  sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt
-  echo "console serial output disabled - requires reboot
+  sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt || sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt || return 1
+  echo "console serial output disabled - requires REBOOT
   "
 sleep 2
 
