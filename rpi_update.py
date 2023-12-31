@@ -21,7 +21,7 @@ def check_preferred_rh_version(config):
                 beta_name_line = line.strip()
                 break
 
-    no_dots_preferred_rh_version = stable_name_line.split(".")[2].strip()
+    no_dots_preferred_rh_version = stable_name_line.split(".")[1].strip()
     converted_rh_version_name = \
         no_dots_preferred_rh_version[0] + "." + no_dots_preferred_rh_version[1] + "." + no_dots_preferred_rh_version[2:]
 
