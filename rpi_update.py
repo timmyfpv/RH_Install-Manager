@@ -100,7 +100,7 @@ def check_rotorhazard_config_status(config):
 
 
 def show_update_completed():
-    thumbs = "👍👍👍  " if host_sys_info() is True else "👍👍👍     "
+    thumbs = "👍👍👍  "
     update_completed = """\n\n
         #################################################
         ##                                             ##
@@ -196,7 +196,7 @@ def first_part_of_installation_done_check(config):
 
 
 def installation(conf_allowed, config, git_flag):
-    thumbs = "👍👍👍  " if host_sys_info() is True else "👍👍👍     "
+    thumbs = "👍👍👍  "
     first_part_completed = """
 
 
