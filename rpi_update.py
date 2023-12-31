@@ -91,10 +91,10 @@ def rh_update_check(config):
 
 def check_rotorhazard_config_status(config):
     if os.path.exists(f"/home/{config.user}/RotorHazard/src/server/config.json"):
-        config_soft = f"({Bcolors.GREEN}configured{Bcolors.ENDC} 👍)"
+        config_soft = f"{Bcolors.GREEN}-> configured{Bcolors.ENDC} 👍"
         config_flag = True
     else:
-        config_soft = f"({Bcolors.YELLOW}{Bcolors.UNDERLINE}not configured{Bcolors.ENDC} 👎)"
+        config_soft = f"{Bcolors.YELLOW}{Bcolors.UNDERLINE}-> not configured{Bcolors.ENDC} 👎"
         config_flag = False
     return config_soft, config_flag
 
@@ -402,12 +402,10 @@ def main_window(config):
         You can change below configuration in Configuration Wizard in Main Menu:
 
         Source of the software is set to version: {endc}{underline}{blue}{server_version}{endc}
-        {bold}
-        Username that you entered:{endc} {underline}{blue}{user}{endc}
 
             """.format(bold=Bcolors.BOLD, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, blue=Bcolors.BLUE,
                        yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE,
-                       server_version=configured_server_target, user=config.user, config_soft=rh_config_text,
+                       server_version=configured_server_target, config_soft=rh_config_text,
                        server=colored_server_version_name, update_prompt=update_prompt)
         print(welcome_text)
         if not rh_config_flag and server_installed_flag:
