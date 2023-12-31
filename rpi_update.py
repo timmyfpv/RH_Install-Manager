@@ -312,19 +312,19 @@ def update(config, git_flag):
                 clear_the_screen()
                 confirm_stable_update_screen = """{bold}
 
-                Looks like there is the stable update available, 
-                newer than currently installed version.{endc}
+            Looks like there is the stable update available, 
+            newer than currently installed version.{endc}
 
-                For now, you have selected {yellow}{underline}{previous_rh_source}{endc} as an update source.
-                Would you like to switch to the stable version for this update?  
+            For now, you have selected {yellow}{underline}{previous_rh_source}{endc} as an update source.
+            Would you like to switch to the stable version for this update?  
 
 
 
-            {green}Y - Yes, switch to stable update and proceed {endc}
+        {green}Y - Yes, switch to stable update and proceed {endc}
 
-                   n - No, just update with existing update source
+               n - No, just update with existing update source
 
-                   a - Abort both, go to the previous menu {endc}
+               a - Abort both, go to the previous menu {endc}
                                """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
                                           yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S,
                                           previous_rh_source=check_preferred_rh_version(config)[0])
@@ -476,6 +476,23 @@ def main_window(config):
                          rhim_config.sys_config_done) = False, False, False
                         write_rhim_sys_markers(rhim_config, config.user)
                         installation(conf_allowed, config, "")
+                    elif confirm in ['n', 'no', 'abort', 'a']:
+                        pass
+                elif selection == 'c' or selection == 'cgit':
+                    confirm_valid_options = ['y', 'yes', 'n', 'no', 'abort', 'a']
+                    while True:
+                        confirm = input("\n\t\tAre you sure? [yes/abort]\t").strip()
+                        if confirm in confirm_valid_options:
+                            break
+                        else:
+                            print("\ntoo big fingers :( wrong command. try again! :)")
+                    if confirm == 'y' or confirm == 'yes':
+                        conf_allowed = True
+                        (rhim_config.second_part_of_install, rhim_config.first_part_of_install,
+                         rhim_config.sys_config_done) = False, False, False
+                        write_rhim_sys_markers(rhim_config, config.user)
+                        git_flag = "git" if selection == 'cgit' else ''
+                        installation(conf_allowed, config, git_flag)
                     elif confirm in ['n', 'no', 'abort', 'a']:
                         pass
                 elif selection == 'a':

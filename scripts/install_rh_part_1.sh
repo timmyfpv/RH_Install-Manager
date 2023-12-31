@@ -10,6 +10,6 @@ sudo apt install wget python3 python*-venv ntp htop libjpeg-dev libffi-dev build
 sudo apt install python3-rpi.gpio -y || echo "-- no python-rpi.gpio module found - available only on Pi --" #is this redundant?
 sudo rm -r /home/"${1}"/temp.zip >/dev/null 2>&1 # in case of weird sys config or previous unsuccessful installations
 cd /home/"${1}" || exit
-sudo /home/${1}/RH_Install-Manager/scripts/move_old_rh_dirs.sh
+sudo /home/"${1}"/RH_Install-Manager/scripts/move_old_rh_dirs.sh "${1}" "${2}"
 python -m venv ~/.venv || (echo "switched to python3 command" && python3 -m venv ~/.venv) # required when 'python' is command is not recognized as 'python3
 
