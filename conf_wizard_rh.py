@@ -104,7 +104,7 @@ If you want to use value given as default, just hit 'Enter'.
                     print("That pin cannot be used for that purpose")
                 else:
                     print("\nPlease enter correct value!")
-            rh_config["LED"]['LED_PIN'] = int(led_data_pin_nr)
+            rh_config["LED"]['LED_GPIO'] = int(led_data_pin_nr)
 
             while True:
                 led_output_inverted = input("\nIs LED data pin output inverted? [y/N | default: no]\t\t\t").lower()
@@ -133,6 +133,16 @@ If you want to use value given as default, just hit 'Enter'.
                 else:
                     print("\nPlease enter correct value!")
             rh_config["LED"]['LED_CHANNEL'] = int(led_channel_nr)
+
+            while True:
+                led_strip = input("\nWhat strip type and color ordering are you using? [default: 'GRB']\t")
+                if not led_strip:
+                    led_strip = 'GRB'
+                    print("defaulted to: 'GRB'")
+                    break
+                elif led_strip.isdigit():
+                    print("\nPlease enter correct type!")
+            rh_config["LED"]['LED_STRIP'] = str(led_strip)
 
             while True:
                 led_panel_rotation = input("\nBy how many degrees is your panel rotated? [0/90/180/270 | default: 0]\t")
@@ -166,9 +176,10 @@ If you want to use value given as default, just hit 'Enter'.
 
         if not led_present_flag:
             rh_config["LED"]['LED_COUNT'] = 0
-            rh_config["LED"]['LED_PIN'] = 10
+            rh_config["LED"]['LED_GPIO'] = 10
             rh_config["LED"]['LED_INVERT'] = False
             rh_config["LED"]['LED_CHANNEL'] = 0
+            rh_config["LED"]['LED_STRIP'] = 'GRB'
             rh_config["LED"]['PANEL_ROTATE'] = 0
             rh_config["LED"]['INVERTED_PANEL_ROWS'] = False
             print("\nLED configuration set to default values.\n\n")
@@ -283,10 +294,11 @@ If you want to use value given as default, just hit 'Enter'.
         Admin password:     {rh_config["GENERAL"]["ADMIN_PASSWORD"]}
         RotorHazard port:   {rh_config["GENERAL"]["HTTP_PORT"]}
         LED amount:         {rh_config["LED"]['LED_COUNT']}
-        LED pin:            {rh_config["LED"]['LED_PIN']}
+        LED gpio:           {rh_config["LED"]['LED_GPIO']}
         LED inverted:       {rh_config["LED"]['LED_INVERT']}
         LED channel:        {rh_config["LED"]['LED_CHANNEL']}
-        LED panel rotate:   {rh_config["LED"]['PANEL_ROTATE']}
+        LED strip:          {rh_config["LED"]['LED_STRIP']}
+        LED panel rotated:  {rh_config["LED"]['PANEL_ROTATE']}
         LED rows inverted:  {rh_config["LED"]['INVERTED_PANEL_ROWS']}
         LED DMA:            {rh_config['LED']['LED_DMA']}
         LED frequency:      {rh_config['LED']['LED_FREQ_HZ']}

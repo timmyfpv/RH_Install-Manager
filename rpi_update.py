@@ -21,7 +21,7 @@ def check_preferred_rh_version(config):
                 beta_name_line = line.strip()
                 break
 
-    no_dots_preferred_rh_version = stable_name_line.split(".")[0].strip()
+    no_dots_preferred_rh_version = stable_name_line.split(".")[1].strip()
     converted_rh_version_name = \
         no_dots_preferred_rh_version[0] + "." + no_dots_preferred_rh_version[1] + "." + no_dots_preferred_rh_version[2:]
 
@@ -415,7 +415,7 @@ def main_window(config):
         else:
             configure = "c - Configure RotorHazard server"
         if rh_update_check(config)[0] is True:
-            update_text = f"{Bcolors.GREEN}{Bcolors.UNDERLINE}u - Update existing installation{Bcolors.ENDC}"
+            update_text = f"{Bcolors.GREEN}u - {Bcolors.UNDERLINE}Update existing installation{Bcolors.ENDC}"
         else:
             update_text = "u - Update existing installation"
         if not rhim_config.second_part_of_install:

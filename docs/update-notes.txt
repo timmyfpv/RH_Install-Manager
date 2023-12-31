@@ -5,6 +5,10 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+6c.401.35
+1. LEDs support and config wizard tweaks
+2. New way of RHIM version numbering
+
 401.35.6b
 1. Better stable update pending handling
 2. Minor tweaks in readme file
