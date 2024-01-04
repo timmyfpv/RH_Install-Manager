@@ -204,11 +204,11 @@ def installation(conf_allowed, config, git_flag):
             ##                                                  ##
             ######################################################
 
-
+            {green_no_s}
             Please reboot now and connect to the timer again. Afterward, 
-            reopen Install Manager by typing '{green}rhim{endc}' in the terminal window 
-            and navigate to the first item in the Main Menu. 
-                        """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S,
+            reopen Install Manager by typing '{endc}rhim{green_no_s}' in the terminal window 
+            and navigate to the first item in the Main Menu. {endc}
+                        """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN_S,
                                    endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     installation_completed = """
 
@@ -219,12 +219,12 @@ def installation(conf_allowed, config, git_flag):
             ##                                                  ##
             ######################################################
 
-
+            {green_no_s}
             Please reboot the system after installation. 
             RotorHazard service will be started automatically.
-            You can also reopen Install Manager (type 'rhim')
-            and check available options.
-                        """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S,
+            You can also reopen Install Manager (type '{endc}rhim{green_no_s}')
+            and check available options.{endc}
+                        """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN_S,
                                    endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     rhim_config = load_rhim_sys_markers(config.user)
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
@@ -427,7 +427,7 @@ def main_window(config):
             if rhim_config.first_part_of_install is False:
                 install = f"{Bcolors.GREEN}i - Install RotorHazard software{Bcolors.ENDC}"
             else:
-                install = f"{Bcolors.GREEN}i - Continue RotorHazard software installation{Bcolors.ENDC}"
+                install = f"{Bcolors.GREEN}i - Continue RotorHazard software installation{Bcolors.ENDC}{Bcolors.RED} -> go here now{Bcolors.ENDC}"
         else:
             install = "i - Install RotorHazard software"
         print("""
