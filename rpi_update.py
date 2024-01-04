@@ -206,10 +206,10 @@ def installation(conf_allowed, config, git_flag):
 
             {green_no_s}
             Please reboot now and connect to the timer again. Afterward, 
-            reopen Install Manager by typing '{endc}rhim{green_no_s}' in the terminal window 
+            reopen Install Manager by typing '{endc_no_s}rhim{green_no_s}' in the terminal window 
             and navigate to the first item in the Main Menu. {endc}
                         """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
-                                   endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
+                                   endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     installation_completed = """
 
 
@@ -222,10 +222,10 @@ def installation(conf_allowed, config, git_flag):
             {green_no_s}
             Please reboot the system after installation. 
             RotorHazard service will be started automatically.
-            You can also reopen Install Manager (type '{endc}rhim{green_no_s}')
+            You can also reopen Install Manager (type '{endc_no_s}rhim{green_no_s}')
             and check available options.{endc}
                         """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
-                                   endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
+                                   endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     rhim_config = load_rhim_sys_markers(config.user)
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
     clear_the_screen()
