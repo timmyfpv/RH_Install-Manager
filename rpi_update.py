@@ -223,7 +223,7 @@ def installation(conf_allowed, config, git_flag):
             Please reboot the system after installation. 
             RotorHazard service will be started automatically.
             You can also reopen Install Manager (type '{endc_no_s}rhim{green_no_s}')
-            and check available options.{endc}
+            and configure available options.{endc}
                         """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
                                    endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     rhim_config = load_rhim_sys_markers(config.user)
@@ -414,7 +414,7 @@ def main_window(config):
                        server=colored_server_version_name, update_prompt=update_prompt)
         print(welcome_text)
         if not rh_config_flag and server_installed_flag:
-            configure = f"{Bcolors.GREEN}c - Configure RotorHazard server{Bcolors.ENDC}"
+            configure = f"{Bcolors.GREEN}c - Configure RotorHazard server{Bcolors.ENDC}{Bcolors.RED} -> go here now{Bcolors.ENDC}"
         elif not rh_config_flag and not server_installed_flag:
             configure = "c - Reconfigure RotorHazard server"
         else:
