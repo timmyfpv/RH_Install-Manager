@@ -506,7 +506,7 @@ def main_menu(config):
         else:
             conf_color, conf_arrow = '', ''
         if not rhim_config.first_part_of_install and not rhim_config.second_part_of_install:
-            f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC}{Bcolors.RED}  <- go here now{Bcolors.ENDC}"
+            rh_installation_state = f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC}{Bcolors.RED}  <- go here now{Bcolors.ENDC}"
         elif rhim_config.first_part_of_install and not rhim_config.second_part_of_install:
             rh_installation_state = f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC}{Bcolors.RED}  <- continue{Bcolors.ENDC}"
         if rhim_config.first_part_of_install and rhim_config.second_part_of_install and rh_update_check(config)[0]:  # checks is RH is about to be updated
