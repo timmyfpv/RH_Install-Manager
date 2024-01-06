@@ -191,7 +191,7 @@ def end_of_part_1():
 
 def first_part_of_installation_done_check(config):
     rhim_config = load_rhim_sys_markers(config.user)
-    return True if rhim_config.first_part_of_install is True else False
+    return True if rhim_config.first_part_of_install else False
 
 
 def installation(conf_allowed, config, git_flag):

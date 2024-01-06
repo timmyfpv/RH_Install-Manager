@@ -8,7 +8,7 @@ from modules import clear_the_screen, Bcolors, logo_top, triangle_image_show, rh
     load_rhim_sys_markers, write_rhim_sys_markers, get_rhim_version
 from nodes_flash import flashing_menu
 from nodes_update_old import nodes_update as old_flash_gpio
-from rpi_update import main_window as rpi_update, rh_update_check, get_rotorhazard_server_version
+from rpi_update import main_window as rpi_update, rh_update_check
 
 
 def compatibility():  # adds compatibility and fixes with previous versions
@@ -497,17 +497,22 @@ def main_menu(config):
     while True:
         clear_the_screen()
         logo_top(config.debug_mode)
+        rh_update_prompt = rh_update_check(config)[1]
         rhim_config = load_rhim_sys_markers(config.user)
-        if not config_check():
+        rh_installation_state = f"RotorHazard Manager{Bcolors.ENDC}"
+        if not config_check():  # checks is RH configured
             conf_color = Bcolors.GREEN
             conf_arrow = "  <- go here first"
-        else:
+        else:   # if it is
             conf_color, conf_arrow = '', ''
-            if rh_update_check(config)[0]:
-                rh_installation_state = f"{Bcolors.GREEN}RotorHazard Manager{Bcolors.ENDC}  {rh_update_prompt}"
+            if rh_update_check(config)[0]:  # checks is RH is about to be updated
+                rh_installation_state = f"{Bcolors.GREEN}RotorHazard Manager{Bcolors.ENDC} {rh_update_prompt}"
             else:
-                if rhim_config.first
-                rh_installation_state = f
+                if not rhim_config.first_part_of_install and not rhim_config.first_part_of_install:
+                    f"{Bcolors.GREEN}RotorHazard Manager{Bcolors.ENDC}  {Bcolors.RED}<- go here now{Bcolors.ENDC}"
+                elif rhim_config.first_part_of_install and not rhim_config.first_part_of_install:
+                    rh_installation_state = f"{Bcolors.GREEN}RotorHazard Manager{Bcolors.ENDC}  {Bcolors.RED}<- continue{Bcolors.ENDC}"
+
         main_menu_content = """
 
                                 {rmf}MAIN MENU{endc}
