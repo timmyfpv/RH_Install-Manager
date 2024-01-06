@@ -8,7 +8,7 @@ from modules import clear_the_screen, Bcolors, logo_top, triangle_image_show, rh
     load_rhim_sys_markers, write_rhim_sys_markers, get_rhim_version
 from nodes_flash import flashing_menu
 from nodes_update_old import nodes_update as old_flash_gpio
-from rpi_update import main_window as rpi_update, rh_update_check
+from rpi_update import main_window as rpi_update, rh_update_check, get_rotorhazard_server_version
 
 
 def compatibility():  # adds compatibility and fixes with previous versions
@@ -497,18 +497,23 @@ def main_menu(config):
     while True:
         clear_the_screen()
         logo_top(config.debug_mode)
-        rh_update_prompt = rh_update_check(config)[1]
+        rhim_config = load_rhim_sys_markers(config.user)
         if not config_check():
             conf_color = Bcolors.GREEN
             conf_arrow = "  <- go here first"
         else:
             conf_color, conf_arrow = '', ''
+            if rh_update_check(config)[0]:
+                rh_installation_state = f"{Bcolors.GREEN}RotorHazard Manager{Bcolors.ENDC}  {rh_update_prompt}"
+            else:
+                if rhim_config.first
+                rh_installation_state = f
         main_menu_content = """
 
                                 {rmf}MAIN MENU{endc}
 
-                            {blue}{bold}  
-                        1 - RotorHazard Manager {rh_update_prompt} 
+                            {bold}  
+                        1 - {install_state} 
                             {endc}{bold}
                         2 - Nodes flash and update {endc}{bold}
                             
@@ -520,7 +525,8 @@ def main_menu(config):
 
                 """.format(bold=Bcolors.BOLD_S, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, green=Bcolors.GREEN,
                            blue=Bcolors.BLUE, yellow=Bcolors.YELLOW_S, red=Bcolors.RED, config_color=conf_color,
-                           rmf=Bcolors.RED_MENU_HEADER, rh_update_prompt=rh_update_prompt, config_arrow=conf_arrow)
+                           rmf=Bcolors.RED_MENU_HEADER, rh_update_prompt=rh_update_prompt, config_arrow=conf_arrow,
+                           install_state=rh_installation_state)
         print(main_menu_content)
         selection = input()
         if selection == '1':
