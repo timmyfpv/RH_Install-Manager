@@ -414,7 +414,7 @@ def main_window(config):
                        server=colored_server_version_name, update_prompt=update_prompt)
         print(welcome_text)
         if not rh_config_flag and server_installed_flag:
-            configure = f"{Bcolors.GREEN}c - Configure RotorHazard server{Bcolors.ENDC}{Bcolors.RED} -> go here now{Bcolors.ENDC}"
+            configure = f"{Bcolors.GREEN}c - Configure RotorHazard server{Bcolors.ENDC}{Bcolors.RED} <- go here now{Bcolors.ENDC}"
         elif not rh_config_flag and not server_installed_flag:
             configure = "c - Reconfigure RotorHazard server"
         else:

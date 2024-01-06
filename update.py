@@ -21,7 +21,7 @@ def config_check():
         prompt = """
           {prompt}  Looks that you haven't set up config file yet.  {endc}
           {prompt}  Please enter Configuration Wizard - point 4     {endc}""" \
-            .format(prompt=Bcolors.PROMPT, endc=Bcolors.ENDC)
+            .format(prompt=Bcolors.PROMPT+Bcolors.BLUE, endc=Bcolors.ENDC)
         print(prompt)
         return False
     else:
@@ -499,26 +499,25 @@ def main_menu(config):
         logo_top(config.debug_mode)
         rh_update_prompt = rh_update_check(config)[1]
         rhim_config = load_rhim_sys_markers(config.user)
-        rh_installation_state = f"RotorHazard Manager{Bcolors.ENDC}"
+        rh_installation_state = f"{Bcolors.BLUE}1 - RotorHazard Manager{Bcolors.ENDC}"
         if not config_check():  # checks is RH configured
             conf_color = Bcolors.GREEN
             conf_arrow = "  <- go here first"
-        else:   # if it is
+        else:
             conf_color, conf_arrow = '', ''
-            if rh_update_check(config)[0]:  # checks is RH is about to be updated
-                rh_installation_state = f"{Bcolors.GREEN}RotorHazard Manager{Bcolors.ENDC} {rh_update_prompt}"
-            else:
-                if not rhim_config.first_part_of_install and not rhim_config.first_part_of_install:
-                    f"{Bcolors.GREEN}RotorHazard Manager{Bcolors.ENDC}  {Bcolors.RED}<- go here now{Bcolors.ENDC}"
-                elif rhim_config.first_part_of_install and not rhim_config.first_part_of_install:
-                    rh_installation_state = f"{Bcolors.GREEN}RotorHazard Manager{Bcolors.ENDC}  {Bcolors.RED}<- continue{Bcolors.ENDC}"
+        if not rhim_config.first_part_of_install and not rhim_config.second_part_of_install:
+            f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC}{Bcolors.RED}  <- go here now{Bcolors.ENDC}"
+        elif rhim_config.first_part_of_install and not rhim_config.second_part_of_install:
+            rh_installation_state = f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC}{Bcolors.RED}  <- continue{Bcolors.ENDC}"
+        if rhim_config.first_part_of_install and rhim_config.second_part_of_install and rh_update_check(config)[0]:  # checks is RH is about to be updated
+            rh_installation_state = f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC} {rh_update_prompt}"
 
-        main_menu_content = """
+        main_menu_content = """ 
 
                                 {rmf}MAIN MENU{endc}
 
                             {bold}  
-                        1 - {install_state} 
+                        {install_state} 
                             {endc}{bold}
                         2 - Nodes flash and update {endc}{bold}
                             
