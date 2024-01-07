@@ -423,9 +423,9 @@ def main_window(config):
             update_text = "u - Update existing installation"
         if not rhim_config.second_part_of_install:
             if not rhim_config.first_part_of_install:
-                install = f"{Bcolors.GREEN}{Bcolors.UNDERLINE}i - Install RotorHazard server{Bcolors.RED} <- go here now{Bcolors.ENDC}"
+                install = f"{Bcolors.GREEN}i - {Bcolors.UNDERLINE}Install RotorHazard server{Bcolors.RED} <- go here now{Bcolors.ENDC}"
             else:
-                install = f"{Bcolors.GREEN}{Bcolors.UNDERLINE}i - Continue RotorHazard server installation{Bcolors.ENDC}{Bcolors.RED} <- go here now{Bcolors.ENDC}"
+                install = f"{Bcolors.GREEN}i - {Bcolors.UNDERLINE}Continue RotorHazard server installation{Bcolors.ENDC}{Bcolors.RED} <- go here now{Bcolors.ENDC}"
         else:
             install = "i - Install RotorHazard server"
         print("""

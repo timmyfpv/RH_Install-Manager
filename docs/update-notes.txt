@@ -5,6 +5,9 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+6d5.401.35
+1. Coding improvements
+
 6d.401.35
 1. Improved installation instructions for the user
 
