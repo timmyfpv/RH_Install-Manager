@@ -12,9 +12,11 @@ def com_init(bus_number):
     err_time = 1
     bus = 0
     try:
+        # noinspection PyUnresolvedReferences
         from smbus2 import SMBus  # works only on Bookworm
         bus = SMBus(bus_number)
     except ModuleNotFoundError as no_mod_err:
+        # noinspection PyUnresolvedReferences
         from smbus import SMBus  # for legacy OSes
         bus = SMBus(bus_number)
     except PermissionError as perm_error:
@@ -31,6 +33,7 @@ def com_init(bus_number):
 
 def reset_gpio_pin(gpio_reset_pin):
     try:
+        # noinspection PyUnresolvedReferences
         import RPi.GPIO as GPIO
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)  # Use BCM pin numbering

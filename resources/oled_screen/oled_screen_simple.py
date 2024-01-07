@@ -23,13 +23,18 @@
 
 from time import sleep
 # import Adafruit_GPIO.SPI as SPI
+# noinspection PyUnresolvedReferences
 import Adafruit_SSD1306
 
+# noinspection PyUnresolvedReferences
 from PIL import Image
+# noinspection PyUnresolvedReferences
 from PIL import ImageDraw
+# noinspection PyUnresolvedReferences
 from PIL import ImageFont
 
 import subprocess
+# noinspection PyUnresolvedReferences
 import psutil
 
 

@@ -5,6 +5,12 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+6d5.401.35
+1. Coding improvements
+
+6d.401.35
+1. Improved installation instructions for the user
+
 6c.401.35
 1. LEDs support and config wizard tweaks
 2. New way of RHIM version numbering
