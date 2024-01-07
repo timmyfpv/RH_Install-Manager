@@ -21,7 +21,7 @@ def config_check():
         prompt = """
           {prompt}  Looks that you haven't set up config file yet.  {endc}
           {prompt}  Please enter Configuration Wizard - point 4     {endc}""" \
-            .format(prompt=Bcolors.PROMPT+Bcolors.BLUE, endc=Bcolors.ENDC)
+            .format(prompt=Bcolors.PROMPT + Bcolors.BLUE, endc=Bcolors.ENDC)
         print(prompt)
         return False
     else:
@@ -497,7 +497,6 @@ def main_menu(config):
     while True:
         clear_the_screen()
         logo_top(config.debug_mode)
-        rh_update_prompt = rh_update_check(config)[1]
         rhim_config = load_rhim_sys_markers(config.user)
         rh_installation_state = f"{Bcolors.BLUE}1 - RotorHazard Manager{Bcolors.ENDC}"
         if not config_check():  # checks is RH configured
@@ -509,8 +508,9 @@ def main_menu(config):
             rh_installation_state = f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC}{Bcolors.RED}  <- go here now{Bcolors.ENDC}"
         elif rhim_config.first_part_of_install and not rhim_config.second_part_of_install:
             rh_installation_state = f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC}{Bcolors.RED}  <- continue{Bcolors.ENDC}"
-        if rhim_config.first_part_of_install and rhim_config.second_part_of_install and rh_update_check(config)[0]:  # checks is RH is about to be updated
-            rh_installation_state = f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC} {rh_update_prompt}"
+        if rhim_config.first_part_of_install and rhim_config.second_part_of_install and rh_update_check(
+                config):  # checks is RH is about to be updated
+            rh_installation_state = f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC}{Bcolors.RED} ! PENDING STABLE UPDATE !{Bcolors.ENDC}"
 
         main_menu_content = """ 
 
@@ -529,8 +529,7 @@ def main_menu(config):
 
                 """.format(bold=Bcolors.BOLD_S, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, green=Bcolors.GREEN,
                            blue=Bcolors.BLUE, yellow=Bcolors.YELLOW_S, red=Bcolors.RED, config_color=conf_color,
-                           rmf=Bcolors.RED_MENU_HEADER, rh_update_prompt=rh_update_prompt, config_arrow=conf_arrow,
-                           install_state=rh_installation_state)
+                           rmf=Bcolors.RED_MENU_HEADER, config_arrow=conf_arrow, install_state=rh_installation_state)
         print(main_menu_content)
         selection = input()
         if selection == '1':

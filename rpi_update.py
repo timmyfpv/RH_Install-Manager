@@ -68,8 +68,6 @@ def get_rotorhazard_server_version(config):
 
 
 def rh_update_check(config):
-    stable_update_prompt = f"{Bcolors.RED}! PENDING STABLE UPDATE !{Bcolors.ENDC}"
-    # above is showed only when stable version is newer than current
     raw_installed_rh_server = get_rotorhazard_server_version(config)[1]  # 3.0.0-dev2
     installed_rh_server = raw_installed_rh_server.split("-")[0]  # 3.0.0
     installed_rh_server_number = int(installed_rh_server.replace(".", ""))  # 300
@@ -84,9 +82,9 @@ def rh_update_check(config):
     if installed_rh_server_number == newest_possible_rh_version and server_installed_flag and non_stable_source:
         rh_update_available_flag = True
     if rh_update_available_flag:
-        return True, stable_update_prompt
+        return True
     else:
-        return False, ''
+        return False
 
 
 def check_rotorhazard_config_status(config):
@@ -235,7 +233,7 @@ def installation(conf_allowed, config, git_flag):
         print(f"\n\t{Bcolors.RED}Looks like you don't have internet connection. Installation canceled.{Bcolors.ENDC}")
         sleep(2)
     else:
-        if first_part_of_installation_done_flag is False:
+        if not first_part_of_installation_done_flag:
             print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(2)
             clear_the_screen()
@@ -313,7 +311,7 @@ def update(config, git_flag):
         else:
             change_update_to_stable = False
             preferred_rh_version = check_preferred_rh_version(config)[0]
-            if rh_update_check(config)[0] is True and config.rh_version != 'stable':
+            if rh_update_check(config) is True and config.rh_version != 'stable':
                 clear_the_screen()
                 confirm_stable_update_screen = """{bold}
 
@@ -341,7 +339,7 @@ def update(config, git_flag):
                     change_update_to_stable = False
                 elif selection == 'a':
                     return
-                if change_update_to_stable is False:
+                if not change_update_to_stable:
                     preferred_rh_version = check_preferred_rh_version(config)[0]
                 else:
                     preferred_rh_version = check_preferred_rh_version(config)[2]
@@ -385,7 +383,7 @@ def main_window(config):
             colored_server_version_name = f"{Bcolors.GREEN}{server_version_name}{Bcolors.ENDC}"
         else:
             colored_server_version_name = f'{Bcolors.YELLOW}{Bcolors.UNDERLINE}not found{Bcolors.ENDC}'
-        update_prompt = rh_update_check(config)[1]
+        update_prompt = f"{Bcolors.RED}! PENDING STABLE UPDATE !{Bcolors.ENDC}" if rh_update_check(config) else ''
         rhim_config = load_rhim_sys_markers(config.user)
         sys_configured_flag = rhim_config.sys_config_done
         configured_server_target = check_preferred_rh_version(config)[0]
@@ -419,12 +417,12 @@ def main_window(config):
             configure = "c - Reconfigure RotorHazard server"
         else:
             configure = "c - Configure RotorHazard server"
-        if rh_update_check(config)[0] is True:
+        if rh_update_check(config):
             update_text = f"{Bcolors.GREEN}u - {Bcolors.UNDERLINE}Update existing installation{Bcolors.ENDC}"
         else:
             update_text = "u - Update existing installation"
         if not rhim_config.second_part_of_install:
-            if rhim_config.first_part_of_install is False:
+            if not rhim_config.first_part_of_install:
                 install = f"{Bcolors.GREEN}i - Install RotorHazard software{Bcolors.RED} <- go here now{Bcolors.ENDC}"
             else:
                 install = f"{Bcolors.GREEN}i - Continue RotorHazard software installation{Bcolors.ENDC}{Bcolors.RED} <- go here now{Bcolors.ENDC}"
