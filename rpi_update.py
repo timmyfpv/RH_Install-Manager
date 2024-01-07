@@ -5,7 +5,7 @@ from time import sleep
 
 from conf_wizard_rh import conf_rh
 from modules import clear_the_screen, Bcolors, triangle_image_show, internet_check, load_rhim_sys_markers, \
-    write_rhim_sys_markers, load_config, server_start, host_sys_info
+    write_rhim_sys_markers, load_config, server_start
 
 
 def check_preferred_rh_version(config):
