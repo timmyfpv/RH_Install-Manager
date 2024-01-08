@@ -237,7 +237,7 @@ def installation(conf_allowed, config, git_flag):
     else:
         if not first_part_of_installation_done_flag:
             print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
-            sleep(2)
+            sleep(1)
             clear_the_screen()
             print(f"\n\n\t{Bcolors.BOLD}Installation process has been started - please wait...{Bcolors.ENDC}")
             print(f"\n\n\t{Bcolors.BOLD}(please don't interrupt - it may take some time){Bcolors.ENDC}\n\n\n")
@@ -247,7 +247,7 @@ def installation(conf_allowed, config, git_flag):
                 else:
                     os.system("./scripts/sys_conf.sh ssh")
                     print("\n\nsimulation mode - SPI, I2C and UART won't be configured\n\n\n")
-                    sleep(3)
+                    sleep(2)
             rhim_config.uart_support_added, rhim_config.first_part_of_install = True, True
             # UART enabling added here so user won't have to reboot Pi again after doing it in Features Menu
             write_rhim_sys_markers(rhim_config, config.user)
@@ -502,7 +502,7 @@ def main_window(config):
                         pass
                 elif selection == 'a':
                     clear_the_screen()
-                    sleep(0.5)
+                    sleep(0.1)
                     break
             else:
                 conf_allowed = True
@@ -515,7 +515,7 @@ def main_window(config):
         elif selection == 'e':
             clear_the_screen()
             os.chdir(f"/home/{config.user}/RH_Install-Manager")
-            sleep(0.3)
+            sleep(0.1)
             break
 
 
