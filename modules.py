@@ -13,6 +13,12 @@ from types import SimpleNamespace as Namespace, SimpleNamespace
 import requests
 
 
+def host_sys_info():
+    host_info = os.system("./scripts/get_host_info.sh")
+    host = True if host_info == 256 else False  # value 256 means 1 was returned by a script
+    return host
+
+
 def get_host_info():
     ip_list = []
     try:
@@ -96,7 +102,7 @@ def logo_top(linux_testing):
   ##  {place_for_debug_status_here}  ##   {ip3}             
   #####################################    
     """.format(bold=Bcolors.BOLD_S, endc=Bcolors.ENDC_S, place_for_debug_status_here=debug_status,
-               yellow=Bcolors.YELLOW_S, orbold=(Bcolors.ORANGE + Bcolors.ORANGE + 8 * " "), hostname=hostname,
+               yellow=Bcolors.YELLOW_S, orbold=(Bcolors.BOLD + Bcolors.ORANGE + 8 * " "), hostname=hostname,
                ip1=ip1, ip2=ip2, ip3=ip3))
 
 

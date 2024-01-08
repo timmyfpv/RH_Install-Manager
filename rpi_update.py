@@ -4,7 +4,7 @@ from pathlib import Path
 from time import sleep
 
 from conf_wizard_rh import conf_rh
-from modules import clear_the_screen, Bcolors, triangle_image_show, internet_check, load_rhim_sys_markers, \
+from modules import clear_the_screen, Bcolors, internet_check, load_rhim_sys_markers, \
     write_rhim_sys_markers, load_config, server_start
 
 
@@ -68,8 +68,6 @@ def get_rotorhazard_server_version(config):
 
 
 def rh_update_check(config):
-    stable_update_prompt = f"{Bcolors.RED}! PENDING STABLE UPDATE !{Bcolors.ENDC}"
-    # above is showed only when stable version is newer than current
     raw_installed_rh_server = get_rotorhazard_server_version(config)[1]  # 3.0.0-dev2
     installed_rh_server = raw_installed_rh_server.split("-")[0]  # 3.0.0
     installed_rh_server_number = int(installed_rh_server.replace(".", ""))  # 300
@@ -84,9 +82,9 @@ def rh_update_check(config):
     if installed_rh_server_number == newest_possible_rh_version and server_installed_flag and non_stable_source:
         rh_update_available_flag = True
     if rh_update_available_flag:
-        return True, stable_update_prompt
+        return True
     else:
-        return False, ''
+        return False
 
 
 def check_rotorhazard_config_status(config):
@@ -157,10 +155,10 @@ def end_update(config, server_configured_flag, server_installed_flag):
 def end_installation():
     while True:
         print(f"""
-                {Bcolors.GREEN}      
-                r - Reboot - {Bcolors.UNDERLINE}STRONGLY{Bcolors.ENDC} {Bcolors.GREEN}recommended {Bcolors.ENDC}
-
-                c - Configure RotorHazard server now
+                
+                r - Reboot without configuration 
+                {Bcolors.GREEN}
+                c - {Bcolors.UNDERLINE}Configure RotorHazard server now{Bcolors.ENDC}
 
                 e - Exit now""")
 
@@ -191,7 +189,7 @@ def end_of_part_1():
 
 def first_part_of_installation_done_check(config):
     rhim_config = load_rhim_sys_markers(config.user)
-    return True if rhim_config.first_part_of_install is True else False
+    return True if rhim_config.first_part_of_install else False
 
 
 def installation(conf_allowed, config, git_flag):
@@ -205,9 +203,10 @@ def installation(conf_allowed, config, git_flag):
             ######################################################
 
             {green_no_s}
-            Please reboot now and connect to the timer again. Afterward, 
-            reopen Install Manager by typing '{endc_no_s}rhim{green_no_s}' in the terminal window 
-            and navigate to the first item in the Main Menu. {endc}
+            Please reboot now and connect to the timer again. 
+            Afterward, reopen Install Manager by typing '{endc_no_s}rhim{green_no_s}' 
+            in the terminal window and navigate to the first item 
+            in the Main Menu. {endc}
                         """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
                                    endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     installation_completed = """
@@ -220,10 +219,11 @@ def installation(conf_allowed, config, git_flag):
             ######################################################
 
             {green_no_s}
-            Please reboot the system after installation. 
+            You can configure your RotorHazard installation now. 
+            After doing that, consider rebooting the system. 
             RotorHazard service will be started automatically.
-            You can also reopen Install Manager (type '{endc_no_s}rhim{green_no_s}')
-            and configure available options.{endc}
+            You can also launch Install Manager (type '{endc_no_s}rhim{green_no_s}')
+            and check available options.{endc}
                         """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
                                    endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     rhim_config = load_rhim_sys_markers(config.user)
@@ -235,9 +235,9 @@ def installation(conf_allowed, config, git_flag):
         print(f"\n\t{Bcolors.RED}Looks like you don't have internet connection. Installation canceled.{Bcolors.ENDC}")
         sleep(2)
     else:
-        if first_part_of_installation_done_flag is False:
+        if not first_part_of_installation_done_flag:
             print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
-            sleep(2)
+            sleep(1)
             clear_the_screen()
             print(f"\n\n\t{Bcolors.BOLD}Installation process has been started - please wait...{Bcolors.ENDC}")
             print(f"\n\n\t{Bcolors.BOLD}(please don't interrupt - it may take some time){Bcolors.ENDC}\n\n\n")
@@ -247,7 +247,7 @@ def installation(conf_allowed, config, git_flag):
                 else:
                     os.system("./scripts/sys_conf.sh ssh")
                     print("\n\nsimulation mode - SPI, I2C and UART won't be configured\n\n\n")
-                    sleep(3)
+                    sleep(2)
             rhim_config.uart_support_added, rhim_config.first_part_of_install = True, True
             # UART enabling added here so user won't have to reboot Pi again after doing it in Features Menu
             write_rhim_sys_markers(rhim_config, config.user)
@@ -313,7 +313,7 @@ def update(config, git_flag):
         else:
             change_update_to_stable = False
             preferred_rh_version = check_preferred_rh_version(config)[0]
-            if rh_update_check(config)[0] is True and config.rh_version != 'stable':
+            if rh_update_check(config) is True and config.rh_version != 'stable':
                 clear_the_screen()
                 confirm_stable_update_screen = """{bold}
 
@@ -341,7 +341,7 @@ def update(config, git_flag):
                     change_update_to_stable = False
                 elif selection == 'a':
                     return
-                if change_update_to_stable is False:
+                if not change_update_to_stable:
                     preferred_rh_version = check_preferred_rh_version(config)[0]
                 else:
                     preferred_rh_version = check_preferred_rh_version(config)[2]
@@ -385,7 +385,7 @@ def main_window(config):
             colored_server_version_name = f"{Bcolors.GREEN}{server_version_name}{Bcolors.ENDC}"
         else:
             colored_server_version_name = f'{Bcolors.YELLOW}{Bcolors.UNDERLINE}not found{Bcolors.ENDC}'
-        update_prompt = rh_update_check(config)[1]
+        update_prompt = f"{Bcolors.RED}! PENDING STABLE UPDATE !{Bcolors.ENDC}" if rh_update_check(config) else ''
         rhim_config = load_rhim_sys_markers(config.user)
         sys_configured_flag = rhim_config.sys_config_done
         configured_server_target = check_preferred_rh_version(config)[0]
@@ -414,22 +414,22 @@ def main_window(config):
                        server=colored_server_version_name, update_prompt=update_prompt)
         print(welcome_text)
         if not rh_config_flag and server_installed_flag:
-            configure = f"{Bcolors.GREEN}c - Configure RotorHazard server{Bcolors.ENDC}{Bcolors.RED} -> go here now{Bcolors.ENDC}"
+            configure = f"{Bcolors.GREEN}c - Configure RotorHazard server{Bcolors.ENDC}{Bcolors.RED} <- go here now{Bcolors.ENDC}"
         elif not rh_config_flag and not server_installed_flag:
             configure = "c - Reconfigure RotorHazard server"
         else:
             configure = "c - Configure RotorHazard server"
-        if rh_update_check(config)[0] is True:
+        if rh_update_check(config):
             update_text = f"{Bcolors.GREEN}u - {Bcolors.UNDERLINE}Update existing installation{Bcolors.ENDC}"
         else:
             update_text = "u - Update existing installation"
         if not rhim_config.second_part_of_install:
-            if rhim_config.first_part_of_install is False:
-                install = f"{Bcolors.GREEN}i - Install RotorHazard software{Bcolors.ENDC}"
+            if not rhim_config.first_part_of_install:
+                install = f"{Bcolors.GREEN}i - {Bcolors.UNDERLINE}Install RotorHazard server{Bcolors.ENDC}{Bcolors.RED} <- go here now{Bcolors.ENDC}"
             else:
-                install = f"{Bcolors.GREEN}i - Continue RotorHazard software installation{Bcolors.ENDC}{Bcolors.RED} -> go here now{Bcolors.ENDC}"
+                install = f"{Bcolors.GREEN}i - {Bcolors.UNDERLINE}Continue RotorHazard server installation{Bcolors.ENDC}{Bcolors.RED} <- go here now{Bcolors.ENDC}"
         else:
-            install = "i - Install RotorHazard software"
+            install = "i - Install RotorHazard server"
         print("""
                     {install}
 
@@ -502,8 +502,7 @@ def main_window(config):
                         pass
                 elif selection == 'a':
                     clear_the_screen()
-                    triangle_image_show()
-                    sleep(0.5)
+                    sleep(0.1)
                     break
             else:
                 conf_allowed = True
@@ -516,8 +515,7 @@ def main_window(config):
         elif selection == 'e':
             clear_the_screen()
             os.chdir(f"/home/{config.user}/RH_Install-Manager")
-            triangle_image_show()
-            sleep(0.3)
+            sleep(0.1)
             break
 
 

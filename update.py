@@ -21,7 +21,7 @@ def config_check():
         prompt = """
           {prompt}  Looks that you haven't set up config file yet.  {endc}
           {prompt}  Please enter Configuration Wizard - point 4     {endc}""" \
-            .format(prompt=Bcolors.PROMPT, endc=Bcolors.ENDC)
+            .format(prompt=Bcolors.BLUE, endc=Bcolors.ENDC)
         print(prompt)
         return False
     else:
@@ -107,7 +107,7 @@ User code: {code}
         break
 
 
-def updated_check(config):
+def rhim_recently_updated_check(config):
     updated_recently_with_new_version_flag = os.path.exists(f"/home/{config.user}/.rhim_markers/.was_updated_new")
     # true if self update was performed and new version was available to downloaded
     updated_recently_with_old_version_flag = os.path.exists(f"/home/{config.user}/.rhim_markers/.was_updated_old")
@@ -145,7 +145,7 @@ def updated_check(config):
         return False
 
 
-def rhim_update_available_check(config):
+def rhim_update_available_check():
     # no config.user usage due to order of operations
     if os.path.exists("./.new_rhim_version_diff_file") and os.path.exists("./updater-config.json"):
         if os.path.getsize("./.new_rhim_version_diff_file"):
@@ -154,8 +154,11 @@ def rhim_update_available_check(config):
             rhim_update_available_flag = False  # done this way due to development purposes and weird edge cases
     else:
         rhim_update_available_flag = False
+    return True if rhim_update_available_flag else False
 
-    if rhim_update_available_flag and config.beta_tester is False:  # don't show update prompt to beta-testers
+
+def rhim_update_available_prompt(config, rhim_update_available_flag):
+    if rhim_update_available_flag:  # don't show update prompt to beta-testers
         clear_the_screen()
         logo_top(config.debug_mode)
         print("""\n\n {bold}
@@ -179,6 +182,7 @@ def rhim_update_available_check(config):
                 break
             elif selection == 's':
                 break
+    return True if rhim_update_available_flag else False
 
 
 def welcome_screen(config):
@@ -202,7 +206,7 @@ def welcome_screen(config):
     {endc}""".format(bold=Bcolors.BOLD, red=Bcolors.RED, green=Bcolors.GREEN, endc=Bcolors.ENDC)
 
     first_time_flag = os.path.exists("./.first_time_here")
-    while first_time_flag and not updated_check(config):
+    while first_time_flag and not rhim_recently_updated_check(config):
         clear_the_screen()
         logo_top(config.debug_mode)
         print(welcome_message)
@@ -226,8 +230,8 @@ def splash_screen(updater_version):
     clear_the_screen()
     print("\n\n")
     triangle_image_show()
-    print(f"\t\t\t{Bcolors.BOLD} Updater version: {str(updater_version)}{Bcolors.ENDC}")
-    sleep(1)
+    print(f"\t\t{Bcolors.BOLD} RotorHazard Install Manager - version: {str(updater_version)}{Bcolors.ENDC}")
+    sleep(1.5)
 
 
 def serial_menu(config):
@@ -365,14 +369,14 @@ def self_updater(config):
     while True:
         clear_the_screen()
         logo_top(config.debug_mode)
-        updater = """{bold}
-        You can update Manager software by hitting '{green}u{endc}{bold}' now. It is advised step 
+        updater = """
+        You can update Manager software by hitting '{green}u{endc}' now. It is advised step 
         before updating the RotorHazard server or before flashing nodes.
 
         Manager version number is related to the {red}latest supported RotorHazard 
-        stable server version{endc}{bold} and {blue}nodes firmware API number{endc}{bold} that it contains.
-        For example, version {red}230{endc}{bold}.{blue}25{endc}{bold}.3a supports RotorHazard 2.3.0 stable 
-        and contains nodes firmware with "API level 25".
+        stable server version{endc} and {blue}nodes firmware API number{endc} that it contains.
+        For example, version 6a.{red}401{endc}{bold}.{blue}35{endc} supports RotorHazard 4.0.1 stable 
+        and contains nodes firmware with "API level 35".
 
         Self-updater will test your internet connection before every update
         and prevent update if there is no internet connection established.
@@ -399,26 +403,28 @@ def features_menu(config):
     while True:
         clear_the_screen()
         logo_top(config.debug_mode)
+        update_available = Bcolors.UNDERLINE if rhim_update_available_check() else ''
         features_menu_content = """
 
-                                {rmf}FEATURES MENU{endc}{bold}
+                            {rmf}FEATURES MENU{endc}{bold}
 
 
-                        1 - Enable serial protocol {endc}{bold}
+                    1 - Enable serial protocol {endc}{bold}
 
-                        2 - Access Point and Internet
+                    2 - Access Point and Internet
 
-                        3 - Show actual Pi's GPIO
+                    3 - Show actual Pi's GPIO
 
-                        4 - Add useful aliases
+                    4 - Add useful aliases
+                    
+                    5 - {update_flag}Update the Install-Manager{endc}{bold}
 
-                        5 - Update the Install-Manager {endc}{bold}
+                    6 - Create a log file{yellow}
 
-                        6 - Create a log file{yellow}
-
-                        e - Exit to main menu {endc}
+                    e - Exit to main menu {endc}
 
                  """.format(bold=Bcolors.BOLD_S, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC,
+                            update_flag=update_available,
                             blue=Bcolors.BLUE, yellow=Bcolors.YELLOW_S, red=Bcolors.RED_S, rmf=Bcolors.RED_MENU_HEADER)
         print(features_menu_content)
         selection = input()
@@ -488,7 +494,7 @@ def end():
     print("\n\n")
     rhim_asci_image_show()
     print(f"\t\t\t{Bcolors.BOLD}Happy flyin'!{Bcolors.ENDC}\n")
-    sleep(1.3)
+    sleep(1.5)
     clear_the_screen()
     sys.exit()
 
@@ -497,30 +503,39 @@ def main_menu(config):
     while True:
         clear_the_screen()
         logo_top(config.debug_mode)
-        rh_update_prompt = rh_update_check(config)[1]
-        if not config_check():
+        rhim_config = load_rhim_sys_markers(config.user)
+        rh_installation_state = f"{Bcolors.BLUE}1 - RotorHazard Manager{Bcolors.ENDC}"
+        if not config_check():  # checks is RH configured
             conf_color = Bcolors.GREEN
             conf_arrow = "  <- go here first"
         else:
             conf_color, conf_arrow = '', ''
-        main_menu_content = """
+            if not rhim_config.first_part_of_install and not rhim_config.second_part_of_install:
+                rh_installation_state = f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC}{Bcolors.RED}  <- go here now{Bcolors.ENDC}"
+            elif rhim_config.first_part_of_install and not rhim_config.second_part_of_install:
+                rh_installation_state = f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC}{Bcolors.RED}  <- continue{Bcolors.ENDC}"
+            if rhim_config.first_part_of_install and rhim_config.second_part_of_install and rh_update_check(
+                    config):  # checks is RH is about to be updated
+                rh_installation_state = f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC}{Bcolors.RED} ! PENDING STABLE UPDATE !{Bcolors.ENDC}"
 
-                                {rmf}MAIN MENU{endc}
+        main_menu_content = """ 
 
-                            {blue}{bold}  
-                        1 - RotorHazard Manager {rh_update_prompt} 
-                            {endc}{bold}
-                        2 - Nodes flash and update {endc}{bold}
+                            {rmf}MAIN MENU{endc}
+
+                        {bold}  
+                    {install_state} 
+                        {endc}{bold}
+                    2 - Nodes flash and update {endc}{bold}
                             
-                        3 - Additional features{config_color}
+                    3 - Additional features{config_color}
 
-                        4 - Configuration Wizard{config_arrow}{endc}{bold}{yellow}
+                    4 - Configuration Wizard{config_arrow}{endc}{bold}{yellow}
 
-                        e - Exit to Raspberry OS{endc}
+                    e - Exit to Raspberry OS{endc}
 
                 """.format(bold=Bcolors.BOLD_S, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, green=Bcolors.GREEN,
                            blue=Bcolors.BLUE, yellow=Bcolors.YELLOW_S, red=Bcolors.RED, config_color=conf_color,
-                           rmf=Bcolors.RED_MENU_HEADER, rh_update_prompt=rh_update_prompt, config_arrow=conf_arrow)
+                           rmf=Bcolors.RED_MENU_HEADER, config_arrow=conf_arrow, install_state=rh_installation_state)
         print(main_menu_content)
         selection = input()
         if selection == '1':
@@ -551,8 +566,8 @@ def main():
     updater_version = get_rhim_version(False)
     config = load_config()
     splash_screen(updater_version)
-    updated_check(config)
-    rhim_update_available_check(config)
+    rhim_recently_updated_check(config)
+    rhim_update_available_prompt(config, rhim_update_available_check())
     welcome_screen(config)
     main_menu(config)
 

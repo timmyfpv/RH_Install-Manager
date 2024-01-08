@@ -23,6 +23,7 @@ printf "\n\nUpdating process has been started\n\n" &
 dots50
 printf "\n"
 for pid in $(pgrep -ax python3 | grep start_rhim.py | awk '{print $1}'); do kill -9 "$pid"; done
+for pid in $(pgrep -ax python3 | grep start_rhim.py | awk '{print $1}'); do kill -9 "$pid"; done # not a mistake - last line in rhim.sh
 cd ~ || exit
 rm -rf ~/.rhim_markers/old_RH_Install-Manager >/dev/null 2>&1
 cp -r ~/RH_Install-Manager ~/.rhim_markers/old_RH_Install-Manager

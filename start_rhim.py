@@ -24,7 +24,7 @@ Detailed instructions what to do now can be found in: RH_Install-Manager/docs/py
         print("\n\nThis program requires python3.6 or newer")
         print(old_python_error_message)
     else:
-        print("Program starts...")
+        print("Please wait...")
         import update
         update.main()
 
