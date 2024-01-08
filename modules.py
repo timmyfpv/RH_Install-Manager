@@ -102,7 +102,7 @@ def logo_top(linux_testing):
   ##  {place_for_debug_status_here}  ##   {ip3}             
   #####################################    
     """.format(bold=Bcolors.BOLD_S, endc=Bcolors.ENDC_S, place_for_debug_status_here=debug_status,
-               yellow=Bcolors.YELLOW_S, orbold=(Bcolors.ORANGE + Bcolors.ORANGE + 8 * " "), hostname=hostname,
+               yellow=Bcolors.YELLOW_S, orbold=(Bcolors.BOLD + Bcolors.ORANGE + 8 * " "), hostname=hostname,
                ip1=ip1, ip2=ip2, ip3=ip3))
 
 

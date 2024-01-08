@@ -406,7 +406,7 @@ def features_menu(config):
         update_available = Bcolors.UNDERLINE if rhim_update_available_check() else ''
         features_menu_content = """
 
-                        {rmf}FEATURES MENU{endc}{bold}
+                            {rmf}FEATURES MENU{endc}{bold}
 
 
                     1 - Enable serial protocol {endc}{bold}
@@ -520,18 +520,18 @@ def main_menu(config):
 
         main_menu_content = """ 
 
-                                {rmf}MAIN MENU{endc}
+                            {rmf}MAIN MENU{endc}
 
-                            {bold}  
-                        {install_state} 
-                            {endc}{bold}
-                        2 - Nodes flash and update {endc}{bold}
+                        {bold}  
+                    {install_state} 
+                        {endc}{bold}
+                    2 - Nodes flash and update {endc}{bold}
                             
-                        3 - Additional features{config_color}
+                    3 - Additional features{config_color}
 
-                        4 - Configuration Wizard{config_arrow}{endc}{bold}{yellow}
+                    4 - Configuration Wizard{config_arrow}{endc}{bold}{yellow}
 
-                        e - Exit to Raspberry OS{endc}
+                    e - Exit to Raspberry OS{endc}
 
                 """.format(bold=Bcolors.BOLD_S, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, green=Bcolors.GREEN,
                            blue=Bcolors.BLUE, yellow=Bcolors.YELLOW_S, red=Bcolors.RED, config_color=conf_color,
