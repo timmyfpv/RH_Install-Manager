@@ -155,7 +155,7 @@ def rhim_update_available_check(config):
     else:
         rhim_update_available_flag = False
 
-    if rhim_update_available_flag and config.beta_tester is False:  # don't show update prompt to beta-testers
+    if rhim_update_available_flag:  # don't show update prompt to beta-testers
         clear_the_screen()
         logo_top(config.debug_mode)
         print("""\n\n {bold}
