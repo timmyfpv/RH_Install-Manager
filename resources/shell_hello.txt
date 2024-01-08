@@ -1,0 +1,6 @@
+echo
+echo -------------------------------------------------
+echo Type \'rhim\' to launch RotorHazard Install Manager
+echo and continue RotorHazard server installation
+echo -------------------------------------------------
+echo

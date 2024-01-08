@@ -56,3 +56,5 @@ echo
 # port forwarding
 cd /home/"${1}"/RH_Install-Manager/scripts/ || exit
 sudo /home/"${1}"/RH_Install-Manager/scripts/iptables_conf.sh
+
+sed -i '/shell_hello.txt/d' ~/.bashrc

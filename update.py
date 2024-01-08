@@ -375,8 +375,8 @@ def self_updater(config):
 
         Manager version number is related to the {red}latest supported RotorHazard 
         stable server version{endc}{bold} and {blue}nodes firmware API number{endc}{bold} that it contains.
-        For example, version {red}230{endc}{bold}.{blue}25{endc}{bold}.3a supports RotorHazard 2.3.0 stable 
-        and contains nodes firmware with "API level 25".
+        For example, version {bold}6a.{red}401{endc}{bold}.{blue}35{endc} supports RotorHazard 4.0.1 stable 
+        and contains nodes firmware with "API level 35".
 
         Self-updater will test your internet connection before every update
         and prevent update if there is no internet connection established.

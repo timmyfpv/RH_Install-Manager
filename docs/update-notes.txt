@@ -5,6 +5,10 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+6e.401.35
+1. Added message when logging into terminal during the installation
+2. Menus tweaks and improvements
+
 6d5.401.35
 1. Coding improvements
 
