@@ -230,8 +230,8 @@ def splash_screen(updater_version):
     clear_the_screen()
     print("\n\n")
     triangle_image_show()
-    print(f"\t\t\t{Bcolors.BOLD} Updater version: {str(updater_version)}{Bcolors.ENDC}")
-    sleep(1)
+    print(f"\t\t{Bcolors.BOLD} RotorHazard Install Manager - version: {str(updater_version)}{Bcolors.ENDC}")
+    sleep(1.5)
 
 
 def serial_menu(config):
@@ -494,7 +494,7 @@ def end():
     print("\n\n")
     rhim_asci_image_show()
     print(f"\t\t\t{Bcolors.BOLD}Happy flyin'!{Bcolors.ENDC}\n")
-    sleep(1.3)
+    sleep(1.5)
     clear_the_screen()
     sys.exit()
 
