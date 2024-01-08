@@ -58,4 +58,5 @@ cd /home/"${1}"/RH_Install-Manager/scripts/ || exit
 sudo /home/"${1}"/RH_Install-Manager/scripts/iptables_conf.sh
 
 sed -i '/shell_hello_1.txt/d' ~/.bashrc
+sed -i '/shell_hello_2.txt/d' ~/.bashrc  # in case of previous installations
 echo "cat ~/RH_Install-Manager/resources/shell_hello_2.txt" >> ~/.bashrc 2>/dev/null
