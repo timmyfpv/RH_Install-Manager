@@ -145,7 +145,7 @@ def rhim_recently_updated_check(config):
         return False
 
 
-def rhim_update_available_check(config):
+def rhim_update_available_check():
     # no config.user usage due to order of operations
     if os.path.exists("./.new_rhim_version_diff_file") and os.path.exists("./updater-config.json"):
         if os.path.getsize("./.new_rhim_version_diff_file"):
@@ -154,7 +154,10 @@ def rhim_update_available_check(config):
             rhim_update_available_flag = False  # done this way due to development purposes and weird edge cases
     else:
         rhim_update_available_flag = False
+    return True if rhim_update_available_flag else False
 
+
+def rhim_update_available_prompt(config, rhim_update_available_flag):
     if rhim_update_available_flag:  # don't show update prompt to beta-testers
         clear_the_screen()
         logo_top(config.debug_mode)
@@ -400,7 +403,7 @@ def features_menu(config):
     while True:
         clear_the_screen()
         logo_top(config.debug_mode)
-        update_available = Bcolors.UNDERLINE if rhim_update_available_check(config) else ''
+        update_available = Bcolors.UNDERLINE if rhim_update_available_check() else ''
         features_menu_content = """
 
                         {rmf}FEATURES MENU{endc}{bold}
@@ -414,13 +417,14 @@ def features_menu(config):
 
                     4 - Add useful aliases
                     
-                    5 - {update_flag}Update the Install-Manager {endc}{bold}
+                    5 - {update_flag}Update the Install-Manager{endc}{bold}
 
                     6 - Create a log file{yellow}
 
                     e - Exit to main menu {endc}
 
-                 """.format(bold=Bcolors.BOLD_S, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, update_flag = update_available,
+                 """.format(bold=Bcolors.BOLD_S, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC,
+                            update_flag=update_available,
                             blue=Bcolors.BLUE, yellow=Bcolors.YELLOW_S, red=Bcolors.RED_S, rmf=Bcolors.RED_MENU_HEADER)
         print(features_menu_content)
         selection = input()
@@ -563,7 +567,7 @@ def main():
     config = load_config()
     splash_screen(updater_version)
     rhim_recently_updated_check(config)
-    rhim_update_available_check(config)
+    rhim_update_available_prompt(config, rhim_update_available_check())
     welcome_screen(config)
     main_menu(config)
 
