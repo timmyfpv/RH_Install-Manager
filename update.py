@@ -369,13 +369,13 @@ def self_updater(config):
     while True:
         clear_the_screen()
         logo_top(config.debug_mode)
-        updater = """{bold}
-        You can update Manager software by hitting '{green}u{endc}{bold}' now. It is advised step 
+        updater = """
+        You can update Manager software by hitting '{green}u{endc}' now. It is advised step 
         before updating the RotorHazard server or before flashing nodes.
 
         Manager version number is related to the {red}latest supported RotorHazard 
-        stable server version{endc}{bold} and {blue}nodes firmware API number{endc}{bold} that it contains.
-        For example, version {bold}6a.{red}401{endc}{bold}.{blue}35{endc} supports RotorHazard 4.0.1 stable 
+        stable server version{endc} and {blue}nodes firmware API number{endc} that it contains.
+        For example, version 6a.{red}401{endc}{bold}.{blue}35{endc} supports RotorHazard 4.0.1 stable 
         and contains nodes firmware with "API level 35".
 
         Self-updater will test your internet connection before every update
