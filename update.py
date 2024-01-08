@@ -21,7 +21,7 @@ def config_check():
         prompt = """
           {prompt}  Looks that you haven't set up config file yet.  {endc}
           {prompt}  Please enter Configuration Wizard - point 4     {endc}""" \
-            .format(prompt=Bcolors.PROMPT + Bcolors.BLUE, endc=Bcolors.ENDC)
+            .format(prompt=Bcolors.BLUE, endc=Bcolors.ENDC)
         print(prompt)
         return False
     else:
@@ -107,7 +107,7 @@ User code: {code}
         break
 
 
-def updated_check(config):
+def rhim_recently_updated_check(config):
     updated_recently_with_new_version_flag = os.path.exists(f"/home/{config.user}/.rhim_markers/.was_updated_new")
     # true if self update was performed and new version was available to downloaded
     updated_recently_with_old_version_flag = os.path.exists(f"/home/{config.user}/.rhim_markers/.was_updated_old")
@@ -179,6 +179,7 @@ def rhim_update_available_check(config):
                 break
             elif selection == 's':
                 break
+    return True if rhim_update_available_flag else False
 
 
 def welcome_screen(config):
@@ -202,7 +203,7 @@ def welcome_screen(config):
     {endc}""".format(bold=Bcolors.BOLD, red=Bcolors.RED, green=Bcolors.GREEN, endc=Bcolors.ENDC)
 
     first_time_flag = os.path.exists("./.first_time_here")
-    while first_time_flag and not updated_check(config):
+    while first_time_flag and not rhim_recently_updated_check(config):
         clear_the_screen()
         logo_top(config.debug_mode)
         print(welcome_message)
@@ -399,6 +400,7 @@ def features_menu(config):
     while True:
         clear_the_screen()
         logo_top(config.debug_mode)
+        update_available = Bcolors.UNDERLINE if rhim_update_available_check(config) else ''
         features_menu_content = """
 
                         {rmf}FEATURES MENU{endc}{bold}
@@ -411,14 +413,14 @@ def features_menu(config):
                     3 - Show actual Pi's GPIO
 
                     4 - Add useful aliases
-
-                    5 - Update the Install-Manager {endc}{bold}
+                    
+                    5 - {update_flag}Update the Install-Manager {endc}{bold}
 
                     6 - Create a log file{yellow}
 
                     e - Exit to main menu {endc}
 
-                 """.format(bold=Bcolors.BOLD_S, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC,
+                 """.format(bold=Bcolors.BOLD_S, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, update_flag = update_available,
                             blue=Bcolors.BLUE, yellow=Bcolors.YELLOW_S, red=Bcolors.RED_S, rmf=Bcolors.RED_MENU_HEADER)
         print(features_menu_content)
         selection = input()
@@ -560,7 +562,7 @@ def main():
     updater_version = get_rhim_version(False)
     config = load_config()
     splash_screen(updater_version)
-    updated_check(config)
+    rhim_recently_updated_check(config)
     rhim_update_available_check(config)
     welcome_screen(config)
     main_menu(config)
