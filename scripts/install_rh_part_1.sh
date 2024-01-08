@@ -12,4 +12,4 @@ sudo rm -r /home/"${1}"/temp.zip >/dev/null 2>&1 # in case of weird sys config o
 cd /home/"${1}" || exit
 sudo /home/"${1}"/RH_Install-Manager/scripts/move_old_rh_dirs.sh "${1}" "${2}"
 python -m venv ~/.venv || (echo "switched to python3 command" && python3 -m venv ~/.venv) # required when 'python' is command is not recognized as 'python3'
-echo "cat ~/RH_Install-Manager/resources/shell_hello.txt" >> ~/.bashrc 2>/dev/null
+echo "cat ~/RH_Install-Manager/resources/shell_hello_1.txt" >> ~/.bashrc 2>/dev/null
