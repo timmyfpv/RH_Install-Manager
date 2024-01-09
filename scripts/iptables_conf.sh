@@ -29,5 +29,11 @@ printf "
 $blue
 port forwarding added - server available on default port 80
 no need to type server port number in a browser address bar
-just type RotorHazard server IP address (probably: $under$(hostname -I | awk '{ print $1 }')$endc$blue)$endc
+just type RotorHazard server IP address:
+$endc
+$under$(hostname -I | awk '{ print $1 }')$endc
+$under$(hostname -I | awk '{ print $2 }')$endc
+$under$(hostname -I | awk '{ print $3 }')$endc
+$endc
+
 $orange(services that run on port 80 are available on port 8080 now)$endc"
