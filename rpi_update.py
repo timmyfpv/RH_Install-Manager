@@ -400,7 +400,7 @@ def main_window(config):
 
         Please update this (Manager) software, before updating RotorHazard.
 
-        Server version currently installed: {server} {bold}{bold}{config_soft}
+        Server version currently installed: {server} {bold}{config_soft}
 
         {update_prompt}
         {bold}
