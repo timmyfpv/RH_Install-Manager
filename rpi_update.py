@@ -236,7 +236,7 @@ def installation(conf_allowed, config, git_flag):
         sleep(2)
     else:
         if not first_part_of_installation_done_flag:
-            print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
+            print(f"\n\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(1)
             clear_the_screen()
             print(f"\n\n\t{Bcolors.BOLD}Installation process has been started - please wait...{Bcolors.ENDC}")
@@ -258,7 +258,7 @@ def installation(conf_allowed, config, git_flag):
             print(first_part_completed)
             end_of_part_1()
         else:
-            print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
+            print(f"\n\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(2)
             clear_the_screen()
             print(
@@ -283,7 +283,7 @@ def update(config, git_flag):
         print(f"\n\t{Bcolors.RED}Looks like you don't have internet connection. Update canceled.{Bcolors.ENDC}")
         sleep(2)
     else:
-        print(f"\n\t\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
+        print(f"\n\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
         sleep(2)
         if not os.path.exists(f"/home/{config.user}/RotorHazard"):
             print(f"""{Bcolors.BOLD}
