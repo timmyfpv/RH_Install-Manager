@@ -218,7 +218,7 @@ def splash_screen(updater_version):
     clear_the_screen()
     print("\n\n")
     triangle_image_show()
-    print(f"\t\t{Bcolors.BOLD} RotorHazard Install Manager - version: {str(updater_version)}{Bcolors.ENDC}")
+    print(f"\t      {Bcolors.BOLD} RotorHazard Install Manager - version: {str(updater_version)}{Bcolors.ENDC}")
     sleep(1.5)
 
 
@@ -311,7 +311,7 @@ def aliases_menu(config):
         Aliases in Linux act like shortcuts or references to another commands. 
         You can use them every time when you operates in the terminal window. 
         For example instead of typing 'python3 ~/RotorHazard/src/server/server.py' 
-        you can just type 'ss' (server start) etc. Aliases can be modified and added 
+        you can just type 'rh' etc. Aliases can be modified and added 
         anytime you want. You just have to open '~./bashrc' file in text editor 
         - like 'nano'. After that you have reboot or type 'source ~/.bashrc'. 
         {Bcolors.BOLD}
@@ -393,7 +393,6 @@ def features_menu(config):
         logo_top(config.debug_mode)
         update_available = Bcolors.UNDERLINE if rhim_update_available_check() else ''
         features_menu_content = """
-
                             {rmf}FEATURES MENU{endc}{bold}
 
 
@@ -507,7 +506,6 @@ def main_menu(config):
                 rh_installation_state = f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC}{Bcolors.RED} ! PENDING STABLE UPDATE !{Bcolors.ENDC}"
 
         main_menu_content = """ 
-
                             {rmf}MAIN MENU{endc}
 
                         {bold}  
