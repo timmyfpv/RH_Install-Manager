@@ -371,22 +371,26 @@ def origin_change(config):
     clear_the_screen()
     logo_top(config.debug_mode)
     while True:
-        version = input(f"""\n\n
-            Choose the RotorHazard version you want to use:
+        version = input(f"""\n
+            Choose the RotorHazard version you want to be set :
+            as a origin of the download: 
                 
-                s - stable
-                b - beta 
-                m - main
-                
-                a - abort\t""").lower()
-        if not version:
+                    s - stable
+                    b - beta 
+                    m - main
+                    c - custom
+                    
+                    a - abort\t""").lower()
+        if version == 's':
             config.rh_version = 'stable'
-            print("defaulted to: 'stable'")
             break
-        elif version in ['main', 'stable', 'beta']:
-            config.rh_version = version
+        elif version == 'b':
+            config.rh_version = 'beta'
             break
-        elif version == 'custom':
+        elif version == 'm':
+            config.rh_version = 'main'
+            break
+        elif version == 'c':
             # custom - hidden option, just for developers and testing.
             # Nodes flashing will be defaulted to stable in that case
             # If the user specifies custom for version, re-ask the question
@@ -398,7 +402,8 @@ def origin_change(config):
         else:
             print("\nPlease enter correct value!")
     write_json(config, f"{home_dir}/RH_Install-Manager/updater-config.json")
-    print("Configuration changed")
+    print(f"\n\t\tConfiguration changed to {config.rh_version}") if version != 'a' else print(
+        "\n\t\tConfiguration unchanged")
     sleep(2)
 
 
@@ -560,7 +565,7 @@ def main_window(config):
         elif selection == 'ugit':
             update(config, "git")
         elif selection == 'o':
-            origin_change()
+            origin_change(config)
         elif selection == 'e':
             clear_the_screen()
             os.chdir(f"/home/{config.user}/RH_Install-Manager")
