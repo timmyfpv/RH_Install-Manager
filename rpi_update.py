@@ -398,7 +398,9 @@ def origin_change(config):
         elif version == 'a':
             break
         else:
-            print("\nPlease enter correct value!")
+            logo_top(config.debug_mode)
+            clear_the_screen()
+            print("\n\n\t\tPlease enter correct value!")
     write_json(config, f"{home_dir}/RH_Install-Manager/updater-config.json")
     print(f"\n\n\tOrigin changed to {Bcolors.UNDERLINE}{config.rh_version}{Bcolors.ENDC}") if version != 'a' \
         else print(f"\n\n\t{Bcolors.UNDERLINE}Configuration unchanged{Bcolors.ENDC}")
