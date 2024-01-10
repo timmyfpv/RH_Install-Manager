@@ -439,7 +439,7 @@ def main_window(config):
         rhim_config = load_rhim_sys_markers(config.user)
         sys_configured_flag = rhim_config.sys_config_done
         configured_server_target = check_preferred_rh_version(config)[0]
-        change_option = "('o' - to change)" if rhim_config_check else ""
+        change_option = "('o' - to change)" if rhim_config_check() else ""
         sleep(0.1)
         welcome_text = """
         \n\n{red} {bold}
@@ -457,7 +457,7 @@ def main_window(config):
         {bold}
         You can change below configuration in Configuration Wizard in Main Menu:
 
-        Origin of the software is set to version: {endc}{underline}{blue}{server_version}{endc} {change_option}
+        Origin of the software is set to the version: {endc}{underline}{blue}{server_version}{endc}  {change_option}
 
             """.format(bold=Bcolors.BOLD, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, blue=Bcolors.BLUE,
                        yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE, change_option=change_option,
