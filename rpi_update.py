@@ -439,7 +439,7 @@ def main_window(config):
         rhim_config = load_rhim_sys_markers(config.user)
         sys_configured_flag = rhim_config.sys_config_done
         configured_server_target = check_preferred_rh_version(config)[0]
-        change_option = "('o' - to change)" if rhim_config_check else ""
+        change_option = "('o' - to change)" if rhim_config_check else change_option = ""
         sleep(0.1)
         welcome_text = """
         \n\n{red} {bold}
