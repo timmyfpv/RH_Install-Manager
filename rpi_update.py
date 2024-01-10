@@ -359,7 +359,6 @@ def origin_change(config):
     def ask_custom_rh_version():
         while True:
             version = input("\nPlease enter the version tag that you wish to install [e.g. 2.1.0-beta.3]:\n")
-            print("Firmware available to flash will be defaulted to 'stable' version.\n")
             custom_confirm = input(f"""
                 You entered version: '{version}' 
 
@@ -372,15 +371,16 @@ def origin_change(config):
     logo_top(config.debug_mode)
     while True:
         version = input(f"""\n
-            Choose the RotorHazard version you want to be set :
-            as a origin of the download: 
+        {Bcolors.BOLD}
+        Choose the RotorHazard version that you want to be set
+        as a origin of the download: 
+            
+                s - stable
+                b - beta 
+                m - main
+                c - custom
                 
-                    s - stable
-                    b - beta 
-                    m - main
-                    c - custom
-                    
-                    a - abort\t""").lower()
+                a - abort\n\t\t""").lower()
         if version == 's':
             config.rh_version = 'stable'
             break
@@ -402,8 +402,8 @@ def origin_change(config):
         else:
             print("\nPlease enter correct value!")
     write_json(config, f"{home_dir}/RH_Install-Manager/updater-config.json")
-    print(f"\n\t\tConfiguration changed to {config.rh_version}") if version != 'a' else print(
-        "\n\t\tConfiguration unchanged")
+    print(f"\n\tOrigin changed to {Bcolors.UNDERLINE}{config.rh_version}{Bcolors.ENDC}") if version != 'a' \
+        else print(f"\n\t{Bcolors.UNDERLINE}Configuration unchanged{Bcolors.ENDC}")
     sleep(2)
 
 
@@ -441,6 +441,7 @@ def main_window(config):
         rhim_config = load_rhim_sys_markers(config.user)
         sys_configured_flag = rhim_config.sys_config_done
         configured_server_target = check_preferred_rh_version(config)[0]
+        change_option = "'o' - to change" if rh_config_flag else ""
         sleep(0.1)
         welcome_text = """
         \n\n{red} {bold}
@@ -458,10 +459,10 @@ def main_window(config):
         {bold}
         You can change below configuration in Configuration Wizard in Main Menu:
 
-        Origin of the software is set to version: {endc}{underline}{blue}{server_version}{endc} (o - origin change)
+        Origin of the software is set to version: {endc}{underline}{blue}{server_version}{endc}   {change_option}
 
             """.format(bold=Bcolors.BOLD, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, blue=Bcolors.BLUE,
-                       yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE,
+                       yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE, change_option = change_option,
                        server_version=configured_server_target, config_soft=rh_config_text,
                        server=colored_server_version_name, update_prompt=update_prompt)
         print(welcome_text)
