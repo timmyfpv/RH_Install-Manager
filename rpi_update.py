@@ -457,7 +457,7 @@ def main_window(config):
         {bold}
         You can change below configuration in Configuration Wizard in Main Menu:
 
-        Origin of the software is set to the version: {endc}{underline}{blue}{server_version}{endc}  {change_option}
+        Download origin is set to the version: {endc}{underline}{blue}{server_version}{endc}   {change_option}
 
             """.format(bold=Bcolors.BOLD, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, blue=Bcolors.BLUE,
                        yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE, change_option=change_option,
