@@ -2,7 +2,7 @@ import glob
 import os
 from pathlib import Path
 from time import sleep
-
+from update import rhim_config_check
 from conf_wizard_rh import conf_rh
 from modules import clear_the_screen, Bcolors, internet_check, load_rhim_sys_markers, \
     write_rhim_sys_markers, load_config, server_start, logo_top, write_json
@@ -441,7 +441,7 @@ def main_window(config):
         rhim_config = load_rhim_sys_markers(config.user)
         sys_configured_flag = rhim_config.sys_config_done
         configured_server_target = check_preferred_rh_version(config)[0]
-        change_option = "'o' - to change" if rh_config_flag else ""
+        change_option = "('o' - to change)" if rhim_config_check else ""
         sleep(0.1)
         welcome_text = """
         \n\n{red} {bold}
@@ -459,10 +459,10 @@ def main_window(config):
         {bold}
         You can change below configuration in Configuration Wizard in Main Menu:
 
-        Origin of the software is set to version: {endc}{underline}{blue}{server_version}{endc}   {change_option}
+        Origin of the software is set to version: {endc}{underline}{blue}{server_version}{endc} {change_option}
 
             """.format(bold=Bcolors.BOLD, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, blue=Bcolors.BLUE,
-                       yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE, change_option = change_option,
+                       yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE, change_option=change_option,
                        server_version=configured_server_target, config_soft=rh_config_text,
                        server=colored_server_version_name, update_prompt=update_prompt)
         print(welcome_text)

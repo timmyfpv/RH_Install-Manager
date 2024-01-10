@@ -16,7 +16,7 @@ def compatibility():  # adds compatibility and fixes with previous versions
     prev_comp()
 
 
-def config_check():
+def rhim_config_check():
     if not os.path.exists("./updater-config.json"):
         prompt = """
           {prompt}  Looks that you haven't set up config file yet.  {endc}
@@ -505,7 +505,7 @@ def main_menu(config):
         logo_top(config.debug_mode)
         rhim_config = load_rhim_sys_markers(config.user)
         rh_installation_state = f"{Bcolors.BLUE}1 - RotorHazard Manager{Bcolors.ENDC}"
-        if not config_check():  # checks is RH configured
+        if not rhim_config_check():  # checks is RH configured
             conf_color = Bcolors.GREEN
             conf_arrow = "  <- go here first"
         else:
