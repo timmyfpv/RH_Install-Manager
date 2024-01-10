@@ -369,8 +369,7 @@ def origin_change(config):
     clear_the_screen()
     logo_top(config.debug_mode)
     while True:
-        version = input(f"""\n
-        {Bcolors.BOLD}
+        version = input(f""" {Bcolors.BOLD}
         Choose the RotorHazard version that you want to be set
         as a origin of the download: 
             
@@ -379,7 +378,7 @@ def origin_change(config):
                 m - main
                 c - custom
                 
-                a - abort\n\t\t""").lower()
+                a - abort\n\n\t""").lower()
         if version == 's':
             config.rh_version = 'stable'
             break
@@ -401,8 +400,8 @@ def origin_change(config):
         else:
             print("\nPlease enter correct value!")
     write_json(config, f"{home_dir}/RH_Install-Manager/updater-config.json")
-    print(f"\n\tOrigin changed to {Bcolors.UNDERLINE}{config.rh_version}{Bcolors.ENDC}") if version != 'a' \
-        else print(f"\n\t{Bcolors.UNDERLINE}Configuration unchanged{Bcolors.ENDC}")
+    print(f"\n\n\tOrigin changed to {Bcolors.UNDERLINE}{config.rh_version}{Bcolors.ENDC}") if version != 'a' \
+        else print(f"\n\n\t{Bcolors.UNDERLINE}Configuration unchanged{Bcolors.ENDC}")
     sleep(2)
 
 
