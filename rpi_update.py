@@ -373,6 +373,7 @@ def origin_change(config):
         Choose the RotorHazard version that you want to be set
         as a origin of the download: 
             
+            
                 s - stable
                 b - beta 
                 m - main
@@ -442,7 +443,7 @@ def main_window(config):
         rhim_config = load_rhim_sys_markers(config.user)
         sys_configured_flag = rhim_config.sys_config_done
         configured_server_target = check_preferred_rh_version(config)[0]
-        change_option = "('o' - to change)" if rhim_config_check() else ""
+        change_option = "('d' - to change)" if rhim_config_check() else ""
         sleep(0.1)
         welcome_text = """
         \n\n{red} {bold}
@@ -566,7 +567,7 @@ def main_window(config):
             update(config, "")
         elif selection == 'ugit':
             update(config, "git")
-        elif selection == 'o':
+        elif selection == 'd':
             origin_change(config)
         elif selection == 'e':
             clear_the_screen()
