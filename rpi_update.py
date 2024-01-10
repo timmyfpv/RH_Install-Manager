@@ -5,7 +5,7 @@ from time import sleep
 
 from conf_wizard_rh import conf_rh
 from modules import clear_the_screen, Bcolors, internet_check, load_rhim_sys_markers, \
-    write_rhim_sys_markers, load_config, server_start
+    write_rhim_sys_markers, load_config, server_start, logo_top, write_json
 
 
 def check_preferred_rh_version(config):
@@ -155,7 +155,7 @@ def end_update(config, server_configured_flag, server_installed_flag):
 def end_installation():
     while True:
         print(f"""
-                
+
                 r - Reboot without configuration 
                 {Bcolors.GREEN}
                 c - {Bcolors.UNDERLINE}Configure RotorHazard server now{Bcolors.ENDC}
@@ -355,6 +355,53 @@ def update(config, git_flag):
             end_update(config, config_flag, server_installed_flag)
 
 
+def origin_change(config):
+    def ask_custom_rh_version():
+        while True:
+            version = input("\nPlease enter the version tag that you wish to install [e.g. 2.1.0-beta.3]:\n")
+            print("Firmware available to flash will be defaulted to 'stable' version.\n")
+            custom_confirm = input(f"""
+                You entered version: '{version}' 
+
+                Confirm [Y/n]       """)
+            if custom_confirm.lower() == 'y' or not custom_confirm:
+                return version
+
+    home_dir = str(Path.home())
+    clear_the_screen()
+    logo_top(config.debug_mode)
+    while True:
+        version = input(f"""\n\n
+            Choose the RotorHazard version you want to use:
+                
+                s - stable
+                b - beta 
+                m - main
+                
+                a - abort\t""").lower()
+        if not version:
+            config.rh_version = 'stable'
+            print("defaulted to: 'stable'")
+            break
+        elif version in ['main', 'stable', 'beta']:
+            config.rh_version = version
+            break
+        elif version == 'custom':
+            # custom - hidden option, just for developers and testing.
+            # Nodes flashing will be defaulted to stable in that case
+            # If the user specifies custom for version, re-ask the question
+            # and ask exactly what version tag they want:
+            config.rh_version = ask_custom_rh_version()
+            break
+        elif version == 'a':
+            break
+        else:
+            print("\nPlease enter correct value!")
+    write_json(config, f"{home_dir}/RH_Install-Manager/updater-config.json")
+    print("Configuration changed")
+    sleep(2)
+
+
 def main_window(config):
     def system_already_configured_prompt():
         clear_the_screen()
@@ -400,13 +447,13 @@ def main_window(config):
 
         Please update this (Manager) software, before updating RotorHazard.
 
-        Server version currently installed: {server} {bold}{config_soft}
+        Server version currently installed: {server} {bold}{config_soft} 
 
         {update_prompt}
         {bold}
         You can change below configuration in Configuration Wizard in Main Menu:
 
-        Source of the software is set to version: {endc}{underline}{blue}{server_version}{endc}
+        Origin of the software is set to version: {endc}{underline}{blue}{server_version}{endc} (o - origin change)
 
             """.format(bold=Bcolors.BOLD, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, blue=Bcolors.BLUE,
                        yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE,
@@ -512,6 +559,8 @@ def main_window(config):
             update(config, "")
         elif selection == 'ugit':
             update(config, "git")
+        elif selection == 'o':
+            origin_change()
         elif selection == 'e':
             clear_the_screen()
             os.chdir(f"/home/{config.user}/RH_Install-Manager")
