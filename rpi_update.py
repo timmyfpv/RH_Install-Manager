@@ -2,10 +2,9 @@ import glob
 import os
 from pathlib import Path
 from time import sleep
-from update import rhim_config_check
 from conf_wizard_rh import conf_rh
 from modules import clear_the_screen, Bcolors, internet_check, load_rhim_sys_markers, \
-    write_rhim_sys_markers, load_config, server_start, logo_top, write_json
+    write_rhim_sys_markers, rhim_load_config, server_start, logo_top, write_json, rhim_config_check
 
 
 def check_preferred_rh_version(config):
@@ -575,7 +574,7 @@ def main_window(config):
 
 
 def main():
-    config = load_config()
+    config = rhim_load_config()
     main_window(config)
 
 

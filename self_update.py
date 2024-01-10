@@ -2,7 +2,7 @@ import os
 from time import sleep
 
 # import shutil
-from modules import load_config, dots_show, internet_check, get_rhim_version, Bcolors
+from modules import rhim_load_config, dots_show, internet_check, get_rhim_version, Bcolors
 
 
 def make_directories_accessible(config):
@@ -66,7 +66,7 @@ def self_update(config):
 
 
 def main():
-    config = load_config()
+    config = rhim_load_config()
     self_update(config)
 
 

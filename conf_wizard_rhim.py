@@ -3,7 +3,7 @@ from pathlib import Path
 from time import sleep
 from types import SimpleNamespace
 
-from modules import clear_the_screen, Bcolors, logo_top, write_json, load_config
+from modules import clear_the_screen, Bcolors, logo_top, write_json, rhim_load_config
 
 '''
 Check if a config file already exists. if it does, 
@@ -275,7 +275,7 @@ Are you using older, non-i2c hardware flashing mod?
             write_json(config, f"{home_dir}/RH_Install-Manager/updater-config.json")
             # Once we write out the json config we should re-load it just
             # to ensure consistency.
-            config = load_config()
+            config = rhim_load_config()
             print("Configuration saved.\n")
             sleep(1)
             conf_now_flag = 0
@@ -306,7 +306,7 @@ def conf_rhim(config):
 
 
 def main():
-    config = load_config()
+    config = rhim_load_config()
     conf_rhim(config)
 
 

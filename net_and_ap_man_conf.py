@@ -1,6 +1,6 @@
 import os
 
-from modules import clear_the_screen, Bcolors, load_config
+from modules import clear_the_screen, Bcolors, rhim_load_config
 
 
 # Set the Wi-Fi country in raspi-config's Localisation Options:
@@ -240,7 +240,7 @@ def net_and_ap_conf(config):
 
 
 def main():
-    config = load_config()
+    config = rhim_load_config()
     net_and_ap_conf(config)
 
 

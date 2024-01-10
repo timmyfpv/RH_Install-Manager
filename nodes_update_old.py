@@ -1,7 +1,7 @@
 import os
 from time import sleep
 
-from modules import clear_the_screen, Bcolors, logo_top, load_config
+from modules import clear_the_screen, Bcolors, logo_top, rhim_load_config
 from nodes_flash import main as new_flashing
 
 try:
@@ -267,7 +267,7 @@ def nodes_update(config):
 
 
 def main():
-    config = load_config()
+    config = rhim_load_config()
     nodes_update(config)
 
 
