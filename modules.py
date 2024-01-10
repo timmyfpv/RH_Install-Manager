@@ -204,7 +204,7 @@ def rhim_config_check():
         prompt = """
           {prompt}  Looks that you haven't set up config file yet.  {endc}
           {prompt}  Please enter Configuration Wizard - point 4     {endc}""" \
-            .format(prompt=Bcolors.BLUE + Bcolors.PROMPT, endc=Bcolors.ENDC)
+            .format(prompt=Bcolors.PROMPT + Bcolors.BLUE, endc=Bcolors.ENDC)
         print(prompt)
         return False
     else:
