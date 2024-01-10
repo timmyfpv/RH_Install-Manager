@@ -2,10 +2,9 @@ import glob
 import os
 from pathlib import Path
 from time import sleep
-
 from conf_wizard_rh import conf_rh
 from modules import clear_the_screen, Bcolors, internet_check, load_rhim_sys_markers, \
-    write_rhim_sys_markers, load_config, server_start
+    write_rhim_sys_markers, rhim_load_config, server_start, logo_top, write_json, rhim_config_check
 
 
 def check_preferred_rh_version(config):
@@ -155,7 +154,7 @@ def end_update(config, server_configured_flag, server_installed_flag):
 def end_installation():
     while True:
         print(f"""
-                
+
                 r - Reboot without configuration 
                 {Bcolors.GREEN}
                 c - {Bcolors.UNDERLINE}Configure RotorHazard server now{Bcolors.ENDC}
@@ -355,6 +354,60 @@ def update(config, git_flag):
             end_update(config, config_flag, server_installed_flag)
 
 
+def origin_change(config):
+    def ask_custom_rh_version():
+        while True:
+            version = input("\nPlease enter the version tag that you wish to install [e.g. 2.1.0-beta.3]:\n")
+            custom_confirm = input(f"""
+                You entered version: '{version}' 
+
+                Confirm [Y/n]       """)
+            if custom_confirm.lower() == 'y' or not custom_confirm:
+                return version
+
+    home_dir = str(Path.home())
+    clear_the_screen()
+    logo_top(config.debug_mode)
+    while True:
+        version = input(f""" {Bcolors.BOLD}
+        Choose the RotorHazard version that you want to be set
+        as a origin of the download: 
+            
+                s - stable
+                b - beta 
+                m - main
+                c - custom
+                
+                a - abort\n\n\t""").lower()
+        if version == 's':
+            config.rh_version = 'stable'
+            break
+        elif version == 'b':
+            config.rh_version = 'beta'
+            break
+        elif version == 'm':
+            config.rh_version = 'main'
+            break
+        elif version == 'c':
+            # custom - hidden option, just for developers and testing.
+            # Nodes flashing will be defaulted to stable in that case
+            # If the user specifies custom for version, re-ask the question
+            # and ask exactly what version tag they want:
+            config.rh_version = ask_custom_rh_version()
+            break
+        elif version == 'a':
+            break
+        else:
+            print("\n\n\t\tPlease enter the correct value!")
+            sleep(2)
+            clear_the_screen()
+            logo_top(config.debug_mode)
+    write_json(config, f"{home_dir}/RH_Install-Manager/updater-config.json")
+    print(f"\n\n\tOrigin changed to {Bcolors.UNDERLINE}{config.rh_version}{Bcolors.ENDC}") if version != 'a' \
+        else print(f"\n\n\t{Bcolors.UNDERLINE}Configuration unchanged{Bcolors.ENDC}")
+    sleep(2)
+
+
 def main_window(config):
     def system_already_configured_prompt():
         clear_the_screen()
@@ -389,6 +442,7 @@ def main_window(config):
         rhim_config = load_rhim_sys_markers(config.user)
         sys_configured_flag = rhim_config.sys_config_done
         configured_server_target = check_preferred_rh_version(config)[0]
+        change_option = "('o' - to change)" if rhim_config_check() else ""
         sleep(0.1)
         welcome_text = """
         \n\n{red} {bold}
@@ -400,16 +454,16 @@ def main_window(config):
 
         Please update this (Manager) software, before updating RotorHazard.
 
-        Server version currently installed: {server} {bold}{config_soft}
+        Server version currently installed: {server} {bold}{config_soft} 
 
         {update_prompt}
         {bold}
         You can change below configuration in Configuration Wizard in Main Menu:
 
-        Source of the software is set to version: {endc}{underline}{blue}{server_version}{endc}
+        Download origin is set to the version: {endc}{underline}{blue}{server_version}{endc}   {change_option}
 
             """.format(bold=Bcolors.BOLD, underline=Bcolors.UNDERLINE, endc=Bcolors.ENDC, blue=Bcolors.BLUE,
-                       yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE,
+                       yellow=Bcolors.YELLOW, red=Bcolors.RED, orange=Bcolors.ORANGE, change_option=change_option,
                        server_version=configured_server_target, config_soft=rh_config_text,
                        server=colored_server_version_name, update_prompt=update_prompt)
         print(welcome_text)
@@ -512,6 +566,8 @@ def main_window(config):
             update(config, "")
         elif selection == 'ugit':
             update(config, "git")
+        elif selection == 'o':
+            origin_change(config)
         elif selection == 'e':
             clear_the_screen()
             os.chdir(f"/home/{config.user}/RH_Install-Manager")
@@ -520,7 +576,7 @@ def main_window(config):
 
 
 def main():
-    config = load_config()
+    config = rhim_load_config()
     main_window(config)
 
 

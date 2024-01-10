@@ -4,8 +4,8 @@ from time import sleep
 
 from conf_wizard_net import conf_wizard_net
 from conf_wizard_rhim import conf_rhim
-from modules import clear_the_screen, Bcolors, logo_top, triangle_image_show, rhim_asci_image_show, load_config, \
-    load_rhim_sys_markers, write_rhim_sys_markers, get_rhim_version
+from modules import clear_the_screen, Bcolors, logo_top, triangle_image_show, rhim_asci_image_show, rhim_load_config, \
+    load_rhim_sys_markers, write_rhim_sys_markers, get_rhim_version, rhim_config_check
 from nodes_flash import flashing_menu
 from nodes_update_old import nodes_update as old_flash_gpio
 from rpi_update import main_window as rpi_update, rh_update_check
@@ -14,18 +14,6 @@ from rpi_update import main_window as rpi_update, rh_update_check
 def compatibility():  # adds compatibility and fixes with previous versions
     from user_folder_check import main as prev_comp
     prev_comp()
-
-
-def config_check():
-    if not os.path.exists("./updater-config.json"):
-        prompt = """
-          {prompt}  Looks that you haven't set up config file yet.  {endc}
-          {prompt}  Please enter Configuration Wizard - point 4     {endc}""" \
-            .format(prompt=Bcolors.BLUE, endc=Bcolors.ENDC)
-        print(prompt)
-        return False
-    else:
-        return True
 
 
 def attribute_error_handling():
@@ -505,7 +493,7 @@ def main_menu(config):
         logo_top(config.debug_mode)
         rhim_config = load_rhim_sys_markers(config.user)
         rh_installation_state = f"{Bcolors.BLUE}1 - RotorHazard Manager{Bcolors.ENDC}"
-        if not config_check():  # checks is RH configured
+        if not rhim_config_check():  # checks is RH configured
             conf_color = Bcolors.GREEN
             conf_arrow = "  <- go here first"
         else:
@@ -564,7 +552,7 @@ def main_menu(config):
 def main():
     compatibility()
     updater_version = get_rhim_version(False)
-    config = load_config()
+    config = rhim_load_config()
     splash_screen(updater_version)
     rhim_recently_updated_check(config)
     rhim_update_available_prompt(config, rhim_update_available_check())

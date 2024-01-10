@@ -171,7 +171,7 @@ def write_rhim_sys_markers(rhim_config, user):
 
 
 def get_rhim_version(checking_from_updater):
-    config = load_config()
+    config = rhim_load_config()
     if checking_from_updater:
         path = f'/home/{config.user}/RH_Install-Manager/'
     else:
@@ -199,7 +199,19 @@ def server_start():
             os.system("./scripts/server_start.sh")
 
 
-def load_config():
+def rhim_config_check():
+    if not os.path.exists("./updater-config.json"):
+        prompt = """
+          {prompt}  Looks that you haven't set up config file yet.  {endc}
+          {prompt}  Please enter Configuration Wizard - point 4     {endc}""" \
+            .format(prompt=Bcolors.PROMPT + Bcolors.BLUE, endc=Bcolors.ENDC)
+        print(prompt)
+        return False
+    else:
+        return True
+
+
+def rhim_load_config():
     if os.path.exists("./updater-config.json"):
         config = load_json("./updater-config.json")
     else:

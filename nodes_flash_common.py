@@ -1,6 +1,6 @@
 from time import sleep
 
-from modules import load_config, Bcolors
+from modules import rhim_load_config, Bcolors
 
 
 def com_init(bus_number):
@@ -61,7 +61,7 @@ def prepare_mate_node(addr):
         checksum = sum(data) & 0xFF
         return checksum
 
-    config = load_config()
+    config = rhim_load_config()
     try:
         bus_number = config.i2c_bus_number  # check with "ls /dev/ | grep i2c" (Raspberry Pi - 1; Banana Pi - 0)
     except AttributeError:

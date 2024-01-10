@@ -1,7 +1,7 @@
 import os
 
 from conf_wizard_net_ap import ap_config
-from modules import load_config, clear_the_screen, logo_top, Bcolors
+from modules import rhim_load_config, clear_the_screen, logo_top, Bcolors
 from net_and_ap_man_conf import net_and_ap_conf
 
 
@@ -79,7 +79,7 @@ def conf_wizard_net(config):
 
 
 def main():
-    config = load_config()
+    config = rhim_load_config()
     conf_wizard_net(config)
 
 

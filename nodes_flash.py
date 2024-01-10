@@ -1,7 +1,7 @@
 import os
 from time import sleep
 
-from modules import clear_the_screen, Bcolors, logo_top, load_config
+from modules import clear_the_screen, Bcolors, logo_top, rhim_load_config
 from nodes_flash_common import com_init, prepare_mate_node, reset_gpio_pin
 
 
@@ -538,7 +538,7 @@ def flashing_menu(config):
 
 
 def main():
-    config = load_config()
+    config = rhim_load_config()
     com_init(config)
     flashing_menu(config)
 

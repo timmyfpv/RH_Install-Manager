@@ -5,6 +5,10 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+6e2.401.35
+1. Added option to change the origin of the download
+without entering the Configuration Wizard
+
 6e.401.35
 1. Added message when logging into terminal during the installation
 2. Menus tweaks and improvements
