@@ -1,5 +1,5 @@
 
 -------------------------------------------------
-To launch RotorHazard Install Manager type 'rhim'
+To launch RotorHazard Install-Manager type 'rhim'
 -------------------------------------------------
 
