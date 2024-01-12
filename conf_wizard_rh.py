@@ -388,9 +388,10 @@ If you want to use value given as default, just hit 'Enter'.
         if selection[0] == 'y':
             write_json(rh_config, f"{home_dir}/RotorHazard/src/server/config.json")
             print(f"\n{Bcolors.UNDERLINE}Configuration saved{Bcolors.ENDC}\n")
-            os.system(f"./scripts/additional_sys_conf.sh shutdown_pin {rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN']} "
+            os.system(f"sudo ./scripts/additional_sys_conf.sh shutdown_pin {rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN']} "
                       f"{rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS']}")
-            sleep(1.5)
+            print(f"\nreboot maybe required\n")
+            sleep(4)
             conf_now_flag = 0
         if selection in ['ch', 'change', 'n', 'no']:
             conf_now_flag = 1
