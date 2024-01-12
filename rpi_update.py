@@ -175,7 +175,7 @@ def end_of_part_1():
     while True:
         print(f"""
             {Bcolors.GREEN}
-               r - Reboot - do it now {Bcolors.ENDC}
+               r - Reboot now {Bcolors.ENDC}
 
                e - Exit now""")
 
@@ -203,13 +203,13 @@ def installation(conf_allowed, config, git_flag):
 
             {green_no_s}
             Please reboot now and connect to the timer again. 
-            Afterward, reopen Install Manager by typing '{endc_no_s}rhim{green_no_s}' 
+            Afterward, reopen Install-Manager by typing '{endc_no_s}rhim{green_no_s}' 
             in the terminal window and navigate to the first item 
             in the Main Menu. 
             
             You can also exit Install-Manager now and manually type 
-            '{endc_no_s}source ~/.bashrc{endc_no_s}'. {green_no_s}Then launch it again
-            by typing '{endc_no_s}rhim{green_no_s}' and continue installation. Reboot later. 
+            '{endc_no_s}source ~/.bashrc{endc_no_s}'. {green_no_s}Then launch it again by typing '{endc_no_s}rhim{green_no_s}' 
+            and continue installation. Reboot later. 
                         """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
                                    endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     installation_completed = """
@@ -224,10 +224,10 @@ def installation(conf_allowed, config, git_flag):
             {green_no_s}
             You can configure your RotorHazard installation now. 
             After doing that, please reboot the timer. 
-            Some features may require this to work properly. 
+            Some features (like UART) require this to work properly. 
             RotorHazard service will be started automatically.
             You can also launch Install-Manager (type '{endc_no_s}rhim{green_no_s}')
-            and check available options after rebooting.{endc}
+            and check available options - after rebooting.{endc}
                         """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
                                    endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     rhim_config = load_rhim_sys_markers(config.user)
