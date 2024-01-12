@@ -282,7 +282,7 @@ If you want to use value given as default, just hit 'Enter'.
             rh_config["HARDWARE"]['I2C_BUS'] = 1
             rh_config['GENERAL']['DEBUG'] = False
             rh_config['GENERAL']['CORS_ALLOWED_HOSTS'] = '*'
-            rh_config['SERIAL_PORTS'] = []
+            rh_config['SERIAL_PORTS'] = ['/dev/serial0']
             rh_config['LED']['LED_DMA'] = 10
             rh_config['LED']['LED_FREQ_HZ'] = 800000
             print("\nAdvanced configuration set to default values.\n\n")
