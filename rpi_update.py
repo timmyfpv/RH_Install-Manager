@@ -205,7 +205,10 @@ def installation(conf_allowed, config, git_flag):
             Please reboot now and connect to the timer again. 
             Afterward, reopen Install Manager by typing '{endc_no_s}rhim{green_no_s}' 
             in the terminal window and navigate to the first item 
-            in the Main Menu. {endc}
+            in the Main Menu. 
+            You can also exit Install-Manager now and manually type 
+            '{endc_no_s}source ~/.bashrc{endc}'. Then open it again
+            and continue installation. Reboot later. 
                         """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
                                    endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     installation_completed = """
@@ -219,7 +222,7 @@ def installation(conf_allowed, config, git_flag):
 
             {green_no_s}
             You can configure your RotorHazard installation now. 
-            After doing that, consider rebooting the system. 
+            After doing that it is advised to reboot the system. 
             RotorHazard service will be started automatically.
             You can also launch Install Manager (type '{endc_no_s}rhim{green_no_s}')
             and check available options.{endc}
