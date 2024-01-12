@@ -27,7 +27,7 @@ def conf_check():
                 conf_now_flag = False
                 break
             else:
-                print("\ntoo big fingers :( wrong command. try again! :)")
+                print("\nPlease enter the correct command")
 
     return conf_now_flag
 
@@ -97,21 +97,17 @@ If you want to use value given as default, just hit 'Enter'.
             else:
                 print("\nPlease enter correct value!")
 
-        print("\nAre you using older - Arduno based PCB ? [y/N | default: no]")
+        print("\nAre you using older - Arduno based PCB ? [y/n]\t\t")
         while True:
             arduino_pcb_flag = input("\t").strip().lower()
-            if not arduino_pcb_flag:
-                print("defaulted to: no")
-                arduino_pcb_flag = False
-                break
-            elif arduino_pcb_flag[0] == 'y':
+            if arduino_pcb_flag[0] == 'y':
                 arduino_pcb_flag = True
                 break
             elif arduino_pcb_flag[0] == 'n':
                 arduino_pcb_flag = False
                 break
             else:
-                print("\ntoo big fingers :( wrong command. try again! :)")
+                print("\nPlease enter the correct command")
 
         if arduino_pcb_flag:
             while True:
@@ -181,7 +177,7 @@ Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyS0]\t\t""")
                 advanced_wizard_flag = False
                 break
             else:
-                print("\ntoo big fingers :( wrong command. try again! :)")
+                print("\nPlease enter the correct command")
 
         if advanced_wizard_flag:
 
