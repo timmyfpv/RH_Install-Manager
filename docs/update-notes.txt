@@ -5,7 +5,7 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
-6e42.401.35
+6e43.401.35
 1. Changed RHIM config wizard - added old PCB flag
 2. Added miniuart related lines
 3. Code tweaks

@@ -27,7 +27,7 @@ def conf_check():
                 conf_now_flag = False
                 break
             else:
-                print("\nPlease enter correct answer")
+                print("\nPlease enter the correct answer")
 
     return conf_now_flag
 
@@ -83,7 +83,7 @@ If you want to use value given as default, just hit 'Enter'.
                 config.rh_version = ask_custom_rh_version()
                 break
             else:
-                print("\nPlease enter correct value!")
+                print("\nPlease enter the correct answer")
 
         while True:
             country_code = input("\nWhat is your country code? [default: GB]\t\t\t\t").upper()
@@ -95,13 +95,13 @@ If you want to use value given as default, just hit 'Enter'.
                 config.country = country_code
                 break
             else:
-                print("\nPlease enter correct value!")
+                print("\nPlease enter the correct answer")
 
         print("\nAre you using older - Arduino based PCB? [y/n]\t\t")
         while True:
             arduino_pcb_flag = input("\t").strip().lower()
             if not arduino_pcb_flag:
-                print("\nPlease enter correct answer")
+                print("\nPlease enter the correct answer")
             elif arduino_pcb_flag[0] == 'y':
                 arduino_pcb_flag = True
                 break
@@ -109,7 +109,7 @@ If you want to use value given as default, just hit 'Enter'.
                 arduino_pcb_flag = False
                 break
             else:
-                print("\nPlease enter correct answer")
+                print("\nPlease enter the correct answer")
 
         if arduino_pcb_flag:
             while True:
@@ -121,7 +121,7 @@ If you want to use value given as default, just hit 'Enter'.
                     print("defaulted to: 0")
                     break
                 if not nodes_number.isdigit() or int(nodes_number) > 8:
-                    print("\nPlease enter correct value!")
+                    print("\nPlease enter the correct answer")
                 else:
                     config.nodes_number = int(nodes_number)
                     break
@@ -141,7 +141,7 @@ If you want to use value given as default, just hit 'Enter'.
                         config.gpio_reset_pin = int(gpio_reset_pin)
                         break
                     else:
-                        print("\nPlease enter correct value!")
+                        print("\nPlease enter the correct answer")
             else:
                 config.gpio_reset_pin = False
 
@@ -179,7 +179,7 @@ Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyAMA0]\t\t""")
                 advanced_wizard_flag = False
                 break
             else:
-                print("\nPlease enter correct answer")
+                print("\nPlease enter the correct answer")
 
         if advanced_wizard_flag:
 
@@ -194,7 +194,7 @@ What is the number of the I2C bus used with nodes? [0/1 | default: 1]\t""")
                     config.i2c_bus_number = int(bus_number)
                     break
                 else:
-                    print("\nPlease enter correct value!")
+                    print("\nPlease enter the correct answer")
 
             while True:
                 debug_mode = input("""
@@ -211,7 +211,7 @@ Flashing itself is not possible in "sim" mode!\t\t\t\t""").lower()
                     debug_mode, config.debug_mode = False, False
                     break
                 else:
-                    print("\nPlease enter correct value!")
+                    print("\nPlease enter the correct answer")
 
             if debug_mode:
                 debug_user_name = input("\nWhat is your user name on sim/debug OS? \t\t\t\t")
@@ -233,7 +233,7 @@ Are you using older, non-i2c hardware flashing mod?
                     old_hardware_mod, config.old_hw_mod = False, False
                     break
                 else:
-                    print("\nPlease enter correct value!")
+                    print("\nPlease enter the correct answer")
 
             while old_hardware_mod:
                 gpio_pins_assign = input("\nPins assignment? [default/custom/PCB | default: default]\t\t").lower()
@@ -243,7 +243,7 @@ Are you using older, non-i2c hardware flashing mod?
                     print("defaulted to: default")
                     break
                 elif gpio_pins_assign not in pins_valid_options:
-                    print("\nPlease enter correct value!")
+                    print("\nPlease enter the correct answer")
                     continue
                 else:
                     config.pins_assignment = gpio_pins_assign
@@ -300,7 +300,7 @@ Are you using older, non-i2c hardware flashing mod?
             if selection in valid_options:
                 break
             else:
-                print("\nPlease enter correct answer")
+                print("\nPlease enter the correct answer")
         if selection[0] == 'y':
             write_json(config, f"{home_dir}/RH_Install-Manager/updater-config.json")
             # Once we write out the json config we should re-load it just
