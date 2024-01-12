@@ -6,3 +6,10 @@ if [ "$1" == "shutdown_pin" ]; then
 dtoverlay=gpio-shutdown,gpio_pin=$2,debounce=$3
   " | sudo tee -a /boot/config.txt
 fi
+
+if [ "$1" == "led" ]; then
+  echo "
+dtoverlay=act-led,gpio=24
+dtparam=act_led_trigger=heartbeat
+  " | sudo tee -a /boot/config.txt
+fi
