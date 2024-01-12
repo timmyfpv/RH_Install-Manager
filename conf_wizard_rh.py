@@ -21,7 +21,7 @@ def conf_check():
                 conf_now_flag = False
                 break
             else:
-                print("\nPlease enter the correct command")
+                print("\nPlease enter correct answer")
 
     return conf_now_flag
 
@@ -59,9 +59,9 @@ If you want to use value given as default, just hit 'Enter'.
             elif http_port_nr.isdigit():
                 break
             elif not http_port_nr.isdigit():
-                print("\nPlease enter the correct command")
+                print("\nPlease enter correct answer")
         rh_config['GENERAL']['HTTP_PORT'] = int(http_port_nr)
-        rh_config["SENSORS"] = {}
+        rh_config['SENSORS'] = {}
         rh_config['LED'] = {}
         rh_config['HARDWARE'] = {}
 
@@ -79,7 +79,7 @@ If you want to use value given as default, just hit 'Enter'.
                 led_present_flag = False
                 break
             else:
-                print("\nPlease enter the correct command")
+                print("\nPlease enter correct answer")
 
         if led_present_flag:
             while True:
@@ -87,7 +87,7 @@ If you want to use value given as default, just hit 'Enter'.
                 if led_amount.isdigit():
                     break
                 else:
-                    print("\nPlease enter the correct command")
+                    print("\nPlease enter correct answer")
             rh_config['LED']['LED_COUNT'] = int(led_amount)
 
             while True:
@@ -103,7 +103,7 @@ If you want to use value given as default, just hit 'Enter'.
                 elif led_data_pin_nr.isdigit() and led_data_pin_nr not in led_pins_allowed:
                     print("That pin cannot be used for that purpose")
                 else:
-                    print("\nPlease enter the correct command")
+                    print("\nPlease enter correct answer")
             rh_config['LED']['LED_GPIO'] = int(led_data_pin_nr)
 
             while True:
@@ -119,7 +119,7 @@ If you want to use value given as default, just hit 'Enter'.
                     led_output_inverted = False
                     break
                 else:
-                    print("\nPlease enter the correct command")
+                    print("\nPlease enter correct answer")
             rh_config['LED']['LED_INVERT'] = led_output_inverted
 
             while True:
@@ -131,7 +131,7 @@ If you want to use value given as default, just hit 'Enter'.
                 elif led_channel_nr.isdigit():
                     break
                 else:
-                    print("\nPlease enter the correct command")
+                    print("\nPlease enter correct answer")
             rh_config['LED']['LED_CHANNEL'] = int(led_channel_nr)
 
             while True:
@@ -155,7 +155,7 @@ If you want to use value given as default, just hit 'Enter'.
                     led_panel_rotation = (int(led_panel_rotation) / 90)
                     break
                 else:
-                    print("\nPlease enter the correct command")
+                    print("\nPlease enter correct answer")
             rh_config['LED']['PANEL_ROTATE'] = int(led_panel_rotation)
 
             while True:
@@ -171,7 +171,7 @@ If you want to use value given as default, just hit 'Enter'.
                     led_rows_inverted = False
                     break
                 else:
-                    print("\nPlease enter the correct command")
+                    print("\nPlease enter correct answer")
             rh_config['LED']['INVERTED_PANEL_ROWS'] = led_rows_inverted
 
         if not led_present_flag:
@@ -199,7 +199,7 @@ If you want to use value given as default, just hit 'Enter'.
                 advanced_wizard_flag = False
                 break
             else:
-                print("\nPlease enter the correct command")
+                print("\nPlease enter correct answer")
 
         if advanced_wizard_flag:
 
@@ -212,7 +212,7 @@ If you want to use value given as default, just hit 'Enter'.
                 elif i2c_bus_nr.isdigit() and int(i2c_bus_nr) < 3:
                     break
                 else:
-                    print("\nPlease enter the correct command")
+                    print("\nPlease enter correct answer")
             rh_config['HARDWARE']['I2C_BUS'] = int(i2c_bus_nr)
 
             while True:
@@ -224,7 +224,7 @@ If you want to use value given as default, just hit 'Enter'.
                 elif led_dma_nr.isdigit():
                     break
                 else:
-                    print("\nPlease enter the correct command")
+                    print("\nPlease enter correct answer")
             rh_config['LED']['LED_DMA'] = int(led_dma_nr)
 
             while True:
@@ -236,7 +236,7 @@ If you want to use value given as default, just hit 'Enter'.
                 elif led_frequency.isdigit() and int(led_frequency) < 800000:
                     break
                 else:
-                    print("\nPlease enter the correct command")
+                    print("\nPlease enter correct answer")
             rh_config['LED']['LED_FREQ_HZ'] = int(led_frequency)
 
             while True:
@@ -252,7 +252,7 @@ If you want to use value given as default, just hit 'Enter'.
                     debug_mode = False
                     break
                 else:
-                    print("\nPlease enter the correct command")
+                    print("\nPlease enter correct answer")
             rh_config['GENERAL']['DEBUG'] = debug_mode
 
             cors = input("\nCORS hosts allowed? [default: all]\t\t\t\t\t")
@@ -265,10 +265,10 @@ If you want to use value given as default, just hit 'Enter'.
 
             while True:
                 serial_ports = input(
-                    "\nWhich serial port (or USB) you will use? [default: serial0]\t\t").strip().lower()
+                    "\nWhich port (serial or USB) you will use? [blank will default to serial0]\t").strip().lower()
                 if not serial_ports:
-                    serial_ports = ['/dev/serial0']
-                    print("defaulted to: /dev/serial0")
+                    serial_ports = []
+                    print("defaulted to: []")
                     break
                 else:
                     serial_ports = [f"/dev/{serial_ports}"]

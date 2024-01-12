@@ -27,7 +27,7 @@ def conf_check():
                 conf_now_flag = False
                 break
             else:
-                print("\nPlease enter the correct command")
+                print("\nPlease enter correct answer")
 
     return conf_now_flag
 
@@ -97,7 +97,7 @@ If you want to use value given as default, just hit 'Enter'.
             else:
                 print("\nPlease enter correct value!")
 
-        print("\nAre you using older - Arduno based PCB ? [y/n]\t\t")
+        print("\nAre you using older - Arduino based PCB? [y/n]\t\t")
         while True:
             arduino_pcb_flag = input("\t").strip().lower()
             if arduino_pcb_flag[0] == 'y':
@@ -107,7 +107,7 @@ If you want to use value given as default, just hit 'Enter'.
                 arduino_pcb_flag = False
                 break
             else:
-                print("\nPlease enter the correct command")
+                print("\nPlease enter correct answer")
 
         if arduino_pcb_flag:
             while True:
@@ -177,7 +177,7 @@ Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyS0]\t\t""")
                 advanced_wizard_flag = False
                 break
             else:
-                print("\nPlease enter the correct command")
+                print("\nPlease enter correct answer")
 
         if advanced_wizard_flag:
 
@@ -298,12 +298,16 @@ Are you using older, non-i2c hardware flashing mod?
             if selection in valid_options:
                 break
             else:
-                print("\ntoo big fingers ;) - please type yes/abort/change")
+                print("\nPlease enter correct answer")
         if selection[0] == 'y':
             write_json(config, f"{home_dir}/RH_Install-Manager/updater-config.json")
             # Once we write out the json config we should re-load it just
             # to ensure consistency.
             config = rhim_load_config()
+            if arduino_pcb_flag:
+                os.system("sudo scripts/enable_miniuart.sh arduino")
+            else:
+                os.system("sudo scripts/enable_miniuart.sh non-arduino")
             print(f"\n{Bcolors.UNDERLINE}Configuration saved{Bcolors.ENDC}\n")
             sleep(1.5)
             conf_now_flag = 0
