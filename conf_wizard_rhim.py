@@ -151,8 +151,8 @@ like NuclearHazard and other STM32 based ones,
 set this up in the RotorHazard configuration wizard later.
 Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyAMA0]\t""")
                 if not flashing_port_name:
-                    config.port_name = 'ttyS0'
-                    print("defaulted to 'ttyS0'")
+                    config.port_name = 'ttyAMA0'
+                    print("defaulted to 'ttyAMA0'")
                     break
                 else:
                     config.port_name = flashing_port_name
@@ -160,7 +160,7 @@ Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyAMA0]\t""")
 
         if not arduino_pcb_flag:
             config.nodes_number = 0
-            config.port_name = 'ttyS0'
+            config.port_name = 'ttyAMA0'
             config.gpio_reset_pin = False
 
         print("\nDo you want to enter advanced part of a wizard? [y/N | default: no]")
