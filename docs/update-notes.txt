@@ -5,6 +5,11 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+6e3.401.35
+1. Added option to proceed with the installation
+without rebooting.
+2. Fixed config bugs
+
 6e2.401.35
 1. Added option to change the origin of the download
 without entering the Configuration Wizard
