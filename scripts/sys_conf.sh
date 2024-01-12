@@ -125,6 +125,7 @@ uart_enabling() {
   echo "
 [UART enabled - RH_Install-Manager]
 enable_uart=1
+dtoverlay=miniuart-bt
   " | sudo tee -a /boot/config.txt || return 1
   sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt || sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt || return 1
   echo "console serial output disabled - requires REBOOT

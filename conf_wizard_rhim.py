@@ -149,7 +149,7 @@ What is the name of the "flashing port" on your system?
 Works with Arduino based systems. For newer PCB versions,
 like NuclearHazard and other STM32 based ones,
 set this up in the RotorHazard configuration wizard later.
-Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyS0]\t\t""")
+Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyAMA0]\t""")
                 if not flashing_port_name:
                     config.port_name = 'ttyS0'
                     print("defaulted to 'ttyS0'")
@@ -304,10 +304,6 @@ Are you using older, non-i2c hardware flashing mod?
             # Once we write out the json config we should re-load it just
             # to ensure consistency.
             config = rhim_load_config()
-            if arduino_pcb_flag:
-                os.system("sudo scripts/enable_miniuart.sh arduino")
-            else:
-                os.system("sudo scripts/enable_miniuart.sh non-arduino")
             print(f"\n{Bcolors.UNDERLINE}Configuration saved{Bcolors.ENDC}\n")
             sleep(1.5)
             conf_now_flag = 0
