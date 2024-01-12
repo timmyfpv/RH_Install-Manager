@@ -61,6 +61,7 @@ If you want to use value given as default, just hit 'Enter'.
             elif not http_port_nr.isdigit():
                 print("\nPlease enter the correct answer")
         rh_config['GENERAL']['HTTP_PORT'] = int(http_port_nr)
+
         rh_config['SENSORS'] = {}
         rh_config['LED'] = {}
         rh_config['HARDWARE'] = {}
@@ -275,6 +276,32 @@ If you want to use value given as default, just hit 'Enter'.
                     break
             rh_config['SERIAL_PORTS'] = serial_ports
 
+            while True:
+                shutdown_pin = input(
+                    "\nWhich pin is connected to the shutdown button? [default: 24]\t\t").strip().lower()
+                if not shutdown_pin:
+                    shutdown_pin = 24
+                    print("defaulted to: 24")
+                    break
+                elif shutdown_pin.isdigit():
+                    break
+                else:
+                    print("\nPlease enter the correct answer")
+            rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN'] = shutdown_pin
+
+            while True:
+                shutdown_debounce = input(
+                    "\nShutdown button delay in microseconds [default: 2500]\t\t\t").strip().lower()
+                if not shutdown_debounce:
+                    shutdown_debounce = 2500
+                    print("defaulted to: 2500")
+                    break
+                elif shutdown_debounce.isdigit() and int(shutdown_debounce) > 500:
+                    break
+                else:
+                    print("\nPlease enter the correct answer")
+            rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS'] = shutdown_debounce
+
         if not advanced_wizard_flag:
             rh_config['HARDWARE']['I2C_BUS'] = 1
             rh_config['GENERAL']['DEBUG'] = False
@@ -282,6 +309,8 @@ If you want to use value given as default, just hit 'Enter'.
             rh_config['SERIAL_PORTS'] = ['/dev/serial0']
             rh_config['LED']['LED_DMA'] = 10
             rh_config['LED']['LED_FREQ_HZ'] = 800000
+            rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN'] = 24
+            rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS'] = 2500
             print("\nAdvanced configuration set to default values.\n\n")
             sleep(1.2)
 
@@ -304,6 +333,9 @@ If you want to use value given as default, just hit 'Enter'.
         Debug mode:         {rh_config['GENERAL']['DEBUG']}
         CORS allowed:       {rh_config['GENERAL']['CORS_ALLOWED_HOSTS']}
         Serial ports:       {rh_config['SERIAL_PORTS']}
+        Shutdown pin:       {rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN']}
+        Shutdown debounce:  {rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS']}
+
 
         Please check. Confirm? [yes/change/abort]\n"""
         print(rh_configuration_summary)
