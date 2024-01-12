@@ -276,14 +276,14 @@ Are you using older, non-i2c hardware flashing mod?
             # Once we write out the json config we should re-load it just
             # to ensure consistency.
             config = rhim_load_config()
-            print("Configuration saved.\n")
-            sleep(1)
+            print(f"\n{Bcolors.UNDERLINE}Configuration saved{Bcolors.ENDC}\n")
+            sleep(1.5)
             conf_now_flag = 0
         if selection in ['ch', 'change', 'n', 'no']:
             conf_now_flag = 1
         if selection == 'abort':
-            print("Configuration aborted.\n")
-            sleep(0.5)
+            print(f"\n{Bcolors.UNDERLINE}Configuration aborted{Bcolors.ENDC}\n")
+            sleep(1.5)
             conf_now_flag = 0
 
         # Must return the new config from inside the if statements variable context.

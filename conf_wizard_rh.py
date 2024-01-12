@@ -10,9 +10,9 @@ def conf_check():
     if os.path.exists(f"./../RotorHazard/src/server/config.json"):
         print("\n\tLooks that you have Rotorhazard software already configured.")
         while True:
-            cont_conf = input("\n\tOverwrite and continue anyway? [y/n]\t\t").lower()
+            cont_conf = input("\n\tOverwrite and continue anyway? [Y/n]\t\t").lower()
             if not cont_conf:
-                print("answer defaulted to: yes")
+                print("\nanswer defaulted to: yes")
                 break
             elif cont_conf[0] == 'y':
                 conf_now_flag = True
@@ -316,14 +316,14 @@ If you want to use value given as default, just hit 'Enter'.
                 print("\ntoo big fingers ;) - please type yes/abort/change")
         if selection[0] == 'y':
             write_json(rh_config, f"{home_dir}/RotorHazard/src/server/config.json")
-            print("Configuration saved.\n")
-            sleep(1)
+            print(f"\n{Bcolors.UNDERLINE}Configuration saved{Bcolors.ENDC}\n")
+            sleep(1.5)
             conf_now_flag = 0
         if selection in ['change', 'n', 'no']:
             conf_now_flag = 1
         if selection == 'abort':
-            print("Configuration aborted.\n")
-            sleep(0.5)
+            print(f"\n{Bcolors.UNDERLINE}Configuration aborted{Bcolors.ENDC}\n")
+            sleep(1.5)
             conf_now_flag = 0
 
     return conf_now_flag
