@@ -153,7 +153,7 @@ What is the name of the "flashing port" on your system?
 Works with Arduino based systems. For newer PCB versions,
 like NuclearHazard and other STM32 based ones,
 set this up in the RotorHazard configuration wizard later.
-Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyS0]\t""")
+Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyS0]\t\t""")
                 if not flashing_port_name:
                     config.port_name = 'ttyS0'
                     print("defaulted to 'ttyS0'")
