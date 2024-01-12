@@ -115,11 +115,11 @@ If you want to use value given as default, just hit 'Enter'.
 
         if arduino_pcb_flag:
             while True:
-                nodes_number = input("\nHow many nodes will you use in your system? [min: 0/1 | max: 8]"
-                                     "This is important for Arduino based PCBs. If newer PCB is used"
-                                     "like STM32 or Nuclear Hazard - skip this step by hitting 'Enter'\t\t")
+                nodes_number = input("\nHow many nodes will you use in your system? [min: 0/1 | max: 8]\n"
+                                     "This is only important for Arduino based PCBs. If newer PCB is used\n"
+                                     "like STM32 or NuclearHazard - skip this step by hitting 'Enter'\t")
                 if not nodes_number:
-                    nodes_number = 0
+                    config.nodes_number = 0
                     print("defaulted to: 0")
                     break
                 if not nodes_number.isdigit() or int(nodes_number) > 8:
@@ -149,11 +149,11 @@ If you want to use value given as default, just hit 'Enter'.
 
             while True:
                 flashing_port_name = input("""
-    What is the name of the "flashing port" on your system?
-    Works with Arduino based systems. For newer PCB versions,
-    like NuclearHazard and other STM32 based ones,
-    set this up in the RotorHazard configuration wizard later.
-    Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyS0]\t\t""")
+What is the name of the "flashing port" on your system?
+Works with Arduino based systems. For newer PCB versions,
+like NuclearHazard and other STM32 based ones,
+set this up in the RotorHazard configuration wizard later.
+Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyS0]\t""")
                 if not flashing_port_name:
                     config.port_name = 'ttyS0'
                     print("defaulted to 'ttyS0'")
@@ -165,7 +165,7 @@ If you want to use value given as default, just hit 'Enter'.
         if not arduino_pcb_flag:
             config.nodes_number = 0
             config.port_name = 'ttyS0'
-            config.gpio_reset_pin = 17
+            config.gpio_reset_pin = False
 
         print("\nDo you want to enter advanced part of a wizard? [y/N | default: no]")
         while True:

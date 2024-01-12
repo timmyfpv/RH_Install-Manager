@@ -265,13 +265,13 @@ If you want to use value given as default, just hit 'Enter'.
 
             while True:
                 serial_ports = input(
-                    "\nWhich serial port (or USB) you will use? [default: /dev/serial0]\t").strip().lower()
+                    "\nWhich serial port (or USB) you will use? [default: serial0]\t\t").strip().lower()
                 if not serial_ports:
                     serial_ports = ['/dev/serial0']
                     print("defaulted to: /dev/serial0")
                     break
                 else:
-                    serial_ports = [f"{serial_ports}"]
+                    serial_ports = [f"/dev/{serial_ports}"]
                     break
             rh_config['SERIAL_PORTS'] = serial_ports
 
