@@ -391,7 +391,7 @@ If you want to use value given as default, just hit 'Enter'.
             os.system(f"sudo ./scripts/additional_sys_conf.sh shutdown_pin {rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN']} "
                       f"{rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS']}")
             print(f"\nreboot maybe required\n")
-            sleep(4)
+            sleep(5)
             conf_now_flag = 0
         if selection in ['ch', 'change', 'n', 'no']:
             conf_now_flag = 1
