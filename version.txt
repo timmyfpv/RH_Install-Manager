@@ -1,4 +1,4 @@
-6e43.401.35
+6e5.401.35
 
 4.0.0-beta.5
 
@@ -7,7 +7,7 @@ First number refers to last stable RH version that can be installed using partic
 Second number is the API level of the newest contained nodes firmware (Arduino).
 Third number refers to the actual version of the Manager itself.
 
-For example version 6a.401.35 could handle installation/update of the RotorHazard server v 4.0.1,
+For example version 6a.401.35 could handle installation/update of the RotorHazard server v4.0.1,
 would contain firmware with the API level 35 and the Manager release "name" would be "6a".
 
 Features and functions are described in files in /docs folder.
