@@ -5,7 +5,7 @@ Description=RotorHazard Server
 After=multi-user.target
 
 [Service]
-User=pi
+User=${1}
 WorkingDirectory=/home/${1}/RotorHazard/src/server
 ExecStart=/home/${1}/.venv/bin/python server.py
 

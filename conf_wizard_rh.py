@@ -95,7 +95,7 @@ If you want to use value given as default, just hit 'Enter'.
                 led_pins_allowed = ['10', '12', '13', '18', '19', '21', '31', '38', '40', '41', '45', '52', '53']
                 if not led_data_pin_nr:
                     led_data_pin_nr = 10
-                    print("defaulted to: 18")
+                    print("defaulted to: 10")
                     break
                 elif led_data_pin_nr in led_pins_allowed:
                     led_data_pin_nr = int(led_data_pin_nr)
