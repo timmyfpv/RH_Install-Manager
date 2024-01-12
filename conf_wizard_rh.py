@@ -41,7 +41,7 @@ If you want to use value given as default, just hit 'Enter'.
 """)
         nuclear_flag = False
         print("\nAre you using NuclearHazard timer? [y/N | default: n]"
-              "If you are, some setting will be automatically applied\t")
+              "\nIf you are, some settings can be automatically applied\t")
         while True:
             nuclear_user = input("\t").strip().lower()
             if not nuclear_user:
@@ -79,7 +79,7 @@ If you want to use value given as default, just hit 'Enter'.
         rh_config['GENERAL']["ADMIN_PASSWORD"] = admin_pswd
 
         while True:
-            http_port_nr = input("\nWhich port will you use with RotorHazard? [default (and advised): 5000]\t")
+            http_port_nr = input("\nWhich port will you use with RotorHazard? [default (and advised): 5000]")
             if not http_port_nr:
                 http_port_nr = 5000
                 print("defaulted to: 5000")
@@ -340,7 +340,7 @@ If you want to use value given as default, just hit 'Enter'.
             rh_config['HARDWARE']['I2C_BUS'] = 1
             rh_config['GENERAL']['DEBUG'] = False
             rh_config['GENERAL']['CORS_ALLOWED_HOSTS'] = '*'
-            rh_config['SERIAL_PORTS'] = ['/dev/serial0']
+            rh_config['SERIAL_PORTS'] = []
             rh_config['LED']['LED_DMA'] = 10
             rh_config['LED']['LED_FREQ_HZ'] = 800000
             if nuclear_flag:
@@ -384,13 +384,13 @@ If you want to use value given as default, just hit 'Enter'.
             if selection in valid_options:
                 break
             else:
-                print("\ntoo big fingers ;) - please type yes/abort/change")
+                print("\nPlease enter the correct answer")
         if selection[0] == 'y':
             write_json(rh_config, f"{home_dir}/RotorHazard/src/server/config.json")
             print(f"\n{Bcolors.UNDERLINE}Configuration saved{Bcolors.ENDC}\n")
             sleep(1.5)
             conf_now_flag = 0
-        if selection in ['change', 'n', 'no']:
+        if selection in ['ch', 'change', 'n', 'no']:
             conf_now_flag = 1
         if selection == 'abort':
             print(f"\n{Bcolors.UNDERLINE}Configuration aborted{Bcolors.ENDC}\n")
