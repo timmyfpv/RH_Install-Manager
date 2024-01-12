@@ -146,7 +146,7 @@ def rhim_update_available_check():
 
 
 def rhim_update_available_prompt(config, rhim_update_available_flag):
-    if rhim_update_available_flag:  # don't show update prompt to beta-testers
+    if rhim_update_available_flag and config.beta_tester is False:  # don't show update prompt to beta-testers
         clear_the_screen()
         logo_top(config.debug_mode)
         print("""\n\n {bold}
@@ -406,7 +406,7 @@ def features_menu(config):
                     
                     5 - {update_flag}Update the Install-Manager{endc}{bold}
 
-                    6 - Create a log file{yellow}
+                    6 - Create a rhim log file{yellow}
 
                     e - Exit to main menu {endc}
 

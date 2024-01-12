@@ -14,7 +14,7 @@ sed -i "s/\/${2}_log.txt//g" ./log_data/log_code.txt
 echo
 echo ------------------------------
 echo
-echo Tell your favourite developer those:
+echo Your file data:
 echo
 echo User name: "${2}"
 cd /home/"${1}"/RH_Install-Manager || exit
