@@ -117,9 +117,9 @@ If you want to use value given as default, just hit 'Enter'.
             while True:
                 nodes_number = input("\nHow many nodes will you use in your system? [min: 0/1 | max: 8]\n"
                                      "This is only important for Arduino based PCBs. If newer PCB is used\n"
-                                     "like STM32 or NuclearHazard - skip this step by hitting 'Enter'\t")
+                                     "like STM32 or NuclearHazard - skip this step by hitting 'Enter'\t\t")
                 if not nodes_number:
-                    config.nodes_number = 0
+                    nodes_number, config.nodes_number = 0, 0
                     print("defaulted to: 0")
                     break
                 if not nodes_number.isdigit() or int(nodes_number) > 8:
