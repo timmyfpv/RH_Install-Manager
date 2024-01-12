@@ -100,7 +100,9 @@ If you want to use value given as default, just hit 'Enter'.
         print("\nAre you using older - Arduino based PCB? [y/n]\t\t")
         while True:
             arduino_pcb_flag = input("\t").strip().lower()
-            if arduino_pcb_flag[0] == 'y':
+            if not arduino_pcb_flag:
+                print("\nPlease enter correct answer")
+            elif arduino_pcb_flag[0] == 'y':
                 arduino_pcb_flag = True
                 break
             elif arduino_pcb_flag[0] == 'n':
@@ -149,7 +151,7 @@ What is the name of the "flashing port" on your system?
 Works with Arduino based systems. For newer PCB versions,
 like NuclearHazard and other STM32 based ones,
 set this up in the RotorHazard configuration wizard later.
-Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyAMA0]\t""")
+Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyAMA0]\t\t""")
                 if not flashing_port_name:
                     config.port_name = 'ttyAMA0'
                     print("defaulted to 'ttyAMA0'")
@@ -251,7 +253,7 @@ Are you using older, non-i2c hardware flashing mod?
 
             while True:
                 user_is_beta_tester = input(
-                    "\nAre you a developer or a software tester? [y/N | default: no]\t\t\t").lower()
+                    "\nAre you a developer or a software tester? [y/N | default: no]\t\t").lower()
                 if not user_is_beta_tester:
                     config.beta_tester = False
                     print("defaulted to: no")
