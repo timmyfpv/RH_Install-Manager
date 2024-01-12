@@ -5,6 +5,9 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+6e4.401.35
+1. Changed RHIM config wizard - added old PCB flag
+
 6e3.401.35
 1. Added option to proceed with the installation
 without rebooting.

@@ -97,44 +97,75 @@ If you want to use value given as default, just hit 'Enter'.
             else:
                 print("\nPlease enter correct value!")
 
+        print("\nAre you using older - Arduno based PCB ? [y/N | default: no]")
         while True:
-            nodes_number = input("\nHow many nodes will you use in your system? [min: 0/1 | max: 8]\t\t")
-            if not nodes_number.isdigit() or int(nodes_number) > 8:
-                print("\nPlease enter correct value!")
-            else:
-                config.nodes_number = int(nodes_number)
+            arduino_pcb_flag = input("\t").strip().lower()
+            if not arduino_pcb_flag:
+                print("defaulted to: no")
+                arduino_pcb_flag = False
                 break
+            elif arduino_pcb_flag[0] == 'y':
+                arduino_pcb_flag = True
+                break
+            elif arduino_pcb_flag[0] == 'n':
+                arduino_pcb_flag = False
+                break
+            else:
+                print("\ntoo big fingers :( wrong command. try again! :)")
 
-        if int(nodes_number) % 2 != 0:
+        if arduino_pcb_flag:
             while True:
-                odd_nodes_note = """
-Since you declared odd number of nodes, please input, 
-which pin will be used as GPIO reset pin? 
-[ default (used on official PCB): 17 ] \t\t\t\t\t"""
-                gpio_reset_pin = input(odd_nodes_note)
-                if not gpio_reset_pin:
-                    config.gpio_reset_pin = 17
-                    print("defaulted to: 17")
+                nodes_number = input("\nHow many nodes will you use in your system? [min: 0/1 | max: 8]"
+                                     "This is important for Arduino based PCBs. If newer PCB is used"
+                                     "like STM32 or Nuclear Hazard - skip this step by hitting 'Enter'\t\t")
+                if not nodes_number:
+                    nodes_number = 0
+                    print("defaulted to: 0")
                     break
-                elif int(gpio_reset_pin) < 40:
-                    config.gpio_reset_pin = int(gpio_reset_pin)
+                if not nodes_number.isdigit() or int(nodes_number) > 8:
+                    print("\nPlease enter correct value!")
+                else:
+                    config.nodes_number = int(nodes_number)
+                    break
+
+            if int(nodes_number) % 2 != 0:
+                while True:
+                    odd_nodes_note = """
+    Since you declared odd number of nodes, please input, 
+    which pin will be used as GPIO reset pin? 
+    [ default (used on official PCB): 17 ] \t\t\t\t\t"""
+                    gpio_reset_pin = input(odd_nodes_note)
+                    if not gpio_reset_pin:
+                        config.gpio_reset_pin = 17
+                        print("defaulted to: 17")
+                        break
+                    elif int(gpio_reset_pin) < 40:
+                        config.gpio_reset_pin = int(gpio_reset_pin)
+                        break
+                    else:
+                        print("\nPlease enter correct value!")
+            else:
+                config.gpio_reset_pin = False
+
+            while True:
+                flashing_port_name = input("""
+    What is the name of the "flashing port" on your system?
+    Works with Arduino based systems. For newer PCB versions,
+    like NuclearHazard and other STM32 based ones,
+    set this up in the RotorHazard configuration wizard later.
+    Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyS0]\t\t""")
+                if not flashing_port_name:
+                    config.port_name = 'ttyS0'
+                    print("defaulted to 'ttyS0'")
                     break
                 else:
-                    print("\nPlease enter correct value!")
-        else:
-            config.gpio_reset_pin = False
+                    config.port_name = flashing_port_name
+                    break
 
-        while True:
-            flashing_port_name = input("""
-What is the name of the "flashing port" on your system?
-Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyS0]\t\t""")
-            if not flashing_port_name:
-                config.port_name = 'ttyS0'
-                print("defaulted to 'ttyS0'")
-                break
-            else:
-                config.port_name = flashing_port_name
-                break
+        if not arduino_pcb_flag:
+            config.nodes_number = 0
+            config.port_name = 'ttyS0'
+            config.gpio_reset_pin = 17
 
         print("\nDo you want to enter advanced part of a wizard? [y/N | default: no]")
         while True:
@@ -223,7 +254,8 @@ Are you using older, non-i2c hardware flashing mod?
                 config.pins_assignment = 'default'
 
             while True:
-                user_is_beta_tester = input("\nAre you a developer or a software tester? [y/N | default: no]\t\t\t").lower()
+                user_is_beta_tester = input(
+                    "\nAre you a developer or a software tester? [y/N | default: no]\t\t\t").lower()
                 if not user_is_beta_tester:
                     config.beta_tester = False
                     print("defaulted to: no")
