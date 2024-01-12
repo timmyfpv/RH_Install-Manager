@@ -420,6 +420,7 @@ def features_menu(config):
         elif selection == '2':
             conf_wizard_net(config)
         elif selection == '3':
+            clear_the_screen()
             os.system("pinout")
             input("\nDone? Hit 'Enter'\n")
         elif selection == '4':
