@@ -264,10 +264,11 @@ If you want to use value given as default, just hit 'Enter'.
             rh_config['GENERAL']['CORS_ALLOWED_HOSTS'] = cors
 
             while True:
-                serial_ports = input("\nWhich USB ports you will use? [default: 'none']\t\t\t\t").strip().lower()
+                serial_ports = input(
+                    "\nWhich serial port (or USB) you will use? [default: /dev/serial0]\t\t").strip().lower()
                 if not serial_ports:
-                    serial_ports = []
-                    print("defaulted to: none")
+                    serial_ports = '/dev/serial0'
+                    print("defaulted to: /dev/serial0")
                     break
                 elif serial_ports[0] == 'n':
                     serial_ports = []
