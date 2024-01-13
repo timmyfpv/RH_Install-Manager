@@ -355,7 +355,7 @@ If you want to use value given as default, just hit 'Enter'.
         rh_configuration_summary = f"""\n\n
             {Bcolors.UNDERLINE}CONFIGURATION{Bcolors.ENDC}
         
-        NucleahHazard:      {nuclear_flag}
+        NuclearHazard:      {nuclear_flag}
         Admin name:         {rh_config['GENERAL']['ADMIN_USERNAME']}
         Admin password:     {rh_config['GENERAL']['ADMIN_PASSWORD']}
         RotorHazard port:   {rh_config['GENERAL']['HTTP_PORT']}
@@ -378,7 +378,7 @@ If you want to use value given as default, just hit 'Enter'.
 
         Please check. Confirm? [yes/change/abort]\n"""
         print(rh_configuration_summary)
-        valid_options = ['y', 'yes', 'n', 'no', 'change', 'abort']
+        valid_options = ['y', 'yes', 'n', 'no', 'change', 'ch', 'abort']
         while True:
             selection = input().strip()
             if selection in valid_options:
