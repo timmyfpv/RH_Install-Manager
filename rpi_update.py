@@ -534,7 +534,7 @@ def main_window(config):
                         if confirm in confirm_valid_options:
                             break
                         else:
-                            print("\ntoo big fingers :( wrong command. try again! :)")
+                            print("\nPlease type the correct answer")
                     if confirm == 'y' or confirm == 'yes':
                         conf_allowed = True
                         (rhim_config.second_part_of_install, rhim_config.first_part_of_install,
@@ -550,7 +550,7 @@ def main_window(config):
                         if confirm in confirm_valid_options:
                             break
                         else:
-                            print("\ntoo big fingers :( wrong command. try again! :)")
+                            print("\nPlease type the correct answer")
                     if confirm == 'y' or confirm == 'yes':
                         conf_allowed = True
                         (rhim_config.second_part_of_install, rhim_config.first_part_of_install,

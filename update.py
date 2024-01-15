@@ -146,7 +146,7 @@ def rhim_update_available_check():
 
 
 def rhim_update_available_prompt(config, rhim_update_available_flag):
-    if rhim_update_available_flag:  # don't show update prompt to beta-testers
+    if rhim_update_available_flag and config.beta_tester is False:  # don't show update prompt to beta-testers
         clear_the_screen()
         logo_top(config.debug_mode)
         print("""\n\n {bold}
@@ -406,7 +406,7 @@ def features_menu(config):
                     
                     5 - {update_flag}Update the Install-Manager{endc}{bold}
 
-                    6 - Create a log file{yellow}
+                    6 - Create a rhim log file{yellow}
 
                     e - Exit to main menu {endc}
 
@@ -420,6 +420,7 @@ def features_menu(config):
         elif selection == '2':
             conf_wizard_net(config)
         elif selection == '3':
+            clear_the_screen()
             os.system("pinout")
             input("\nDone? Hit 'Enter'\n")
         elif selection == '4':
@@ -451,11 +452,11 @@ def show_about(config):
 
     Possible RotorHazard server versions that may be selected:
 
-    > {blue}'stable'{endc}{bold}- last stable release (can be from before few days or few months){endc}{bold}
+    > {blue}'stable'{endc}{bold} - last stable release (can be from before few days or few months){endc}{bold}
 
-    > {blue}'beta'  {endc}{bold}- last 'beta' release (usually has about few weeks, quite stable){endc}{bold}
+    > {blue}'beta'  {endc}{bold} - last 'beta' release (usually has about few weeks, quite stable){endc}{bold}
 
-    > {blue}'main'{endc}{bold}- absolutely newest features implemented (even if not well tested){endc} 
+    > {blue}'main'{endc}{bold}  - absolutely newest features implemented (even if not well tested){endc} 
 
 
 

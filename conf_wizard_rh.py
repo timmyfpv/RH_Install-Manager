@@ -39,19 +39,47 @@ def do_config():
 Please type your configuration data. It can be modified later.
 If you want to use value given as default, just hit 'Enter'.
 """)
-        rh_config['GENERAL'] = {}
-        admin_name = input("\nWhat will be admin user name on RotorHazard page? [default: admin]\t")
-        if not admin_name:
-            admin_name = 'admin'
-            print("defaulted to: 'admin'")
-        rh_config['GENERAL']["ADMIN_USERNAME"] = admin_name
-        admin_pswd = input("\nWhat will be admin password on RotorHazard page? [default: rotorhazard]\t")
-        if not admin_pswd:
-            admin_pswd = 'rotorhazard'
-            print("defaulted to: 'rotorhazard'")
-        rh_config['GENERAL']["ADMIN_PASSWORD"] = admin_pswd
+        nuclear_flag = False
+        print("\nAre you using NuclearHazard timer? [y/N | default: n]"
+              "\nIf you are, some settings can be automatically applied\t")
         while True:
-            http_port_nr = input("\nWhich port will you use with RotorHazard? [default (and advised): 5000]\t")
+            nuclear_user = input("\t").strip().lower()
+            if not nuclear_user:
+                print("defaulted to: 'no'")
+                nuclear_flag = False
+                break
+            elif nuclear_user[0] == 'y':
+                nuclear_flag = True
+                break
+            elif nuclear_user[0] == 'n':
+                nuclear_flag = False
+                break
+            else:
+                print("\nPlease enter the correct answer")
+
+        rh_config['GENERAL'] = {}
+
+        if nuclear_flag:
+            admin_name = "NuclearHazard"
+        else:
+            admin_name = input("\nWhat will be admin user name on RotorHazard page? [default: admin]\t")
+            if not admin_name:
+                admin_name = 'admin'
+                print("defaulted to: 'admin'")
+        rh_config['GENERAL']["ADMIN_USERNAME"] = admin_name
+
+        if nuclear_flag:
+            admin_pswd = "nuclearhazard"
+        else:
+            admin_pswd = input("\nWhat will be admin password on RotorHazard page? [default: rotorhazard]\t")
+            if not admin_pswd:
+                admin_pswd = 'rotorhazard'
+                print("defaulted to: 'rotorhazard'")
+
+        rh_config['GENERAL']["ADMIN_PASSWORD"] = admin_pswd
+
+        while True:
+            http_port_nr = input("\nWhich port will you use with RotorHazard? [default (and advised): 5000]")
             if not http_port_nr:
                 http_port_nr = 5000
                 print("defaulted to: 5000")
@@ -61,6 +89,7 @@ If you want to use value given as default, just hit 'Enter'.
             elif not http_port_nr.isdigit():
                 print("\nPlease enter the correct answer")
         rh_config['GENERAL']['HTTP_PORT'] = int(http_port_nr)
+
         rh_config['SENSORS'] = {}
         rh_config['LED'] = {}
         rh_config['HARDWARE'] = {}
@@ -275,19 +304,58 @@ If you want to use value given as default, just hit 'Enter'.
                     break
             rh_config['SERIAL_PORTS'] = serial_ports
 
+            if nuclear_flag:
+                shutdown_pin = 19
+            else:
+                while True:
+                    shutdown_pin = input(
+                        "\nWhich pin is connected to the shutdown button? [default: 24]\t\t").strip().lower()
+                    if not shutdown_pin:
+                        shutdown_pin = 24
+                        print("defaulted to: 24")
+                        break
+                    elif shutdown_pin.isdigit():
+                        break
+                    else:
+                        print("\nPlease enter the correct answer")
+            rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN'] = shutdown_pin
+
+            if nuclear_flag:
+                shutdown_debounce = 5000
+            else:
+                while True:
+                    shutdown_debounce = input(
+                        "\nShutdown button delay in microseconds [default: 2500]\t\t\t").strip().lower()
+                    if not shutdown_debounce:
+                        shutdown_debounce = 2500
+                        print("defaulted to: 2500")
+                        break
+                    elif shutdown_debounce.isdigit() and int(shutdown_debounce) > 500:
+                        break
+                    else:
+                        print("\nPlease enter the correct answer")
+            rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS'] = shutdown_debounce
+
         if not advanced_wizard_flag:
             rh_config['HARDWARE']['I2C_BUS'] = 1
             rh_config['GENERAL']['DEBUG'] = False
             rh_config['GENERAL']['CORS_ALLOWED_HOSTS'] = '*'
-            rh_config['SERIAL_PORTS'] = ['/dev/serial0']
+            rh_config['SERIAL_PORTS'] = []
             rh_config['LED']['LED_DMA'] = 10
             rh_config['LED']['LED_FREQ_HZ'] = 800000
+            if nuclear_flag:
+                rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN'] = 19
+                rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS'] = 2500
+            else:
+                rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN'] = 24
+                rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS'] = 2500
             print("\nAdvanced configuration set to default values.\n\n")
             sleep(1.2)
 
         rh_configuration_summary = f"""\n\n
             {Bcolors.UNDERLINE}CONFIGURATION{Bcolors.ENDC}
-
+        
+        NuclearHazard:      {nuclear_flag}
         Admin name:         {rh_config['GENERAL']['ADMIN_USERNAME']}
         Admin password:     {rh_config['GENERAL']['ADMIN_PASSWORD']}
         RotorHazard port:   {rh_config['GENERAL']['HTTP_PORT']}
@@ -304,22 +372,30 @@ If you want to use value given as default, just hit 'Enter'.
         Debug mode:         {rh_config['GENERAL']['DEBUG']}
         CORS allowed:       {rh_config['GENERAL']['CORS_ALLOWED_HOSTS']}
         Serial ports:       {rh_config['SERIAL_PORTS']}
+        Shutdown pin:       {rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN']}
+        Shutdown debounce:  {rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS']}
+
 
         Please check. Confirm? [yes/change/abort]\n"""
         print(rh_configuration_summary)
-        valid_options = ['y', 'yes', 'n', 'no', 'change', 'abort']
+        valid_options = ['y', 'yes', 'n', 'no', 'change', 'ch', 'abort']
         while True:
             selection = input().strip()
             if selection in valid_options:
                 break
             else:
-                print("\ntoo big fingers ;) - please type yes/abort/change")
+                print("\nPlease enter the correct answer")
         if selection[0] == 'y':
             write_json(rh_config, f"{home_dir}/RotorHazard/src/server/config.json")
             print(f"\n{Bcolors.UNDERLINE}Configuration saved{Bcolors.ENDC}\n")
-            sleep(1.5)
+            os.system(
+                f"sudo ./scripts/additional_sys_conf.sh shutdown_pin {rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN']} "
+                f"{rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS']}")
+            os.system(f"sudo ./scripts/additional_sys_conf.sh led ")
+            print(f"\nreboot maybe required\n")
+            sleep(5)
             conf_now_flag = 0
-        if selection in ['change', 'n', 'no']:
+        if selection in ['ch', 'change', 'n', 'no']:
             conf_now_flag = 1
         if selection == 'abort':
             print(f"\n{Bcolors.UNDERLINE}Configuration aborted{Bcolors.ENDC}\n")
