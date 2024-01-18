@@ -376,7 +376,7 @@ def origin_change(config):
     while True:
         version = input(f""" {Bcolors.BOLD}
         Choose the RotorHazard version that you want to be set
-        as a origin of the download: 
+        as a origin of the download: {Bcolors.ENDC}
             
             
                 s - stable
