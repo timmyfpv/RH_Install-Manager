@@ -5,9 +5,12 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+6e6.401.35
+1. NuclearHazard automatic script ready
+
 6e51.401.35
 1. Additional configs wizard options
-2. Nuclear Hazard ready (testing)
+2. NuclearHazard ready (testing)
 
 6e5.401.35
 1. Changed RHIM config wizard - added old PCB flag

@@ -176,10 +176,12 @@ def end_quick_installation(config):
               f"/home/{config.user}/RotorHazard/src/server/config.json")
     print("\t\tDefault NuclearHazard configuration applied.\n\n")
     sleep(2)
-    selection = input("Do you want to activate automatic NuclearHazard Wi-Fi? [y/N]")
+    selection = input("\tDo you want to activate automatic NuclearHazard Wi-Fi? [y/N]"
+                      "You can do it later by typing ./nh-install.sh wifi")
     if selection == 'y':
         os.system("sudo sh ~/RH_Install-Manager/NuclearHazard/nh-wifi.sh")
     else:
+        print("\n\n")
         return
 
 
@@ -217,11 +219,9 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
             Afterward, type the command from the instructions: 
             '{endc_no_s}~/RH_Install-Manager/NuclearHazard/nh-install.sh 2{green_no_s}' 
 
-            You can also manually type now:
-            '{endc_no_s}source ~/.bashrc{green_no_s}' 
+            You can exit also manually type now: '{endc_no_s}source ~/.bashrc{green_no_s}' 
             and then immediately proceed with the installation,
-            by typing '{endc_no_s}./nh-install.sh 2{green_no_s}' 
-            Reboot later. 
+            by typing '{endc_no_s}./nh-install.sh 2{green_no_s}'. Reboot later. 
                         """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
                                    endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
 
