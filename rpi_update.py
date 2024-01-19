@@ -8,7 +8,7 @@ from modules import clear_the_screen, Bcolors, internet_check, load_rhim_sys_mar
 
 
 def check_preferred_rh_version(config):
-    with open("version.txt", "r") as file:
+    with open(f"/home/{config.user}/RH_Install-Manager/version.txt", "r") as file:
         lines = file.readlines()
         line_number = 0
 
@@ -186,12 +186,11 @@ def end_of_part_1():
             return
 
 
-def first_part_of_installation_done_check(config):
-    rhim_config = load_rhim_sys_markers(config.user)
-    return True if rhim_config.first_part_of_install else False
-
-
 def installation(conf_allowed, config, git_flag):
+    def first_part_of_installation_done_check(config):
+        rhim_config = load_rhim_sys_markers(config.user)
+        return True if rhim_config.first_part_of_install else False
+
     first_part_completed = """
 
 
@@ -247,16 +246,16 @@ def installation(conf_allowed, config, git_flag):
             print(f"\n\n\t{Bcolors.BOLD}(please don't interrupt - it may take some time){Bcolors.ENDC}\n\n\n")
             if conf_allowed:
                 if not config.debug_mode:
-                    os.system("./scripts/sys_conf.sh all")
+                    os.system(f"/home/{config.user}/RH_Install-Manager/scripts/sys_conf.sh all")
                 else:
-                    os.system("./scripts/sys_conf.sh ssh")
+                    os.system(f"/home/{config.user}/RH_Install-Manager/scripts/sys_conf.sh ssh")
                     print("\n\nsimulation mode - SPI, I2C and UART won't be configured\n\n\n")
                     sleep(2)
             rhim_config.uart_support_added, rhim_config.first_part_of_install = True, True
             # UART enabling added here so user won't have to reboot Pi again after doing it in Features Menu
             write_rhim_sys_markers(rhim_config, config.user)
             os.system(
-                f"./scripts/install_rh_part_1.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
+                f"/home/{config.user}/RH_Install-Manager/scripts/install_rh_part_1.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
             input("\n\n\npress Enter to continue")
             clear_the_screen()
             print(first_part_completed)
@@ -269,7 +268,7 @@ def installation(conf_allowed, config, git_flag):
                 f"\n\n\t{Bcolors.BOLD}Second part of installation has been started - please wait...{Bcolors.ENDC}")
             print(f"\n\n\t{Bcolors.BOLD}(please don't interrupt - it may take some time){Bcolors.ENDC}\n\n\n")
             os.system(
-                f"./scripts/install_rh_part_2.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
+                f"/home/{config.user}/RH_Install-Manager/scripts/install_rh_part_2.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
             input("\n\n\npress Enter to continue")
             clear_the_screen()
             print(installation_completed)
