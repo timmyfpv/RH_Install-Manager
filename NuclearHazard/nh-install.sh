@@ -2,6 +2,6 @@
 export PYTHONPATH=/home/"$USER"/RH_Install-Manager:$PYTHONPATH
 
 sh ../rhim.sh no_start
-export install_step="$1"
-python3 ./nh-quick-install.py "$1"
+export INSTALL_STEP='$1'
+python3 ./nh-quick-install.py
 

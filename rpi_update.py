@@ -253,11 +253,13 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
     clear_the_screen()
     internet_flag = internet_check()
     first_part_of_installation_done_flag = first_part_of_installation_done_check(config)
+    if quick_install is not False:
+        first_part_of_installation_done_flag = False if quick_install == 1 else first_part_of_installation_done_flag
     if not internet_flag:
         print(f"\n\t{Bcolors.RED}Looks like you don't have internet connection. Installation canceled.{Bcolors.ENDC}")
         sleep(2)
     else:
-        if not first_part_of_installation_done_flag or quick_install == 1:
+        if not first_part_of_installation_done_flag:
             print(f"\n\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(1)
             clear_the_screen()
@@ -279,7 +281,7 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
             clear_the_screen()
             print(first_part_completed)
             end_of_part_1()
-        elif first_part_of_installation_done_flag or quick_install == 2:
+        elif first_part_of_installation_done_flag:
             print(f"\n\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(2)
             clear_the_screen()
