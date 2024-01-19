@@ -61,10 +61,10 @@ If you want to use value given as default, just hit 'Enter'.
 """)
         pi_user_name = input("\nWhat is your user name on the Raspberry Pi (host)? [default: pi]\t")
         if not pi_user_name:
-            config.pi_user = 'pi'
+            config.user = 'pi'
             print("defaulted to: 'pi'")
         else:
-            config.pi_user = pi_user_name
+            config.user = pi_user_name
         while True:
             version = input(f"\nChoose the RotorHazard version you want to use? \
 [{Bcolors.UNDERLINE}stable{Bcolors.ENDC} | beta | main]\t").lower()
@@ -280,7 +280,7 @@ Are you using older, non-i2c hardware flashing mod?
         print(f"""\n\n
             {Bcolors.UNDERLINE}CONFIGURATION{Bcolors.ENDC}:
 
-        User name:              {config.pi_user}
+        User name:              {config.user}
         RotorHazard version:    {config.rh_version}
         Country code:           {config.country}
         Nodes amount:           {config.nodes_number}
