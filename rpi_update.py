@@ -175,7 +175,12 @@ def end_quick_installation(config):
     os.system(f"cp /home/{config.user}/RH_Install-Manager/NuclearHazard/nh-rh-config.json "
               f"/home/{config.user}/RotorHazard/src/server/config.json")
     print("\t\tDefault NuclearHazard configuration applied.\n\n")
-    sleep(4)
+    sleep(2)
+    selection = input("Do you want to activate automatic NuclearHazard Wi-Fi? [y/N]")
+    if selection == 'y':
+        os.system("sudo sh ~/RH_Install-Manager/NuclearHazard/nh-wifi.sh")
+    else:
+        return
 
 
 def end_of_part_1():
@@ -198,7 +203,29 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
         rhim_config = load_rhim_sys_markers(config.user)
         return True if rhim_config.first_part_of_install else False
 
-    first_part_completed = """
+    first_part_completed_short = """
+
+
+            ######################################################
+            ##                                                  ##
+            ##{bold}{green} First part completed  {thumbs}{endc}##
+            ##                                                  ##
+            ######################################################
+
+            {green_no_s}
+            Please reboot now and connect to the timer again. 
+            Afterward, type the command from the instructions: 
+            '{endc_no_s}~/RH_Install-Manager/NuclearHazard/nh-install.sh 2{green_no_s}' 
+
+            You can also manually type now:
+            '{endc_no_s}source ~/.bashrc{green_no_s}' 
+            and then immediately proceed with the installation,
+            by typing '{endc_no_s}./nh-install.sh 2{green_no_s}' 
+            Reboot later. 
+                        """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
+                                   endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
+
+    first_part_completed_long = """
 
 
             ######################################################
@@ -283,7 +310,7 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
                 f"/home/{config.user}/RH_Install-Manager/scripts/install_rh_part_1.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
             input("\n\n\npress Enter to continue")
             clear_the_screen()
-            print(first_part_completed)
+            print(first_part_completed_long) if not quick_install else print(first_part_completed_short)
             end_of_part_1()
         else:
             print(f"\n\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")

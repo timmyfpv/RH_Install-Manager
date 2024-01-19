@@ -21,3 +21,10 @@ WorkingDirectory=/home/NuclearHazard/
 [Install]
 WantedBy=multi-user.target" | sudo tee -a /etc/systemd/system/hotspot.service
 sudo systemctl enable hotspot.service
+
+
+echo "
+
+Automatic NuclearHazard AccessPoint enabled
+
+"
