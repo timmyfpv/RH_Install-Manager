@@ -6,7 +6,7 @@
         ^^^^^^^^^^^^
 
 6e6.401.35
-1. NuclearHazard automatic script ready
+1. NuclearHazard automatic script added
 
 6e51.401.35
 1. Additional configs wizard options
