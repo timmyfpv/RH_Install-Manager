@@ -14,10 +14,6 @@ def load_json(file_name):
 
 def main():
     config = load_json("./nh-updater-config.json")
-    if config.debug_mode:
-        config.user = config.debug_user
-    else:
-        config.user = config.pi_user
     installation(True, config, False)
 
 
