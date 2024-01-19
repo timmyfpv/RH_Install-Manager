@@ -253,8 +253,9 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
     clear_the_screen()
     internet_flag = internet_check()
     first_part_of_installation_done_flag = first_part_of_installation_done_check(config)
+    quick_install = int(quick_install)
     if quick_install != 0:
-        if quick_install == "1":
+        if quick_install == 1:
             first_part_of_installation_done_flag = False
         else:
             first_part_of_installation_done_flag = True
