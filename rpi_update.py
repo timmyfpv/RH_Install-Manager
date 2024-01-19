@@ -151,7 +151,7 @@ def end_update(config, server_configured_flag, server_installed_flag):
             return
 
 
-def end_installation():
+def end_normal_installation():
     while True:
         print(f"""
 
@@ -171,6 +171,13 @@ def end_installation():
             break
 
 
+def end_quick_installation(config):
+    os.system(f"cp /home/{config.user}/RH_Install-Manager/NuclearHazard/nh-rh-config.json "
+              f"/home/{config.user}/RotorHazard/src/server/config.json")
+    print("Default NuclearHazard configuration applied.")
+    sleep(4)
+
+
 def end_of_part_1():
     while True:
         print(f"""
@@ -186,7 +193,7 @@ def end_of_part_1():
             return
 
 
-def installation(conf_allowed, config, git_flag):
+def installation(conf_allowed, config, git_flag, quick_install=False):
     def first_part_of_installation_done_check(config):
         rhim_config = load_rhim_sys_markers(config.user)
         return True if rhim_config.first_part_of_install else False
@@ -273,7 +280,10 @@ def installation(conf_allowed, config, git_flag):
             clear_the_screen()
             print(installation_completed)
             os.system("sudo chmod 777 -R ~/RotorHazard")
-            end_installation()
+            if not quick_install:
+                end_normal_installation()
+            else:
+                end_quick_installation(config)
             rhim_config.second_part_of_install, rhim_config.sys_config_done = True, True
             write_rhim_sys_markers(rhim_config, config.user)
 
@@ -351,7 +361,7 @@ def update(config, git_flag):
             clear_the_screen()
             print(f"\n\n\t{Bcolors.BOLD}Updating existing installation - please wait...{Bcolors.ENDC}")
             print(f"\n\n\t{Bcolors.BOLD}(please don't interrupt - it may take some time){Bcolors.ENDC}\n\n\n")
-            os.system(f"./scripts/update_rh.sh {config.user} {preferred_rh_version} {git_flag}")
+            os.system(f"/home/{config.user}/RH_Install-Manager/scripts/update_rh.sh {config.user} {preferred_rh_version} {git_flag}")
             config_flag, config_soft = check_rotorhazard_config_status(config)
             server_installed_flag, server_version_name, _ = get_rotorhazard_server_version(config)
             os.system("sudo chmod -R 777 ~/RotorHazard")
