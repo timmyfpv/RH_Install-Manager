@@ -61,7 +61,7 @@ If you want to use value given as default, just hit 'Enter'.
 """)
         pi_user_name = input("\nWhat is your user name on the Raspberry Pi (host)? [default: pi]\t")
         if not pi_user_name:
-            config.pi_user = 'pi'
+            config.user = 'pi'
             print("defaulted to: 'pi'")
         else:
             config.user = pi_user_name
