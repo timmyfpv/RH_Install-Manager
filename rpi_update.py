@@ -253,8 +253,11 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
     clear_the_screen()
     internet_flag = internet_check()
     first_part_of_installation_done_flag = first_part_of_installation_done_check(config)
-    if quick_install is not False:
-        first_part_of_installation_done_flag = False if quick_install == 1 else first_part_of_installation_done_flag
+    if quick_install != 0:
+        if quick_install == "1":
+            first_part_of_installation_done_flag = False
+        else:
+            first_part_of_installation_done_flag = True
     if not internet_flag:
         print(f"\n\t{Bcolors.RED}Looks like you don't have internet connection. Installation canceled.{Bcolors.ENDC}")
         sleep(2)
@@ -281,7 +284,7 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
             clear_the_screen()
             print(first_part_completed)
             end_of_part_1()
-        elif first_part_of_installation_done_flag:
+        else:
             print(f"\n\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(2)
             clear_the_screen()
@@ -372,7 +375,8 @@ def update(config, git_flag):
             clear_the_screen()
             print(f"\n\n\t{Bcolors.BOLD}Updating existing installation - please wait...{Bcolors.ENDC}")
             print(f"\n\n\t{Bcolors.BOLD}(please don't interrupt - it may take some time){Bcolors.ENDC}\n\n\n")
-            os.system(f"/home/{config.user}/RH_Install-Manager/scripts/update_rh.sh {config.user} {preferred_rh_version} {git_flag}")
+            os.system(
+                f"/home/{config.user}/RH_Install-Manager/scripts/update_rh.sh {config.user} {preferred_rh_version} {git_flag}")
             config_flag, config_soft = check_rotorhazard_config_status(config)
             server_installed_flag, server_version_name, _ = get_rotorhazard_server_version(config)
             os.system("sudo chmod -R 777 ~/RotorHazard")
