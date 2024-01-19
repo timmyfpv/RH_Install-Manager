@@ -214,6 +214,8 @@ open_software_alias_check &
 dependencies_check
 wait
 check_for_python_venv_flag
-python3 start_rhim.py || python3 start_rhim.py
+if [ "$1" != "no_start" ]; then
+  python3 start_rhim.py || python3 start_rhim.py
+fi
 # for some reason 'requests' module sometimes isn't loaded properly the first time
 # and requires second program launch
