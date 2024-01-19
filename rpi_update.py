@@ -174,7 +174,7 @@ def end_normal_installation():
 def end_quick_installation(config):
     os.system(f"cp /home/{config.user}/RH_Install-Manager/NuclearHazard/nh-rh-config.json "
               f"/home/{config.user}/RotorHazard/src/server/config.json")
-    print("Default NuclearHazard configuration applied.")
+    print("\t\tDefault NuclearHazard configuration applied.\n\n")
     sleep(4)
 
 
@@ -227,6 +227,18 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
             ##                                                  ##
             ######################################################
 
+
+                        """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
+                                   endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
+    installation_completed_long = """
+
+
+            ######################################################
+            ##                                                  ##
+            ##{bold}{green}Installation completed {thumbs}{endc}##
+            ##                                                  ##
+            ######################################################
+
             {green_no_s}
             You can configure your RotorHazard installation now. 
             After doing that, please reboot the timer. 
@@ -245,7 +257,7 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
         print(f"\n\t{Bcolors.RED}Looks like you don't have internet connection. Installation canceled.{Bcolors.ENDC}")
         sleep(2)
     else:
-        if not first_part_of_installation_done_flag:
+        if not first_part_of_installation_done_flag or quick_install == 1:
             print(f"\n\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(1)
             clear_the_screen()
@@ -267,7 +279,7 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
             clear_the_screen()
             print(first_part_completed)
             end_of_part_1()
-        else:
+        elif first_part_of_installation_done_flag or quick_install == 2:
             print(f"\n\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(2)
             clear_the_screen()
@@ -278,12 +290,9 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
                 f"/home/{config.user}/RH_Install-Manager/scripts/install_rh_part_2.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
             input("\n\n\npress Enter to continue")
             clear_the_screen()
-            print(installation_completed)
+            print(installation_completed_long) if not quick_install else print(installation_completed)
             os.system("sudo chmod 777 -R ~/RotorHazard")
-            if not quick_install:
-                end_normal_installation()
-            else:
-                end_quick_installation(config)
+            end_normal_installation() if not quick_install else end_quick_installation(config)
             rhim_config.second_part_of_install, rhim_config.sys_config_done = True, True
             write_rhim_sys_markers(rhim_config, config.user)
 

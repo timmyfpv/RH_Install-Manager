@@ -13,8 +13,9 @@ def load_json(file_name):
 
 
 def main():
+    passed_install_step = os.getenv('install_step')
     config = load_json("./nh-updater-config.json")
-    installation(True, config, False)
+    installation(True, config, False, passed_install_step)
 
 
 if __name__ == "__main__":
