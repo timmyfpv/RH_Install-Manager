@@ -345,7 +345,7 @@ def aliases_menu(config):
 def self_updater(config):
     def check_if_beta_user(config):
         if config.beta_tester is not False:
-            rhim_source_name = "main" if config.beta_tester is True else config.beta_tester
+            rhim_source_name = "dev" if config.beta_tester is True else config.beta_tester
             updater_info = f'{Bcolors.RED}' \
                            f'Source of the update is set to the "{Bcolors.UNDERLINE}{Bcolors.BOLD}{rhim_source_name}' \
                            f'{Bcolors.ENDC}{Bcolors.RED}{Bcolors.BOLD}" branch.{Bcolors.ENDC}\n'
@@ -456,7 +456,7 @@ def show_about(config):
 
     > {blue}'beta'  {endc}{bold} - last 'beta' release (usually has about few weeks, quite stable){endc}{bold}
 
-    > {blue}'main'{endc}{bold}  - absolutely newest features implemented (even if not well tested){endc} 
+    > {blue}'main'{endc}{bold}   - absolutely newest features implemented (even if not well tested){endc} 
 
 
 

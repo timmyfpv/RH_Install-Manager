@@ -33,7 +33,7 @@ def self_update(config):
         # if config:  # if config is not empty, then the file exited to load.
         #     shutil.copyfile('~/RH_Install-Manager/updater-config.json', '~/.rhim_markers/updater-config.json')
         if config.beta_tester is True:
-            source = 'main'
+            source = 'dev'
             print("This will be the 'beta' update - may be changed in config wizard.\n")
         elif config.beta_tester is False:
             source = 'stable'
