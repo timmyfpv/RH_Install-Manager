@@ -176,8 +176,9 @@ def end_quick_installation(config):
               f"/home/{config.user}/RotorHazard/src/server/config.json")
     print("\t\tDefault NuclearHazard configuration applied.\n\n")
     sleep(2)
-    selection = input("\tDo you want to activate automatic NuclearHazard Wi-Fi? [y/N]"
-                      "You can do it later by typing ./nh-install.sh wifi")
+    selection = input("\tDo you want to activate automatic NuclearHazard Wi-Fi? [y/N]\n"
+                      "\tYou can do it later by typing ./nh-install.sh wifi\n"
+                      "\tin the directory ~/RH_Install-Manager/NuclearHazard")
     if selection == 'y':
         os.system("sudo sh ~/RH_Install-Manager/NuclearHazard/nh-wifi.sh")
     else:
@@ -219,8 +220,8 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
             Afterward, type the command from the instructions: 
             '{endc_no_s}~/RH_Install-Manager/NuclearHazard/nh-install.sh 2{green_no_s}' 
 
-            You can exit also manually type now: '{endc_no_s}source ~/.bashrc{green_no_s}' 
-            and then immediately proceed with the installation,
+            You can also exit now and type: '{endc_no_s}source ~/.bashrc{green_no_s}'. 
+            Then immediately proceed with the installation,
             by typing '{endc_no_s}./nh-install.sh 2{green_no_s}'. Reboot later. 
                         """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
                                    endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
@@ -311,6 +312,7 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
             write_rhim_sys_markers(rhim_config, config.user)
             os.system(
                 f"/home/{config.user}/RH_Install-Manager/scripts/install_rh_part_1.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
+            os.system(f"""echo "cat /home/{config.user}/RH_Install-Manager/resources/shell_hello_1.txt" >> ~/.bashrc 2>/dev/null""") if not quick_install else None
             input("\n\n\npress Enter to continue")
             clear_the_screen()
             print(first_part_completed_long) if not quick_install else print(first_part_completed_short)
