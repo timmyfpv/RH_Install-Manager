@@ -178,7 +178,7 @@ def end_quick_installation(config):
     sleep(2)
     selection = input("\tDo you want to activate automatic NuclearHazard Wi-Fi? [y/N]\n"
                       "\tYou can do it later by typing ./nh-install.sh wifi\n"
-                      "\tin the directory ~/RH_Install-Manager/NuclearHazard")
+                      "\tin the directory ~/RH_Install-Manager/NuclearHazard\n\n\t")
     if selection == 'y':
         os.system("sudo sh ~/RH_Install-Manager/NuclearHazard/nh-wifi.sh")
     else:
