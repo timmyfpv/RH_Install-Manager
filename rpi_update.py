@@ -1,5 +1,6 @@
 import glob
 import os
+import sys
 from pathlib import Path
 from time import sleep
 from conf_wizard_rh import conf_rh
@@ -198,7 +199,7 @@ def end_of_part_1():
         if selection == 'r':
             os.system("sudo reboot")
         elif selection == 'e':
-            return
+            sys.exit()
 
 
 def installation(conf_allowed, config, git_flag, quick_install=False):
