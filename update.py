@@ -12,7 +12,7 @@ from rpi_update import main_window as rpi_update, rh_update_check
 
 
 def compatibility():  # adds compatibility and fixes with previous versions
-    from user_folder_check import main as prev_comp
+    from compatibility_check import main as prev_comp
     prev_comp()
 
 
