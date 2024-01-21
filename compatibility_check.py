@@ -40,7 +40,7 @@ def virtual_env_check(file_path, word):
 def json_user_change(home_dir):
     config_file = f"{home_dir}/RH_Install-Manager/updater-config.json"
     if os.path.exists(config_file):
-        with open('./updater-config.json', 'r') as file:
+        with open(config_file, 'r') as file:
             data = json.load(file)
 
         if 'pi_user' in data:
