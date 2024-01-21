@@ -37,8 +37,8 @@ def virtual_env_check(file_path, word):
             os.system("echo 'source ~/.venv/bin/activate' >> ~/.bashrc")
 
 
-def json_user_change():
-    config_file = "./updater-config.json"
+def json_user_change(home_dir):
+    config_file = f"{home_dir}/RH_Install-Manager/updater-config.json"
     if os.path.exists(config_file):
         with open('./updater-config.json', 'r') as file:
             data = json.load(file)
@@ -56,7 +56,7 @@ def main():
     Path(f"{home_dir}/.rhim_markers").mkdir(exist_ok=True)
     aliases_clean('Shortcut', 'After', f'{home_dir}/.bashrc', 'uu', 'updateupdater', '# #')
     virtual_env_check(f'{home_dir}/.bashrc', 'VIRTUAL_ENV_DISABLE_PROMPT')
-    json_user_change()
+    json_user_change(home_dir)
 
 
 if __name__ == "__main__":
