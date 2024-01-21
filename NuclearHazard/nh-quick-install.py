@@ -2,7 +2,7 @@ from rpi_update import installation
 import os
 import json
 from types import SimpleNamespace as Namespace, SimpleNamespace
-from user_folder_check import main as user_folder_check
+from compatibility_check import main as user_folder_check
 
 
 def load_json(file_name):

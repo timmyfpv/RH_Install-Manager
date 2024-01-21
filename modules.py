@@ -220,10 +220,7 @@ def rhim_load_config():
     if config.debug_mode:
         config.user = config.debug_user
     else:
-        try:
-            config.user = config.user
-        except:
-            config.user = config.pi_user
+        config.user = config.user
     # paste custom version number here if you want to declare it manually
     return config
 
