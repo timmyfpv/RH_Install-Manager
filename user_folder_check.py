@@ -1,6 +1,7 @@
 import os
 import platform
 from pathlib import Path
+import json
 
 
 # removes old aliases, especially doubled ones and bad leftovers from ~/.bashrc file
@@ -36,11 +37,26 @@ def virtual_env_check(file_path, word):
             os.system("echo 'source ~/.venv/bin/activate' >> ~/.bashrc")
 
 
+def json_user_change():
+    config_file = "./updater-config.json"
+    if os.path.exists(config_file):
+        with open('./updater-config.json', 'r') as file:
+            data = json.load(file)
+
+        if 'pi_user' in data:
+            pi_user_value = data['pi_user']
+            data['user'] = pi_user_value
+
+        with open(config_file, 'w') as file:
+            json.dump(data, file, indent=2)
+
+
 def main():
     home_dir = str(Path.home())
     Path(f"{home_dir}/.rhim_markers").mkdir(exist_ok=True)
     aliases_clean('Shortcut', 'After', f'{home_dir}/.bashrc', 'uu', 'updateupdater', '# #')
     virtual_env_check(f'{home_dir}/.bashrc', 'VIRTUAL_ENV_DISABLE_PROMPT')
+    json_user_change()
 
 
 if __name__ == "__main__":
