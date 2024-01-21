@@ -437,7 +437,7 @@ def features_menu(config):
 
 
 def show_about(config):
-    while True:
+    while config.user is not "NuclearHazard":
         clear_the_screen()
         welcome_first_page = """{bold}  
 
