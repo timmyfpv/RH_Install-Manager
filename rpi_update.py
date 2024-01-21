@@ -175,6 +175,7 @@ def end_normal_installation():
 def end_quick_installation(config):
     os.system(f"cp /home/{config.user}/RH_Install-Manager/NuclearHazard/nh-rh-config.json "
               f"/home/{config.user}/RotorHazard/src/server/config.json")
+    os.system(f"cp ~/RH_Install-Manager/NuclearHazard/nh-updater-config.json ~/RH_Install-Manager/updater-config.json")
     print("\t\tDefault NuclearHazard configuration applied.\n\n")
     sleep(2)
     selection = input("\tDo you want to activate automatic NuclearHazard Wi-Fi? [y/N]\n"
@@ -296,7 +297,6 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
             if quick_install == 1:
                 os.system("sudo ~/RH_Install-Manager/scripts/additional_sys_conf.sh shutdown_pin 19 2500")
                 os.system("sudo ~/RH_Install-Manager/scripts/additional_sys_conf.sh led")
-                os.system("cp ~/RH_Install-Manager/NuclearHazard/nh-updater-config.json ~/RH_Install-Manager/updater-config.json")
             print(f"\n\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(1)
             clear_the_screen()
