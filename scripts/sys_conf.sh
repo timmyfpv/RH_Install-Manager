@@ -80,6 +80,7 @@ Raspberry Pi 5 chipset found
     echo "
 [I2C enabled - RH_Install-Manager]
 dtparam=i2c_arm=on
+dtoverlay=i2c1-pi5
   " | sudo tee -a /boot/config.txt || return 1
 
   else
@@ -122,16 +123,24 @@ i2c_error() {
 uart_enabling() {
   sudo cp /boot/cmdline.txt /boot/cmdline.txt.dist
   sudo cp /boot/firmware/cmdline.txt /boot/firmware/cmdline.txt.dist || sudo cp /boot/config.txt /boot/config.txt.dist || return 1
-  echo "
+  if [[ $(~/RH_Install-Manager/scripts/pi_model_check.sh) == "pi_5" ]]; then
+    echo "
+[UART enabled - RH_Install-Manager]
+enable_uart=1
+dtoverlay=miniuart-bt
+dtoverlay=uart0-pi5
+  " | sudo tee -a /boot/config.txt || return 1
+  else
+    echo "
 [UART enabled - RH_Install-Manager]
 enable_uart=1
 dtoverlay=miniuart-bt
   " | sudo tee -a /boot/config.txt || return 1
+  fi
   sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt || sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt || return 1
   echo "console serial output disabled - requires REBOOT
   "
-sleep 2
-
+  sleep 2
 
   printf "
      $green -- UART ENABLED -- $endc
