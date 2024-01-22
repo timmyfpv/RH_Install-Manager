@@ -338,8 +338,8 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
 
 
 def update(config, git_flag):
-    clear_the_screen()
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
+    clear_the_screen()
     internet_flag = internet_check()
     if not internet_flag:
         print(f"\n\t{Bcolors.RED}Looks like you don't have internet connection. Update canceled.{Bcolors.ENDC}")
