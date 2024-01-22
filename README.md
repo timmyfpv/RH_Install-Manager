@@ -19,7 +19,7 @@
 1. Automatic configuring Access Point
     - Hotspot: Configure always-on hotspot using Pi's built-in Wi-Fi and Ethernet port
         - You lose the ability to connect to the internet using built in Wi-Fi
-    - [Auto-Hotspot:](./AUTO_HOTSPOT.md) Automatically connect to known Wi-Fi if available, or become hotspot if no
+    - [Auto-Hotspot:](./docs/AUTO_HOTSPOT.md) Automatically connect to known Wi-Fi if available, or become hotspot if no
       network is found.
         - If your Pi has been configured to connect to Wi-Fi, this option allows you to use that Wi-Fi when in range,
           and still create a hotspot when not in range

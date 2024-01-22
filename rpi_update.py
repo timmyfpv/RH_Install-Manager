@@ -165,11 +165,11 @@ def end_normal_installation():
         selection = input()
         if selection == 'r':
             os.system("sudo reboot")
-        elif selection == 'e':
-            return
         elif selection == 'c':
             conf_rh()
             break
+        elif selection == 'e':
+            return
 
 
 def end_quick_installation(config):
@@ -314,7 +314,8 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
             write_rhim_sys_markers(rhim_config, config.user)
             os.system(
                 f"/home/{config.user}/RH_Install-Manager/scripts/install_rh_part_1.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
-            os.system(f"""echo "cat /home/{config.user}/RH_Install-Manager/resources/shell_hello_1.txt" >> ~/.bashrc 2>/dev/null""") if not quick_install else None
+            os.system(
+                f"""echo "cat /home/{config.user}/RH_Install-Manager/resources/shell_hello_1.txt" >> ~/.bashrc 2>/dev/null""") if not quick_install else None
             input("\n\n\npress Enter to continue")
             clear_the_screen()
             print(first_part_completed_long) if not quick_install else print(first_part_completed_short)
@@ -444,13 +445,13 @@ def origin_change(config):
                 c - custom
                 
                 a - abort\n\n\t""").lower()
-        if version == 's':
+        if version[0] == 's':
             config.rh_version = 'stable'
             break
-        elif version == 'b':
+        elif version[0] == 'b':
             config.rh_version = 'beta'
             break
-        elif version == 'm':
+        elif version[0] == 'm':
             config.rh_version = 'main'
             break
         elif version == 'c':
@@ -460,7 +461,7 @@ def origin_change(config):
             # and ask exactly what version tag they want:
             config.rh_version = ask_custom_rh_version()
             break
-        elif version == 'a':
+        elif version[0] == 'a':
             break
         else:
             print("\n\n\t\tPlease enter the correct value!")
