@@ -5,7 +5,7 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
-6e71.401.35
+6e72.401.35
 1. Raspberry Pi 5 ready (testing)
 
 6e7.401.35
