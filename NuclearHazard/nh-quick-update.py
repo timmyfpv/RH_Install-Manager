@@ -15,9 +15,14 @@ def load_json(file_name):
 
 def main():
     compatibility_check()
-    passed_install_step = os.getenv('INSTALL_STEP')
-    config = load_json("./nh-updater-config.json")
-    update(config, False)
+    # passed_install_step = os.getenv('INSTALL_STEP')
+    config_file = "../updater-config.json"
+    if os.path.exists(config_file):
+        config = load_json(config_file)
+        update(config, False)
+    else:
+        print("\n\n\t\tPlease install RotorHazard server first.\n\n"
+              "\t\tType: './nh-install.sh 1'\n\n")
 
 
 if __name__ == "__main__":
