@@ -333,9 +333,9 @@ def first_flashing(config):
         Will you flash your nodes for the first time via UART (on PCB) 
         or using USB* port? [default: UART]
 
-     {green}1 - UART (port ttyS0 - default){endc}{bold}
+     {green}1 - UART (port ttyAMA0 - default){endc}{bold}
 
-            2 - UART (port ttyAMA0 - try in case of errors)
+            2 - UART (port ttyS0 - try in case of errors)
 
             3 - USB (node connected to Pi's USB port)
 
@@ -347,9 +347,9 @@ def first_flashing(config):
 """.format(green=Bcolors.GREEN_S, yellow=Bcolors.YELLOW_S, bold=Bcolors.BOLD, endc=Bcolors.ENDC)
         port_selection = input(first_flash_select)
         if port_selection == '1':
-            flash_node_first_time('ttyS0')
-        elif port_selection == '2':
             flash_node_first_time('ttyAMA0')
+        elif port_selection == '2':
+            flash_node_first_time('ttyS0')
         elif port_selection == '3':
             usb_msg = """
     You are about to attempt first time firmware flashing via Pi's USB port.
