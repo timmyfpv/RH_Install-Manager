@@ -26,8 +26,9 @@ sleep 2
   mv RH_Install-Manager-* RH_Install-Manager || return 1
 
   printf "
+--------------------------------------------------------------------
 $green
-Program downloaded successfully. To open the program now type:
+Program downloaded successfully. To open the Installer now type:
 $endc
 cd ~/RH_Install-Manager
 ./rhim.sh
