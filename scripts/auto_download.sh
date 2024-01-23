@@ -3,6 +3,7 @@
 white=""
 green="\033[92m"
 red="\033[91m"
+yellow="\033[93m"
 endc="\033[0m"
 
 script() {
@@ -31,6 +32,10 @@ $endc
 cd ~/RH_Install-Manager
 ./rhim.sh
 
+$yellow
+If you are using the NuclearHazard edition of the timer,
+you can proceed with the quick install script.
+$endc
 "
 
 }
