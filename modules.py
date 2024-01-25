@@ -9,7 +9,6 @@ from pathlib import Path
 from shutil import copyfile
 from time import sleep
 from types import SimpleNamespace as Namespace, SimpleNamespace
-
 import requests
 
 

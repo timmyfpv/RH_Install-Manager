@@ -123,7 +123,7 @@ i2c_error() {
 uart_enabling() {
   sudo cp /boot/cmdline.txt /boot/cmdline.txt.dist
   sudo cp /boot/firmware/cmdline.txt /boot/firmware/cmdline.txt.dist || sudo cp /boot/config.txt /boot/config.txt.dist || return 1
-  if [[ $(~/RH_Install-Manager/scripts/pi_model_check.sh) == "pi_5" ]]; then
+  if [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_5" ]; then
     echo "
 [UART enabled - RH_Install-Manager]
 enable_uart=1
