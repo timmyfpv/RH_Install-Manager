@@ -360,7 +360,7 @@ def update(config, git_flag):
 
         a - Abort 
 
-""")
+                    """)
             selection = input()
             if selection == 'i':
                 conf_allowed = True
