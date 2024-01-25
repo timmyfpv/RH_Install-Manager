@@ -534,8 +534,8 @@ def main_menu(config):
             else:
                 clear_the_screen()
                 logo_top(config.debug_mode)
-                print("\n\n\t\tPlease enter Configuration Wizard first.\n"
-                      "Hit Enter now to go back.\n\n\n")
+                print("\n\n\t\tPlease enter Configuration Wizard first."
+                      "\n\n\t\tHit 'Enter' now to go back.\n\n\n")
                 input()
         elif selection == '2':
             try:
