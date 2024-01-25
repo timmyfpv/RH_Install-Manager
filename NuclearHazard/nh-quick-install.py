@@ -10,7 +10,7 @@ from compatibility_check import main as compatibility_check
 def name_check():
     username = pwd.getpwuid(os.getuid()).pw_name
     if username != "NuclearHazard":
-        print("\n\n\t\tThis script assumes your username is 'NuclearHazard\n\n")
+        print("\n\n\t\tThis script assumes your username is 'NuclearHazard'\n\n\n")
         input("Press Enter to exit")
         sys.exit()
 
