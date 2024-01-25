@@ -10,10 +10,10 @@ from compatibility_check import main as compatibility_check
 
 def name_check():
     username = pwd.getpwuid(os.getuid()).pw_name
-    if username != "NuclearHazard":
-        print("\n\n\t\tThis script assumes your username is 'NuclearHazard'")
-        input("\n\n\t\tPress Enter to exit")
-        sys.exit()
+    # if username != "NuclearHazard":
+    #     print("\n\n\t\tThis script assumes your username is 'NuclearHazard'")
+    #     input("\n\n\t\tPress Enter to exit")
+    #     sys.exit()
     return username
 
 
