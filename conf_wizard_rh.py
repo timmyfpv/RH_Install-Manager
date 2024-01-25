@@ -309,10 +309,10 @@ If you want to use value given as default, just hit 'Enter'.
             else:
                 while True:
                     shutdown_pin = input(
-                        "\nWhich pin is connected to the shutdown button? [default: 24]\t\t").strip().lower()
+                        "\nWhich pin is connected to the shutdown button? [default: 18]\t\t").strip().lower()
                     if not shutdown_pin:
-                        shutdown_pin = 24
-                        print("defaulted to: 24")
+                        shutdown_pin = 18
+                        print("defaulted to: 18")
                         break
                     elif shutdown_pin.isdigit():
                         break
@@ -321,14 +321,14 @@ If you want to use value given as default, just hit 'Enter'.
             rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN'] = shutdown_pin
 
             if nuclear_flag:
-                shutdown_debounce = 5000
+                shutdown_debounce = 2500
             else:
                 while True:
                     shutdown_debounce = input(
-                        "\nShutdown button delay in microseconds [default: 2500]\t\t\t").strip().lower()
+                        "\nShutdown button delay in microseconds [default: 5000]\t\t\t").strip().lower()
                     if not shutdown_debounce:
-                        shutdown_debounce = 2500
-                        print("defaulted to: 2500")
+                        shutdown_debounce = 5000
+                        print("defaulted to: 5000")
                         break
                     elif shutdown_debounce.isdigit() and int(shutdown_debounce) > 500:
                         break
@@ -347,8 +347,8 @@ If you want to use value given as default, just hit 'Enter'.
                 rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN'] = 19
                 rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS'] = 2500
             else:
-                rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN'] = 24
-                rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS'] = 2500
+                rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN'] = 18
+                rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS'] = 5000
             print("\nAdvanced configuration set to default values.\n\n")
             sleep(1.2)
 
