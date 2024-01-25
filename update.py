@@ -526,10 +526,17 @@ def main_menu(config):
         print(main_menu_content)
         selection = input()
         if selection == '1':
-            try:
-                rpi_update(config)
-            except AttributeError:
-                attribute_error_handling()
+            if rhim_config_check():
+                try:
+                    rpi_update(config)
+                except AttributeError:
+                    attribute_error_handling()
+            else:
+                clear_the_screen()
+                logo_top(config.debug_mode)
+                print("\n\n\t\tPlease enter Configuration Wizard first.\n"
+                      "Hit Enter now to go back.\n\n\n")
+                input()
         elif selection == '2':
             try:
                 rhim_status = load_rhim_sys_markers(config.user)
