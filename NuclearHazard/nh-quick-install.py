@@ -3,6 +3,7 @@ import os
 import sys
 import pwd
 import json
+from modules import write_json
 from types import SimpleNamespace as Namespace, SimpleNamespace
 from compatibility_check import main as compatibility_check
 
@@ -30,7 +31,8 @@ def main():
     passed_install_step = os.getenv('INSTALL_STEP')
     config = load_json("./nh-updater-config.json")
     config.name = username
-    installation(True, config, False, passed_install_step)
+    write_json(config, "./nh-updater-config.json")
+#    installation(True, config, False, passed_install_step)
 
 
 if __name__ == "__main__":
