@@ -30,9 +30,9 @@ def main():
     compatibility_check()
     passed_install_step = os.getenv('INSTALL_STEP')
     config = load_json("./nh-updater-config.json")
-    config.name = username
+    config.user = username
     write_json(config, "./nh-updater-config.json")
-#    installation(True, config, False, passed_install_step)
+    installation(True, config, False, passed_install_step)
 
 
 if __name__ == "__main__":
