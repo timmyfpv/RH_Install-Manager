@@ -139,7 +139,8 @@ dtoverlay=miniuart-bt
   sudo raspi-config nonint do_serial_hw 0
 
   fi
-  sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt || sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt || return 1
+  sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt || echo
+  sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt || echo
   echo "console serial output disabled - requires REBOOT
   "
   sudo raspi-config nonint do_serial_cons 1
