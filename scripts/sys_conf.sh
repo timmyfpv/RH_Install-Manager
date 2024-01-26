@@ -136,10 +136,14 @@ dtoverlay=uart0-pi5
 enable_uart=1
 dtoverlay=miniuart-bt
   " | sudo tee -a /boot/config.txt || return 1
+  sudo raspi-config nonint do_serial_hw 0
+
   fi
   sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt || sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt || return 1
   echo "console serial output disabled - requires REBOOT
   "
+  sudo raspi-config nonint do_serial_cons 1
+
   sleep 2
 
   printf "
