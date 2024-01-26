@@ -27,8 +27,8 @@ def main():
     passed_install_step = os.getenv('INSTALL_STEP')
     if passed_install_step not in ['1', '2', 'wifi']:
         print("\n\n\tPlease specify the install step with the ./nh-install.sh command:"
-              "\n\t\t'./nh-install.sh 1' or './nh-install.sh 2' or './nh-install.sh wifi'\n")
-        input("\n\t\tHit 'Enter' to exit.\n")
+              "\n\t'./nh-install.sh 1/2/wifi'\n")
+        input("\n\n\tHit 'Enter' to exit and try again.\n")
         sys.exit()
     config = load_json("./nh-updater-config.json")
     config.user = username
