@@ -97,7 +97,7 @@ If you want to use value given as default, just hit 'Enter'.
             else:
                 print("\nPlease enter the correct answer")
 
-        print("\nAre you using older - Arduino based PCB? [y/n]\t\t")
+        print("\nAre you using Arduino based PCB (like Delta 5 or RH 1.2)? [y/n]\t\t")
         while True:
             arduino_pcb_flag = input("\t").strip().lower()
             if not arduino_pcb_flag:
