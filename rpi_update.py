@@ -390,11 +390,11 @@ def update(config, git_flag):
 
 
 
-        {green}Y - Yes, switch to stable update and proceed {endc}
+        {green}y - Yes, switch to stable update and proceed {endc}
 
                n - No, just update with existing update source
 
-               a - Abort both, go to the previous menu {endc}
+               a - Abort both and go back {endc}
                                """.format(bold=Bcolors.BOLD, endc=Bcolors.ENDC, underline=Bcolors.UNDERLINE,
                                           yellow=Bcolors.YELLOW, green=Bcolors.GREEN_S,
                                           previous_rh_source=check_preferred_rh_version(config)[0])
