@@ -543,15 +543,28 @@ def main_menu(config):
                       "\n\n\t\tHit 'Enter' now to go back.\n\n\n")
                 input()
         elif selection == '2':
-            try:
-                rhim_status = load_rhim_sys_markers(config.user)
-                if rhim_status.uart_support_added:
-                    old_flash_gpio(config) if config.old_hw_mod else flashing_menu(config)
-                # enters "old" flashing menu only when "old_hw_mod" is confirmed
-                else:
-                    serial_menu(config)
-            except AttributeError:
-                attribute_error_handling()
+            def stm_flashing_confirmed():
+                clear_the_screen()
+                logo_top(config.debug_mode)
+                print("\n\n    Please note that this part of the menu only applies to Arduino based PCBs."
+                      "\n\n    Flashing STM32 based boards (e.g. NuclearHazard) is done via RH web GUI."
+                      "\n\n\n\n\tHit 'Enter' to confirm\n\n\n")
+                input()
+                return True
+
+            while stm_flashing_confirmed():
+                try:
+                    rhim_status = load_rhim_sys_markers(config.user)
+                    if rhim_status.uart_support_added:
+                        old_flash_gpio(config) if config.old_hw_mod else flashing_menu(config)
+                        break
+                    # enters "old" flashing menu only when "old_hw_mod" is confirmed
+                    else:
+                        serial_menu(config)
+                        break
+                except AttributeError:
+                    attribute_error_handling()
+                    break
         elif selection == '3':
             features_menu(config)
         elif selection == '4':
