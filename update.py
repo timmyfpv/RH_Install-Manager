@@ -21,10 +21,10 @@ def attribute_error_handling():
     AttributeError
 
     Looks that you may have some configuration mismatch. 
-    
+
     It is also likely that {underline}reboot is required{endc} so interfaces
     like UART and I2C can be reloaded.
-    
+
     Check entered username and other parameters in Config Wizard.
 
     You may also try to re-open this program with './rhim.sh' command.
@@ -152,7 +152,7 @@ def rhim_update_available_prompt(config, rhim_update_available_flag):
         print("""\n\n {bold}
 
                 New Install-Manager version is available.
-                
+
                 Consider updating now (takes ~20 secs).
 
 
@@ -181,10 +181,11 @@ def welcome_screen(config):
     or have 'hardware mod" done for that functionality. You may also check 
     features like smart-hotspot or adding aliases to your system, etc.
 
-
     This program has ability to perform 'self-updates' - see "Features Menu".    
 
-    If you found any bug - please report it via GitHub or Facebook. {endc}{bold}        
+    If you find any bugs, please report them via GitHub or Facebook.    
+    If you see this tool as useful, you may consider tipping
+    using the PayPal link on the project's GitHub page.
 
 
     Wish you a good experience. Enjoy!
@@ -259,14 +260,14 @@ def serial_menu(config):
 
 
          {green}y - yes, enable UART now {endc}
-     
+
                 s - skip this prompt
-            
+
                 d - don't show this prompt again
 
         {yellow}a - abort{endc}
-        
-        
+
+
             """.format(yellow=Bcolors.YELLOW_S, green=Bcolors.GREEN_S, endc=Bcolors.ENDC)
         selection = input(serial_adding_menu)
         if selection == 'y':
@@ -368,7 +369,7 @@ def self_updater(config):
 
         Self-updater will test your internet connection before every update
         and prevent update if there is no internet connection established.
-        
+
         {underline}Version of this program installed right now{endc}{bold}: {version}
 
         {updater_info}
@@ -408,7 +409,7 @@ def features_menu(config):
                     3 - Show actual Pi's GPIO
 
                     4 - Add useful aliases
-                    
+
                     5 - {update_flag}Update the Install-Manager{endc}{bold}
 
                     6 - Create a rhim log file{yellow}
@@ -518,7 +519,7 @@ def main_menu(config):
                     {install_state} 
                         {endc}{bold}
                     2 - Nodes flash and update {endc}{bold}
-                            
+
                     3 - Additional features{config_color}
 
                     4 - Configuration Wizard{config_arrow}{endc}{bold}{yellow}
