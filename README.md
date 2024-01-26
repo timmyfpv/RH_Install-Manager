@@ -114,7 +114,7 @@ In case of any issues - consider checking out [FAQ section](/docs/FAQ.md).
 <br/>
 I started this project as a way to help the community. I also found it very interesting and meaningful to explore new territories and do the best I can so end user can be satisfied to as high degree as possible. We spent long hours on testing, coding and troubleshooting. If you feel that this work was valuable and you want to say "thank you" that way, you can use
 
-[PayPal donation link](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ULZYQPB38C8UQ&source=url).
+[PayPal donation link](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ULZYQPB38C8UQ&source=url).<br/>
 
 Every amount is appreciated. It will be spend on new testing equipment or just a coffee or beer :) Remember that our help and contribution is NOT conditional :)
 <br/>
