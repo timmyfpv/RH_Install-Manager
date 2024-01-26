@@ -93,7 +93,7 @@ if ! test -f "$PYTHON3_CONVERSION_FLAG_FILE"; then
 
   ### sensors transition to python3 handling ###
 
-  printf "\n\n    Converting existing sensors libraries to python3 versions \n\n\n"
+  printf "\n\n    Converting existing sensors libraries to python3 versions \n"
 
   INA_SENSOR_FILES=/home/"${1}"/pi_ina219
 

@@ -30,7 +30,7 @@ cd /home/"${1}" || exit
 # added because of the broken Adafruit_GPIO compatibility on Raspbian 11 Bullseye
 (sudo sed -i 's/UNKNOWN          = 0/UNKNOWN          = 1/' /usr/local/lib/python3*/dist-packages/Adafruit_GPIO/Platform.py &&
   printf "\n $green Adafruit_GPIO compatibility is now OK $endc \n\n\n" && sleep 1) ||
-  (printf "$endc \nAdafruit_GPIO compatibility file probably missing \n\n $endc" && sleep 2)
+  (printf "$endc \nAdafruit_GPIO compatibility file probably missing - skipping\n\n $endc" && sleep 2)
 
 java_installation() {
   if [[ $(~/RH_Install-Manager/scripts/pi_model_check.sh) == "pi_zero" ]]; then

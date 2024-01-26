@@ -182,7 +182,7 @@ def end_quick_installation(config):
                       "\tYou can do it later by typing ./nh-install.sh wifi\n"
                       "\tin the directory ~/RH_Install-Manager/NuclearHazard\n\n\t")
     if selection == 'y':
-        os.system("sudo sh ~/RH_Install-Manager/NuclearHazard/nh-wifi.sh")
+        os.system("sh ~/RH_Install-Manager/NuclearHazard/nh-wifi.sh")
     else:
         print("\n\n")
         return
@@ -248,7 +248,7 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
             and continue installation. Reboot later. 
                         """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
                                    endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
-    installation_completed = """
+    installation_completed_short = """
 
 
             ######################################################
@@ -331,7 +331,7 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
                 f"/home/{config.user}/RH_Install-Manager/scripts/install_rh_part_2.sh {config.user} {check_preferred_rh_version(config)[0]} {git_flag}")
             input("\n\n\npress Enter to continue")
             clear_the_screen()
-            print(installation_completed_long) if not quick_install else print(installation_completed)
+            print(installation_completed_long) if not quick_install else print(installation_completed_short)
             os.system("sudo chmod 777 -R ~/RotorHazard")
             end_normal_installation() if not quick_install else end_quick_installation(config)
             rhim_config.second_part_of_install, rhim_config.sys_config_done = True, True

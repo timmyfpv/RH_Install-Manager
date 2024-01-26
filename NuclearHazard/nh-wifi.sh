@@ -17,8 +17,8 @@ Wants=NetworkManager.service
 [Service]
 Type=simple
 ExecStartPre=/bin/sleep 10
-ExecStart=sudo /home/NuclearHazard/hotspot.sh
-WorkingDirectory=/home/NuclearHazard/
+ExecStart=sudo /home/$USER/hotspot.sh
+WorkingDirectory=/home/$USER/
 
 [Install]
 WantedBy=multi-user.target" | sudo tee -a /etc/systemd/system/hotspot.service
