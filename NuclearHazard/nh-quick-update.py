@@ -1,6 +1,7 @@
 from rpi_update import update
 import os
 import json
+from modules import write_json, load_json
 from types import SimpleNamespace as Namespace, SimpleNamespace
 from compatibility_check import main as compatibility_check
 
@@ -15,10 +16,13 @@ def load_json(file_name):
 
 def main():
     compatibility_check()
-    # passed_install_step = os.getenv('INSTALL_STEP')
+    passed_rh_ver = os.getenv('RH_VERSION')
     config_file = "../updater-config.json"
     if os.path.exists(config_file):
         config = load_json(config_file)
+        if passed_rh_ver in ['stable', 'beta', 'main']:
+            config.rh_version = passed_rh_ver
+            write_json(config, config_file)
         update(config, False)
     else:
         print("\n\n\t\tPlease install RotorHazard server first.\n\n"

@@ -3,7 +3,7 @@ import os
 import sys
 import pwd
 import json
-from modules import write_json
+from modules import write_json, load_json
 from types import SimpleNamespace as Namespace, SimpleNamespace
 from compatibility_check import main as compatibility_check
 
@@ -11,14 +11,6 @@ from compatibility_check import main as compatibility_check
 def name_check():
     username = pwd.getpwuid(os.getuid()).pw_name
     return username
-
-
-def load_json(file_name):
-    data = {}
-    if os.path.exists(file_name):
-        with open(file_name) as open_file:
-            data = json.loads(open_file.read(), object_hook=lambda d: Namespace(**d))
-    return data
 
 
 def main():
@@ -30,9 +22,10 @@ def main():
               "\n\t'./nh-install.sh 1/2/wifi'\n")
         input("\n\n\tHit 'Enter' to exit and try again.\n")
         sys.exit()
-    config = load_json("./nh-updater-config.json")
+    config_file = "./nh-updater-config.json"
+    config = load_json(config_file)
     config.user = username
-    write_json(config, "./nh-updater-config.json")
+    write_json(config, config_file)
     installation(True, config, False, passed_install_step)
 
 

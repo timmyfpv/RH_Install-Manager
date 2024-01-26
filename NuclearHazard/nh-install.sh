@@ -1,4 +1,5 @@
 #!/bin/bash
+
 export PYTHONPATH=/home/"$USER"/RH_Install-Manager:$PYTHONPATH
 
 sh ../rhim.sh no_start
