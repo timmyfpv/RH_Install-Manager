@@ -5,7 +5,7 @@ from time import sleep
 from conf_wizard_net import conf_wizard_net
 from conf_wizard_rhim import conf_rhim
 from modules import clear_the_screen, Bcolors, logo_top, triangle_image_show, rhim_asci_image_show, rhim_load_config, \
-    load_rhim_sys_markers, write_rhim_sys_markers, get_rhim_version, rhim_config_check
+    load_rhim_sys_markers, write_rhim_sys_markers, get_rhim_version, rhim_config_check, write_json
 from nodes_flash import flashing_menu
 from nodes_update_old import nodes_update as old_flash_gpio
 from rpi_update import main_window as rpi_update, rh_update_check
@@ -383,7 +383,12 @@ def self_updater(config):
         selection = input()
         if selection == 'e':
             break
-        elif selection == 'u':
+        elif selection in ['u', 'dev', 'stab']:
+            if selection == 'dev':
+                config.beta_tester = True
+            elif selection == 'stab':
+                config.beta_tester = False
+            write_json(config, f"/home/{config.user}/RH_Install-Manager/updater-config.json")
             os.system("scripts/updater_from_rhim.sh")
 
 
