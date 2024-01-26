@@ -5,8 +5,13 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+6f.401.35
+1. NuclearHazard quick install fully supported
+2. NuclearHazard automatic AP added
+3. Configuration wizards tweaks
+
 6e8.401.35
-1. NH quick install username check added
+1. NuclearHazard quick install username check added
 
 6e72.401.35
 1. Raspberry Pi 5 ready (testing)
