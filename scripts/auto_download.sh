@@ -43,7 +43,7 @@ $endc
 
 script || printf "
 $red
-errors encountered - try manual installation -> more info od GitHub
+errors encountered - try manual installation -> more info on GitHub
 $endc
 
 "
