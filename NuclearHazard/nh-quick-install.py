@@ -2,9 +2,7 @@ from rpi_update import installation
 import os
 import sys
 import pwd
-import json
 from modules import write_json, load_json
-from types import SimpleNamespace as Namespace, SimpleNamespace
 from compatibility_check import main as compatibility_check
 
 
