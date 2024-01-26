@@ -10,10 +10,6 @@ from compatibility_check import main as compatibility_check
 
 def name_check():
     username = pwd.getpwuid(os.getuid()).pw_name
-    # if username != "NuclearHazard":
-    #     print("\n\n\t\tThis script assumes your username is 'NuclearHazard'")
-    #     input("\n\n\t\tPress Enter to exit")
-    #     sys.exit()
     return username
 
 
@@ -29,6 +25,11 @@ def main():
     username = name_check()
     compatibility_check()
     passed_install_step = os.getenv('INSTALL_STEP')
+    if passed_install_step not in ['1', '2', 'wifi']:
+        print("\n\n\tPlease specify the install step with the ./nh-install.sh command:"
+              "\n\t\t'./nh-install.sh 1' or './nh-install.sh 2' or './nh-install.sh wifi'\n")
+        input("\n\t\tHit 'Enter' to exit.\n")
+        sys.exit()
     config = load_json("./nh-updater-config.json")
     config.user = username
     write_json(config, "./nh-updater-config.json")
