@@ -116,7 +116,6 @@ I started this project as a way to help the community. I also found it very inte
 
 [PayPal donation link](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ULZYQPB38C8UQ&source=url).  
 <br>
-<br>
 
 Every amount is appreciated. It will be spend on new testing equipment or just a coffee or beer :) Remember that our help and contribution is NOT conditional :)
 <br/>
