@@ -183,13 +183,13 @@ def welcome_screen(config):
 
     This program has ability to perform 'self-updates' - see "Features Menu".    
 
+
     If you find any bugs, please report them via GitHub or Facebook.    
     If you see this tool as useful, you may consider tipping
     using the PayPal link on the project's GitHub page.
 
 
     Wish you a good experience. Enjoy!
-
 
                                                             Pawel F.                                                
     {endc}""".format(bold=Bcolors.BOLD, red=Bcolors.RED, green=Bcolors.GREEN, endc=Bcolors.ENDC)
