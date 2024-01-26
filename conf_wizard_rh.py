@@ -203,6 +203,30 @@ If you want to use value given as default, just hit 'Enter'.
                     print("\nPlease enter the correct answer")
             rh_config['LED']['INVERTED_PANEL_ROWS'] = led_rows_inverted
 
+            while True:
+                led_dma_nr = input("\nLED DMA you will use in your system? [default: 10]\t\t\t")
+                if not led_dma_nr:
+                    led_dma_nr = 10
+                    print("defaulted to: 10")
+                    break
+                elif led_dma_nr.isdigit():
+                    break
+                else:
+                    print("\nPlease enter the correct answer")
+            rh_config['LED']['LED_DMA'] = int(led_dma_nr)
+
+            while True:
+                led_frequency = input("\nWhat LED frequency will you use? [default: 800000]\t\t\t")
+                if not led_frequency:
+                    led_frequency = 800000
+                    print("defaulted to: 800000")
+                    break
+                elif led_frequency.isdigit() and int(led_frequency) < 800000:
+                    break
+                else:
+                    print("\nPlease enter the correct answer")
+            rh_config['LED']['LED_FREQ_HZ'] = int(led_frequency)
+
         if not led_present_flag:
             rh_config['LED']['LED_COUNT'] = 0
             rh_config['LED']['LED_GPIO'] = 10
@@ -211,6 +235,8 @@ If you want to use value given as default, just hit 'Enter'.
             rh_config['LED']['LED_STRIP'] = 'GRB'
             rh_config['LED']['PANEL_ROTATE'] = 0
             rh_config['LED']['INVERTED_PANEL_ROWS'] = False
+            rh_config['LED']['LED_DMA'] = 10
+            rh_config['LED']['LED_FREQ_HZ'] = 800000
             print("\nLED configuration set to default values.\n\n")
             sleep(1.2)
 
@@ -243,30 +269,6 @@ If you want to use value given as default, just hit 'Enter'.
                 else:
                     print("\nPlease enter the correct answer")
             rh_config['HARDWARE']['I2C_BUS'] = int(i2c_bus_nr)
-
-            while True:
-                led_dma_nr = input("\nLED DMA you will use in your system? [default: 10]\t\t\t")
-                if not led_dma_nr:
-                    led_dma_nr = 10
-                    print("defaulted to: 10")
-                    break
-                elif led_dma_nr.isdigit():
-                    break
-                else:
-                    print("\nPlease enter the correct answer")
-            rh_config['LED']['LED_DMA'] = int(led_dma_nr)
-
-            while True:
-                led_frequency = input("\nWhat LED frequency will you use? [default: 800000]\t\t\t")
-                if not led_frequency:
-                    led_frequency = 800000
-                    print("defaulted to: 800000")
-                    break
-                elif led_frequency.isdigit() and int(led_frequency) < 800000:
-                    break
-                else:
-                    print("\nPlease enter the correct answer")
-            rh_config['LED']['LED_FREQ_HZ'] = int(led_frequency)
 
             while True:
                 debug_mode = input("\nWill you use RotorHazard in a debug mode? [y/N | default: no]\t\t").lower()
@@ -341,8 +343,6 @@ If you want to use value given as default, just hit 'Enter'.
             rh_config['GENERAL']['DEBUG'] = False
             rh_config['GENERAL']['CORS_ALLOWED_HOSTS'] = '*'
             rh_config['SERIAL_PORTS'] = []
-            rh_config['LED']['LED_DMA'] = 10
-            rh_config['LED']['LED_FREQ_HZ'] = 800000
             if nuclear_flag:
                 rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN'] = 19
                 rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS'] = 2500
