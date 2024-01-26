@@ -279,6 +279,7 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
                         """.format(thumbs="👍👍👍  ", bold=Bcolors.BOLD_S, green_no_s=Bcolors.GREEN,
                                    endc_no_s=Bcolors.ENDC, endc=Bcolors.ENDC_S, green=Bcolors.GREEN_S)
     rhim_config = load_rhim_sys_markers(config.user)
+    os.system("sudo echo")  # due to Linux specific behaviour
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
     clear_the_screen()
     internet_flag = internet_check()
@@ -339,6 +340,7 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
 
 
 def update(config, git_flag):
+    os.system("sudo echo")  # due to Linux specific behaviour
     os.system("sudo systemctl stop rotorhazard >/dev/null 2>&1 &") if not config.debug_mode else None
     clear_the_screen()
     internet_flag = internet_check()
