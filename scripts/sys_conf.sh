@@ -33,6 +33,9 @@ ssh_error() {
 }
 
 spi_enabling() {
+
+  sudo raspi-config nonint do_spi 0
+
   echo "
 [SPI enabled - RH_Install-Manager]
 dtparam=spi=on
@@ -64,6 +67,9 @@ spi_error() {
 }
 
 i2c_enabling() {
+
+  sudo raspi-config nonint do_i2c 0
+
   if [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_4" ]; then
     echo "
 Raspberry Pi 4 chipset found
