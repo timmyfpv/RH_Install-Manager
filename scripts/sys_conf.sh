@@ -129,7 +129,8 @@ uart_enabling() {
 
   sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt || echo
   sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt || echo
-  echo "console serial output disabled - requires REBOOT
+  echo "
+  console serial output disabled - requires REBOOT
   "
   sudo raspi-config nonint do_serial_cons 1
 
