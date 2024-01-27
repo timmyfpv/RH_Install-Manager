@@ -34,7 +34,7 @@ ssh_error() {
 
 spi_enabling() {
 
-  sudo raspi-config nonint do_spi 0
+  sudo raspi-config nonint do_spi 0 || return 1
 
   echo "
 [SPI enabled - RH_Install-Manager]
@@ -68,7 +68,7 @@ spi_error() {
 
 i2c_enabling() {
 
-  sudo raspi-config nonint do_i2c 0
+  sudo raspi-config nonint do_i2c 0 || return 1
 
   if [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_4" ]; then
     echo "
@@ -131,14 +131,14 @@ uart_enabling() {
   sudo cp /boot/cmdline.txt /boot/cmdline.txt.dist || echo
   sudo cp /boot/firmware/cmdline.txt /boot/firmware/cmdline.txt.dist || echo
 
-  sudo raspi-config nonint do_serial_hw 0
+  sudo raspi-config nonint do_serial_hw 0 || return 1
 
   sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt || echo
   sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt || echo
   echo "
   console serial output disabled - requires REBOOT
   "
-  sudo raspi-config nonint do_serial_cons 1
+  sudo raspi-config nonint do_serial_cons 1 || return 1
 
   if [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_5" ]; then
     echo "
