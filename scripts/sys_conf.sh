@@ -93,7 +93,7 @@ i2c-dev
 dtparam=i2c1=on
 dtparam=i2c_arm=on
   " | sudo tee -a /boot/config.txt || return 1
-#    sudo sed -i 's/^blacklist i2c-bcm2708/#blacklist i2c-bcm2708/' /etc/modprobe.d/raspi-blacklist.conf || return 1
+    #    sudo sed -i 's/^blacklist i2c-bcm2708/#blacklist i2c-bcm2708/' /etc/modprobe.d/raspi-blacklist.conf || return 1
 
   fi
   printf "
@@ -121,8 +121,18 @@ i2c_error() {
 }
 
 uart_enabling() {
-  sudo cp /boot/cmdline.txt /boot/cmdline.txt.dist
-  sudo cp /boot/firmware/cmdline.txt /boot/firmware/cmdline.txt.dist || sudo cp /boot/config.txt /boot/config.txt.dist || return 1
+  sudo cp /boot/config.txt /boot/config.txt.dist || echo
+  sudo cp /boot/cmdline.txt /boot/cmdline.txt.dist || echo
+  sudo cp /boot/firmware/cmdline.txt /boot/firmware/cmdline.txt.dist || echo
+
+  sudo raspi-config nonint do_serial_hw 0
+
+  sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt || echo
+  sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt || echo
+  echo "console serial output disabled - requires REBOOT
+  "
+  sudo raspi-config nonint do_serial_cons 1
+
   if [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_5" ]; then
     echo "
 [UART enabled - RH_Install-Manager]
@@ -130,20 +140,16 @@ enable_uart=1
 dtoverlay=miniuart-bt
 dtoverlay=uart0-pi5
   " | sudo tee -a /boot/config.txt || return 1
+
   else
+
     echo "
 [UART enabled - RH_Install-Manager]
 enable_uart=1
 dtoverlay=miniuart-bt
   " | sudo tee -a /boot/config.txt || return 1
-  sudo raspi-config nonint do_serial_hw 0
 
   fi
-  sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt || echo
-  sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt || echo
-  echo "console serial output disabled - requires REBOOT
-  "
-  sudo raspi-config nonint do_serial_cons 1
 
   sleep 2
 
