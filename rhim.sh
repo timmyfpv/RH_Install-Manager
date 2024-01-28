@@ -46,13 +46,13 @@ open_software_alias_check() {
   if ! grep -q "alias rhim=" ~/.bashrc; then
     echo '
 #[added during RH_Install-Manager setup]
-alias rhim="cd ~/RH_Install-Manager && sh ./rhim.sh"                        # opens RH_Install-Manager software' >>../.bashrc
+alias rhim="cd ~/RH_Install-Manager && sh ./rhim.sh"                        # opens RH_Install-Manager software' >> ~/.bashrc
   fi
 
   if ! grep -q "~/.venv/bin/activate" ~/.bashrc; then
     echo '
 #[added during RH_Install-Manager setup]
-alias rh="cd ~/RotorHazard/src/server && source ~/.venv/bin/activate && python server.py"   # starts RH-server' >>../.bashrc
+alias rh="cd ~/RotorHazard/src/server && source ~/.venv/bin/activate && python server.py"   # starts RH-server' >> ~/.bashrc
   fi
 }
 
