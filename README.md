@@ -2,6 +2,12 @@
 
 # Easy manage and update your [RotorHazard](https://github.com/RotorHazard/RotorHazard) installation.
 
+> [!TIP]
+> Flash Raspberry Pi OS to your SD card, then start installing RotorHazard with one command: <br />
+> `curl -sSL https://raw.githubusercontent.com/RotorHazard/Install-Manager/stable/scripts/auto_download.sh | bash`
+>
+> Support development of the Install Manager on [Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ULZYQPB38C8UQ&source=url).
+
 ### Main features of the software:
 
 1. Wizard install/update of RotorHazard server software:
