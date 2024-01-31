@@ -20,12 +20,10 @@ def attribute_error_handling():
     err_msg = """
     AttributeError
 
-    Looks that you may have some configuration mismatch. 
-
-    It is also likely that {underline}reboot is required{endc} so interfaces
-    like UART and I2C can be reloaded.
-
-    Check entered username and other parameters in Config Wizard.
+    It is possible that a {underline}reboot is required{endc}
+    to reload hardware interfaces.
+    If this error persists, you may have a configuration mismatch.
+    Check your username and other parameters of your configuration.
 
     You may also try to re-open this program with './rhim.sh' command.
 
@@ -68,7 +66,7 @@ def log_send(config):
     while True:
         selection = input("\n\n\tDo you want to send a log file for a review to the developer? [y/n] ")
         if selection == 'y' or selection == 'yes':
-            log_name = input("\n\tPlease enter your name so we know who sent a log file: ")
+            log_name = input("\n\tPlease enter your name: ")
             os.system(f"./scripts/log_send.sh {config.user} {log_name}")
             f = open("./log_data/log_code.txt", "r")
             code = ''
@@ -153,7 +151,7 @@ def rhim_update_available_prompt(config, rhim_update_available_flag):
 
                 New Install-Manager version is available.
 
-                Consider updating now (takes ~20 secs).
+                Consider updating now (~20 secs).
 
 
 
@@ -175,20 +173,18 @@ def rhim_update_available_prompt(config, rhim_update_available_flag):
 
 def welcome_screen(config):
     welcome_message = """{bold}
-    Welcome! With our software you can easily install, update and manage 
-    your RotorHazard installation. You can also flash the firmware onto nodes, 
-    without the need to open the timer ever again. You have to use official PCB 
-    or have 'hardware mod" done for that functionality. You may also check 
-    features like smart-hotspot or adding aliases to your system, etc.
+    Welcome! This software can install, update and manage RotorHazard.
+    With supported hardware, you can also flash node firmware onto Arduinos.
+    You may also enable addition features like smart-hotspot or system aliases.
 
-    This program has ability to perform 'self-updates' - see "Features Menu".    
+    This program can also update itself - see "Features" menu.
 
-    If you find any bugs, please report them via GitHub or Facebook.    
-    If you see this tool as useful, you may consider tipping
+    If you find any bugs, please report them via GitHub or Facebook.
+    If you find this tool useful, please consider tipping
     using the PayPal link on the project's GitHub page.
 
 
-    Wish you a good experience. Enjoy!
+    I wish you a good experience. Enjoy!
 
                                                             Pawel F.                                                
     {endc}""".format(bold=Bcolors.BOLD, red=Bcolors.RED, green=Bcolors.GREEN, endc=Bcolors.ENDC)
@@ -233,8 +229,7 @@ def serial_menu(config):
         print("""
 
         Serial port enabled successfully.
-        You have to reboot Raspberry now,
-        so changes can be implemented. Ok?
+        A reboot is required.
 
 
 
@@ -252,8 +247,7 @@ def serial_menu(config):
         clear_the_screen()
         logo_top(config.debug_mode)
         serial_adding_menu = """
-            Serial port (UART) has to be enabled. 
-            Without it Arduino-nodes cannot be programmed.
+            Serial port (UART) must be enabled before Arduinos can be programmed.
             Do you want to enable it now?
 
 
@@ -309,16 +303,16 @@ def aliases_menu(config):
         clear_the_screen()
         aliases_description = f""" 
         Aliases in Linux act like shortcuts or references to another commands. 
-        You can use them every time when you operates in the terminal window. 
-        For example instead of typing 'python3 ~/RotorHazard/src/server/server.py' 
-        you can just type 'rh' etc. Aliases can be modified and added 
-        anytime you want. You just have to open '~./bashrc' file in text editor 
-        - like 'nano'. After that you have reboot or type 'source ~/.bashrc'. 
+        You can use them in the terminal window. 
+        For example, instead of typing 'python3 ~/RotorHazard/src/server/server.py' 
+        you can just type 'rh'. Aliases can be modified and added anytime 
+        by opening '~./bashrc' in a text editor like 'nano'.
+        After that, reboot or type 'source ~/.bashrc'. 
         {Bcolors.BOLD}
         {read_aliases_file()}
         {Bcolors.ENDC}
-            Do you want to use above aliases in your system?
-            Reboot should be performed after adding those"""
+            Do you want to use the above aliases in your system?
+            After adding, a reboot is required to enable."""
         print(aliases_description)
         selection = input(f"\n\t\t\t{Bcolors.YELLOW}Press 'y' for yes or 'a' for abort{Bcolors.ENDC}\n")
         if selection == 'y':
@@ -358,8 +352,8 @@ def self_updater(config):
         clear_the_screen()
         logo_top(config.debug_mode)
         updater = """
-        You can update Manager software by hitting '{green}u{endc}' now. It is advised step 
-        before updating the RotorHazard server or before flashing nodes.
+        Update Install Manager by hitting '{green}u{endc}' now. This is advised 
+        before updating the RotorHazard server or flashing nodes.
 
         Manager version number is related to the {red}latest supported RotorHazard 
         stable server version{endc} and {blue}nodes firmware API number{endc} that it contains.
@@ -449,19 +443,17 @@ def show_about(config):
     Please configure Manager software using a wizard after reading this page.
 
 
-    This wizard will configure this software, not RotorHazard server itself. 
-    Things like amount of LEDs or RotorHazard password should be configured 
-    separately in {blue}RotorHazard Manager{endc}{bold} - see in Main Menu.
+    This wizard will configure Install Manager, not RotorHazard itself.
 
 
 
-    Possible RotorHazard server versions that may be selected:
+    RotorHazard server versions that may be selected:
 
-    > {blue}'stable'{endc}{bold} - last stable release (can be from before few days or few months){endc}{bold}
+    > {blue}'stable'{endc}{bold} - full stable release tested and suitable for live events{endc}{bold}
 
-    > {blue}'beta'  {endc}{bold} - last 'beta' release (usually has about few weeks, quite stable){endc}{bold}
+    > {blue}'beta'  {endc}{bold} - contains new features but may also contain some bugs{endc}{bold}
 
-    > {blue}'main'{endc}{bold}   - absolutely newest features implemented (even if not well tested){endc} 
+    > {blue}'main'{endc}{bold}   - most recent feature development but may be unstable or non-functional{endc} 
 
 
 

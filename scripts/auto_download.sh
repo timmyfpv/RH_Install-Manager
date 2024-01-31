@@ -34,9 +34,10 @@ cd ~/RH_Install-Manager
 ./rhim.sh
 
 $yellow
-If you are using the NuclearHazard edition of the timer,
-you can proceed with the quick install script.
+For the NuclearHazard quick install, enter:
 $endc
+cd ~/RH_Install-Manager/NuclearHazard
+./rh-install.sh 1
 "
 
 }
