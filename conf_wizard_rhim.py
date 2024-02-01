@@ -313,6 +313,7 @@ Are you using older, non-i2c hardware flashing mod?
             print(f"\n{Bcolors.UNDERLINE}Configuration aborted{Bcolors.ENDC}\n")
             sleep(1.5)
             conf_now_flag = 0
+            config = rhim_load_config()
 
         # Must return the new config from inside the if statements variable context.
         return conf_now_flag, config
