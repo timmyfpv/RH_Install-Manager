@@ -139,13 +139,13 @@ uart_enabling() {
   sudo cp "${boot_directory}/config.txt" "${boot_directory}/config.txt.dist" || echo
   sudo cp "${boot_directory}/cmdline.txt" "${boot_directory}/cmdline.txt.dist" || echo
 
-  sudo raspi-config nonint do_serial_hw 0 || return 1
+  sudo raspi-config nonint do_serial_hw 0 || echo "older Raspberry Pi OS found - adjusting"
 
   sudo sed -i 's/console=serial0,115200//g' "${boot_directory}/cmdline.txt" || echo
   echo "
   console serial output disabled - requires REBOOT
   "
-  sudo raspi-config nonint do_serial_cons 1 || return 1
+  sudo raspi-config nonint do_serial_cons 1 || echo "older Raspberry Pi OS found - adjusting"
 
   echo "
 ### UART enabled - RH_Install-Manager ###
@@ -155,7 +155,8 @@ dtparam=uart0=on
 dtoverlay=uart0-pi5
 
 [all]
-dtparam=uart0=on
+dtparam=uart0=on  #  Bookworm and newer
+enable_uart=1     #  Bullseye and older
   " | sudo tee -a "${boot_directory}/config.txt" || return 1
 
   sleep 2
