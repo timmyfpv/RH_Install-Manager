@@ -1,14 +1,8 @@
 from rpi_update import installation
 import os
 import sys
-import pwd
-from modules import write_json, load_json
+from modules import write_json, load_json, name_check
 from compatibility_check import main as compatibility_check
-
-
-def name_check():
-    username = pwd.getpwuid(os.getuid()).pw_name
-    return username
 
 
 def main():
@@ -20,7 +14,7 @@ def main():
               "\n\t'./nh-install.sh 1/2/wifi'\n")
         input("\n\n\tHit 'Enter' to exit and try again.\n")
         sys.exit()
-    config_file = "./nh-updater-config.json"
+    config_file = f"/home/{username}/RH_Install-Manager/NuclearHazard/nh-updater-config.json"
     config = load_json(config_file)
     config.user = username
     write_json(config, config_file)

@@ -5,6 +5,7 @@ import socket
 import subprocess
 import sys
 import time
+import pwd
 from pathlib import Path
 from shutil import copyfile
 from time import sleep
@@ -32,6 +33,11 @@ def get_host_info():
         hostname = "no hostname info"
 
     return hostname, ip_list
+
+
+def name_check():
+    username = pwd.getpwuid(os.getuid()).pw_name
+    return username
 
 
 def clear_the_screen():

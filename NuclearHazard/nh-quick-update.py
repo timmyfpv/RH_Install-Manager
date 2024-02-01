@@ -1,13 +1,15 @@
 from rpi_update import update
 import os
-from modules import write_json, load_json
+import pwd
+from modules import write_json, load_json, name_check
 from compatibility_check import main as compatibility_check
 
 
 def main():
+    username = name_check()
     compatibility_check()
     passed_rh_ver = os.getenv('RH_VERSION')
-    config_file = "../updater-config.json"
+    config_file = f"/home/{username}/RH_Install-Manager/updater-config.json"
     if os.path.exists(config_file):
         config = load_json(config_file)
         if passed_rh_ver in ['stable', 'beta', 'main']:
