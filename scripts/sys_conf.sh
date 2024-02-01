@@ -23,6 +23,7 @@ ssh_enabling() {
   sudo systemctl enable ssh || return 1
   sudo systemctl start ssh || return 1
   printf "
+
      $green -- SSH ENABLED -- $endc
 
 
@@ -233,4 +234,5 @@ if [ "${1}" = "all" ]; then
   spi_enabling || spi_error
   i2c_enabling || i2c_error
   uart_enabling || uart_error
+  echo
 fi
