@@ -5,6 +5,7 @@ import socket
 import subprocess
 import sys
 import time
+import pwd
 from pathlib import Path
 from shutil import copyfile
 from time import sleep
