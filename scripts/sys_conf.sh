@@ -165,13 +165,10 @@ uart_enabling() {
 # UART enabled - RH_Install-Manager #
 
 [pi5]
-enable_uart=1
-dtoverlay=miniuart-bt
 dtoverlay=uart0-pi5
 
 [all]
-enable_uart=1
-dtoverlay=miniuart-bt
+dtparam=uart0=on
   " | sudo tee -a "$boot_directory"/config.txt || return 1
 
   sleep 2
