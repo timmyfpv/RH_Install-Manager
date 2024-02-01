@@ -79,7 +79,7 @@ If you want to use value given as default, just hit 'Enter'.
         rh_config['GENERAL']["ADMIN_PASSWORD"] = admin_pswd
 
         while True:
-            http_port_nr = input("\nWhich port will you use with RotorHazard? [default (and advised): 5000]")
+            http_port_nr = input("\nWhich port will you use with RotorHazard? [default (and advised): 5000]\t")
             if not http_port_nr:
                 http_port_nr = 5000
                 print("defaulted to: 5000")
@@ -136,7 +136,7 @@ If you want to use value given as default, just hit 'Enter'.
             rh_config['LED']['LED_GPIO'] = int(led_data_pin_nr)
 
             while True:
-                led_output_inverted = input("\nIs LED data pin output inverted? [y/N]\t\t\t").lower()
+                led_output_inverted = input("\nIs LED data pin output inverted? [y/N]\t\t\t\t\t").lower()
                 if not led_output_inverted:
                     led_output_inverted = False
                     print("defaulted to: no")
@@ -188,7 +188,7 @@ If you want to use value given as default, just hit 'Enter'.
             rh_config['LED']['PANEL_ROTATE'] = int(led_panel_rotation)
 
             while True:
-                led_rows_inverted = input("\nAre your panel rows inverted? [y/N]\t\t\t").lower()
+                led_rows_inverted = input("\nAre your panel rows inverted? [y/N]\t\t\t\t\t").lower()
                 if not led_rows_inverted:
                     led_rows_inverted = False
                     print("defaulted to: no")
@@ -271,7 +271,7 @@ If you want to use value given as default, just hit 'Enter'.
             rh_config['HARDWARE']['I2C_BUS'] = int(i2c_bus_nr)
 
             while True:
-                debug_mode = input("\nWill you use RotorHazard in debug mode? [y/N]\t\t").lower()
+                debug_mode = input("\nWill you use RotorHazard in debug mode? [y/N]\t\t\t\t").lower()
                 if not debug_mode:
                     debug_mode = False
                     print("defaulted to: no")
@@ -296,7 +296,7 @@ If you want to use value given as default, just hit 'Enter'.
 
             while True:
                 serial_ports = input(
-                    "\nWhich port (serial or USB) you will use? [blank defaults to serial0]\t\t").strip().lower()
+                    "\nWhich port (serial or USB) you will use? [blank defaults to serial0]\t").strip().lower()
                 if not serial_ports:
                     serial_ports = []
                     print("defaulted to: []")

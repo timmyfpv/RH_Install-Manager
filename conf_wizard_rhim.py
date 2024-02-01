@@ -148,7 +148,7 @@ If you want to use value given as default, press 'Enter'.
             while True:
                 flashing_port_name = input("""
 What port will be used for flashing Arduinos?
-(STM32/NuclearHazard builds are flashed in the rotorHazard UI.)
+(STM32/NuclearHazard builds are flashed in the RotorHazard UI)
 Usually 'ttyS0' or 'ttyAMA0' (on older OSes) [default: ttyAMA0]\t\t""")
                 if not flashing_port_name:
                     config.port_name = 'ttyAMA0'
@@ -219,7 +219,7 @@ Flashing itself is not possible in "sim" mode!\t\t\t\t""").lower()
             while True:
                 old_hardware_mod = input("""
 Are you using older, non-i2c hardware flashing mod? 
-(nodes reset pins connected to gpio pins) [y/N]\t\t""").lower()
+(nodes reset pins connected to gpio pins) [y/N]\t\t\t\t""").lower()
                 if not old_hardware_mod:
                     old_hardware_mod, config.old_hw_mod = False, False
                     print("defaulted to: no")
