@@ -28,16 +28,14 @@ sleep 2
   printf "
 --------------------------------------------------------------------
 $green
-Program downloaded successfully. To open the Installer now type:
-$endc
+Program downloaded successfully. To open the Installer now type:$endc
 cd ~/RH_Install-Manager
 ./rhim.sh
-
 $yellow
-For the NuclearHazard quick install, enter:
-$endc
+For the NuclearHazard quick install, enter:$endc
 cd ~/RH_Install-Manager/NuclearHazard
 ./nh-install.sh 1
+
 "
 
 }
