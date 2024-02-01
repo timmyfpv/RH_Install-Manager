@@ -453,7 +453,7 @@ def show_about(config):
 
     > {blue}'beta'  {endc}{bold} - contains new features but may also contain some bugs{endc}{bold}
 
-    > {blue}'main'{endc}{bold}   - most recent feature development but may be unstable or non-functional{endc} 
+    > {blue}'main'{endc}{bold}   - current development version with highest risk of errors{endc} 
 
 
 
