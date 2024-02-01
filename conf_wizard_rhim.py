@@ -251,7 +251,7 @@ Are you using older, non-i2c hardware flashing mod?
 
             while True:
                 user_is_beta_tester = input(
-                    "\nAre you a beta tester for Install Manager? [y/N]\t\t").lower()
+                    "\nAre you a beta tester for Install Manager? [y/N]\t\t\t").lower()
                 if not user_is_beta_tester:
                     config.beta_tester = False
                     print("defaulted to: no")
