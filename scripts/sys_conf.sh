@@ -3,7 +3,6 @@
 green="\033[92m"
 red="\033[91m"
 endc="\033[0m"
-underline="\033[4m"
 
 ssh_enabling() {
   sudo systemctl enable ssh || return 1
@@ -37,9 +36,12 @@ spi_enabling() {
   sudo raspi-config nonint do_spi 0 || return 1
 
   echo "
-[SPI enabled - RH_Install-Manager]
+# SPI enabled - RH_Install-Manager #
+
+[all]
 dtparam=spi=on
 " | sudo tee -a /boot/config.txt || return 1
+
   sudo sed -i 's/^blacklist spi-bcm2708/#blacklist spi-bcm2708/' /etc/modprobe.d/raspi-blacklist.conf >>/dev/null 2>&1
   printf "
      $green -- SPI ENABLED -- $endc
@@ -75,23 +77,16 @@ i2c_enabling() {
 Raspberry Pi 4 chipset found
     "
     echo "
-[I2C enabled - RH_Install-Manager]
-dtparam=i2c_arm=on
-  " | sudo tee -a /boot/config.txt || return 1
+# I2C enabled - RH_Install-Manager #
 
-  elif [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_5" ]; then
-    echo "
-Raspberry Pi 5 chipset found
-    "
-    echo "
-[I2C enabled - RH_Install-Manager]
+[pi5]
 dtparam=i2c_arm=on
 dtoverlay=i2c1-pi5
-  " | sudo tee -a /boot/config.txt || return 1
 
-  else
-    echo "
-[I2C enabled - RH_Install-Manager]
+[pi4]
+dtparam=i2c_arm=on
+
+[pi3]
 dtparam=i2c_baudrate=75000
 core_freq=250
 i2c-bcm2708
@@ -129,29 +124,27 @@ i2c_error() {
 uart_enabling() {
   sudo cp /boot/config.txt /boot/config.txt.dist || echo
   sudo cp /boot/cmdline.txt /boot/cmdline.txt.dist || echo
-  sudo cp /boot/firmware/cmdline.txt /boot/firmware/cmdline.txt.dist || echo
 
   sudo raspi-config nonint do_serial_hw 0 || return 1
 
   sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt || echo
-  sudo sed -i 's/console=serial0,115200//g' /boot/cmdline.txt || echo
   echo "
   console serial output disabled - requires REBOOT
   "
   sudo raspi-config nonint do_serial_cons 1 || return 1
 
   if [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_5" ]; then
+
+
     echo "
-[UART enabled - RH_Install-Manager]
+# UART enabled - RH_Install-Manager #
+
+[pi5]
 enable_uart=1
 dtoverlay=miniuart-bt
 dtoverlay=uart0-pi5
-  " | sudo tee -a /boot/config.txt || return 1
 
-  else
-
-    echo "
-[UART enabled - RH_Install-Manager]
+[all]
 enable_uart=1
 dtoverlay=miniuart-bt
   " | sudo tee -a /boot/config.txt || return 1
