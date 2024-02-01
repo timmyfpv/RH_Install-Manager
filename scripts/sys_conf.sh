@@ -4,6 +4,28 @@ green="\033[92m"
 red="\033[91m"
 endc="\033[0m"
 
+chipset_check() {
+
+  if [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_3" ]; then
+    printf "\n\n\t Generic Raspberry Pi chipset found \n\n"
+  elif [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_4" ]; then
+    printf "\n\n\t Raspberry Pi 4 chipset found \n\n"
+  elif [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_5" ]; then
+    printf "\n\n\t Raspberry Pi 5 chipset found \n\n"
+  fi
+
+}
+
+config_directory_check() {
+
+  if [ "$(~/RH_Install-Manager/scripts/os_version_check.sh)" == "12" ]; then
+    boot_directory="/boot/firmware"
+  else
+    boot_directory="/boot"
+  fi
+
+}
+
 ssh_enabling() {
   sudo systemctl enable ssh || return 1
   sudo systemctl start ssh || return 1
@@ -40,7 +62,7 @@ spi_enabling() {
 
 [all]
 dtparam=spi=on
-" | sudo tee -a /boot/config.txt || return 1
+" | sudo tee -a "$boot_directory"/config.txt || return 1
 
   sudo sed -i 's/^blacklist spi-bcm2708/#blacklist spi-bcm2708/' /etc/modprobe.d/raspi-blacklist.conf >>/dev/null 2>&1
   printf "
@@ -72,11 +94,7 @@ i2c_enabling() {
 
   sudo raspi-config nonint do_i2c 0 || return 1
 
-  if [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_4" ]; then
-    echo "
-Raspberry Pi 4 chipset found
-    "
-    echo "
+  echo "
 # I2C enabled - RH_Install-Manager #
 
 [pi5]
@@ -93,10 +111,9 @@ i2c-bcm2708
 i2c-dev
 dtparam=i2c1=on
 dtparam=i2c_arm=on
-  " | sudo tee -a /boot/config.txt || return 1
-    #    sudo sed -i 's/^blacklist i2c-bcm2708/#blacklist i2c-bcm2708/' /etc/modprobe.d/raspi-blacklist.conf || return 1
+  " | sudo tee -a "$boot_directory"/config.txt || return 1
+  #    sudo sed -i 's/^blacklist i2c-bcm2708/#blacklist i2c-bcm2708/' /etc/modprobe.d/raspi-blacklist.conf || return 1
 
-  fi
   printf "
      $green -- I2C ENABLED -- $endc
 
@@ -122,21 +139,18 @@ i2c_error() {
 }
 
 uart_enabling() {
-  sudo cp /boot/config.txt /boot/config.txt.dist || echo
-  sudo cp /boot/cmdline.txt /boot/cmdline.txt.dist || echo
+  sudo cp "$boot_directory"/config.txt "$boot_directory"/config.txt.dist || echo
+  sudo cp "$boot_directory"/cmdline.txt "$boot_directory"/cmdline.txt.dist || echo
 
   sudo raspi-config nonint do_serial_hw 0 || return 1
 
-  sudo sed -i 's/console=serial0,115200//g' /boot/firmware/cmdline.txt || echo
+  sudo sed -i 's/console=serial0,115200//g' "$boot_directory"/cmdline.txt || echo
   echo "
   console serial output disabled - requires REBOOT
   "
   sudo raspi-config nonint do_serial_cons 1 || return 1
 
-  if [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_5" ]; then
-
-
-    echo "
+  echo "
 # UART enabled - RH_Install-Manager #
 
 [pi5]
@@ -147,9 +161,7 @@ dtoverlay=uart0-pi5
 [all]
 enable_uart=1
 dtoverlay=miniuart-bt
-  " | sudo tee -a /boot/config.txt || return 1
-
-  fi
+  " | sudo tee -a "$boot_directory"/config.txt || return 1
 
   sleep 2
 
@@ -202,6 +214,7 @@ reboot_message() {
 }
 
 if [ "${1}" = "all" ]; then
+  chipset_check || echo
   ssh_enabling || ssh_error
   spi_enabling || spi_error
   i2c_enabling || i2c_error
