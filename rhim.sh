@@ -182,7 +182,7 @@ dependencies_check() {
     echo python3-dev has to be installed && sudo apt install python3-dev -y
   fi
 
-  if check_package 'python3-venv'; then
+  if check_package_when_errors 'python3-venv'; then
     echo python3-venv"      "found
   else
     echo python3-venv has to be installed && sudo apt install python3-venv -y
