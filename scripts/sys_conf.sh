@@ -95,8 +95,12 @@ i2c_enabling() {
 
 [pi5]
 dtoverlay=i2c1-pi5
+dtparam=i2c_arm=on
+
 
 [pi3]
+dtparam=i2c_arm=on
+
 dtparam=i2c_baudrate=75000
 core_freq=250
 i2c-bcm2708
@@ -147,6 +151,7 @@ uart_enabling() {
 ### UART enabled - RH_Install-Manager ###
 
 [pi5]
+dtparam=uart0=on
 dtoverlay=uart0-pi5
 
 [all]
