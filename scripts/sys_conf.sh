@@ -16,15 +16,7 @@ chipset_check() {
 
 }
 
-config_directory_check() {
 
-  if [ "$(~/RH_Install-Manager/scripts/os_version_check.sh)" == "12" ]; then
-    boot_directory="/boot/firmware"
-  else
-    boot_directory="/boot"
-  fi
-
-}
 
 ssh_enabling() {
   sudo systemctl enable ssh || return 1
