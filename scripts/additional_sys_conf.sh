@@ -31,5 +31,5 @@ if [ "$1" == "led" ]; then
 ## ACT pin - RH_Install-Manager ##
 dtoverlay=act-led,gpio=24
 dtparam=act_led_trigger=heartbeat
-  " | sudo tee -a /boot/config.txt
+  " | sudo tee -a "$boot_directory"/config.txt
 fi
