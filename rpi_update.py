@@ -291,7 +291,7 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
         else:
             first_part_of_installation_done_flag = True
     if not internet_flag:
-        print(f"\n\t{Bcolors.RED}Looks like you don't have internet connection. Installation canceled.{Bcolors.ENDC}")
+        print(f"\n\t{Bcolors.RED}No internet connection found. Installation canceled.{Bcolors.ENDC}")
         sleep(2)
     else:
         if not first_part_of_installation_done_flag:
@@ -345,7 +345,7 @@ def update(config, git_flag):
     clear_the_screen()
     internet_flag = internet_check()
     if not internet_flag:
-        print(f"\n\t{Bcolors.RED}Looks like you don't have internet connection. Update canceled.{Bcolors.ENDC}")
+        print(f"\n\t{Bcolors.RED}No internet connection found. Update canceled.{Bcolors.ENDC}")
         sleep(2)
     else:
         print(f"\n\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
@@ -353,7 +353,7 @@ def update(config, git_flag):
         if not os.path.exists(f"/home/{config.user}/RotorHazard"):
             print(f"""{Bcolors.BOLD}
 
-    Looks like you don't have RotorHazard server software installed for now. 
+    No RotorHazard server installation found. 
 
     Please install your server software first.{Bcolors.ENDC}{Bcolors.GREEN} 
 
