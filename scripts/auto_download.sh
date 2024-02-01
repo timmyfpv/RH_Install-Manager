@@ -34,7 +34,7 @@ cd ~/RH_Install-Manager
 $yellow
 For the NuclearHazard quick install, enter:$endc
 cd ~/RH_Install-Manager/NuclearHazard
-./rh-install.sh 1
+./nh-install.sh 1
 
 "
 
