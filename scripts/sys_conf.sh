@@ -155,6 +155,7 @@ dtparam=uart0=on
 dtoverlay=uart0-pi5
 
 [all]
+dtoverlay=miniuart-bt
 dtparam=uart0=on  #  Bookworm and newer
 enable_uart=1     #  Bullseye and older
   " | sudo tee -a "${boot_directory}/config.txt" || return 1
