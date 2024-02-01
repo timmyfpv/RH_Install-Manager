@@ -6,17 +6,16 @@ endc="\033[0m"
 
 chipset_check() {
 
-  if [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_3" ]; then
-    printf "\n\n\t Generic Raspberry Pi chipset found \n\n"
-  elif [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_4" ]; then
+  if [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_4" ]; then
     printf "\n\n\t Raspberry Pi 4 chipset found \n\n"
   elif [ "$(~/RH_Install-Manager/scripts/pi_model_check.sh)" == "pi_5" ]; then
     printf "\n\n\t Raspberry Pi 5 chipset found \n\n"
+  else
+    printf "\n\n\t Generic Raspberry Pi chipset found \n\n"
+
   fi
 
 }
-
-
 
 ssh_enabling() {
   sudo systemctl enable ssh || return 1
@@ -46,6 +45,11 @@ ssh_error() {
 }
 
 spi_enabling() {
+  if [ "$(~/RH_Install-Manager/scripts/os_version_check.sh)" == "12" ]; then
+    boot_directory="/boot/firmware"
+  else
+    boot_directory="/boot"
+  fi
 
   sudo raspi-config nonint do_spi 0 || return 1
 
@@ -57,6 +61,7 @@ dtparam=spi=on
 " | sudo tee -a "$boot_directory"/config.txt || return 1
 
   sudo sed -i 's/^blacklist spi-bcm2708/#blacklist spi-bcm2708/' /etc/modprobe.d/raspi-blacklist.conf >>/dev/null 2>&1
+
   printf "
      $green -- SPI ENABLED -- $endc
 
@@ -83,6 +88,11 @@ spi_error() {
 }
 
 i2c_enabling() {
+  if [ "$(~/RH_Install-Manager/scripts/os_version_check.sh)" == "12" ]; then
+    boot_directory="/boot/firmware"
+  else
+    boot_directory="/boot"
+  fi
 
   sudo raspi-config nonint do_i2c 0 || return 1
 
@@ -131,6 +141,12 @@ i2c_error() {
 }
 
 uart_enabling() {
+  if [ "$(~/RH_Install-Manager/scripts/os_version_check.sh)" == "12" ]; then
+    boot_directory="/boot/firmware"
+  else
+    boot_directory="/boot"
+  fi
+
   sudo cp "$boot_directory"/config.txt "$boot_directory"/config.txt.dist || echo
   sudo cp "$boot_directory"/cmdline.txt "$boot_directory"/cmdline.txt.dist || echo
 
