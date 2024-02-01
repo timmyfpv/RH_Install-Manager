@@ -45,6 +45,7 @@ ssh_error() {
 }
 
 spi_enabling() {
+
   if [ "$(~/RH_Install-Manager/scripts/os_version_check.sh)" == "12" ]; then
     boot_directory="/boot/firmware"
   else
@@ -88,6 +89,7 @@ spi_error() {
 }
 
 i2c_enabling() {
+
   if [ "$(~/RH_Install-Manager/scripts/os_version_check.sh)" == "12" ]; then
     boot_directory="/boot/firmware"
   else
@@ -141,6 +143,7 @@ i2c_error() {
 }
 
 uart_enabling() {
+
   if [ "$(~/RH_Install-Manager/scripts/os_version_check.sh)" == "12" ]; then
     boot_directory="/boot/firmware"
   else
