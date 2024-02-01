@@ -1,14 +1,8 @@
 from rpi_update import installation
 import os
 import sys
-import pwd
-from modules import write_json, load_json
+from modules import write_json, load_json, name_check
 from compatibility_check import main as compatibility_check
-
-
-def name_check():
-    username = pwd.getpwuid(os.getuid()).pw_name
-    return username
 
 
 def main():

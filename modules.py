@@ -34,6 +34,11 @@ def get_host_info():
     return hostname, ip_list
 
 
+def name_check():
+    username = pwd.getpwuid(os.getuid()).pw_name
+    return username
+
+
 def clear_the_screen():
     sleep(0.02)
     if platform.system() == "Windows":
