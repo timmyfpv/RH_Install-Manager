@@ -173,7 +173,7 @@ def end_normal_installation():
 
 
 def end_quick_installation(config):
-    rhim_prompt = (f"""{Bcolors.GREEN}
+    rhim_prompt = (f"""{Bcolors.GREEN}\n
         If you want to adjust any additional features like LEDs etc.
         please open Install-Manager by typing '{Bcolors.ENDC}rhim{Bcolors.GREEN}'. {Bcolors.ENDC}\n\n""")
     os.system(f"cp /home/{config.user}/RH_Install-Manager/NuclearHazard/nh-rh-config.json "
