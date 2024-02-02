@@ -173,6 +173,9 @@ def end_normal_installation():
 
 
 def end_quick_installation(config):
+    rhim_prompt = (f"""
+        If you want to adjust any additional features like LEDs etc.
+        please open Install-Manager by typing 'rhim'. \n""")
     os.system(f"cp /home/{config.user}/RH_Install-Manager/NuclearHazard/nh-rh-config.json "
               f"/home/{config.user}/RotorHazard/src/server/config.json")
     os.system(f"cp ~/RH_Install-Manager/NuclearHazard/nh-updater-config.json ~/RH_Install-Manager/updater-config.json")
@@ -183,8 +186,9 @@ def end_quick_installation(config):
                       "\tin the directory ~/RH_Install-Manager/NuclearHazard\n\n\t")
     if selection == 'y':
         os.system("sh ~/RH_Install-Manager/NuclearHazard/nh-wifi.sh")
+        print(rhim_prompt)
     else:
-        print("\n\n")
+        print(rhim_prompt)
         return
 
 
