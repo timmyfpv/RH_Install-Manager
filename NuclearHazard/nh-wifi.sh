@@ -34,4 +34,8 @@ echo "
 
 --- Automatic NuclearHazard AccessPoint enabled ---
 
+SSID: NuclearHazard
+PSWD: nuclearhazard
+
+
 "
