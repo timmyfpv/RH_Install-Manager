@@ -2,6 +2,7 @@
 
 sudo rm /home/"$USER"/hotspot.sh >/dev/null 2>&1
 
+echo
 echo "if iwgetid -r | grep -q .; then
     echo "Wi-Fi network found. Not creating a hotspot."
 else
@@ -30,6 +31,10 @@ sudo systemctl enable hotspot.service
 
 echo "
 
-Automatic NuclearHazard AccessPoint enabled
+
+--- Automatic NuclearHazard AccessPoint enabled ---
+
+SSID: NuclearHazard
+PSWD: nuclearhazard
 
 "
