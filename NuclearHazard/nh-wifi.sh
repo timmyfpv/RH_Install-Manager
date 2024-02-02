@@ -37,5 +37,4 @@ echo "
 SSID: NuclearHazard
 PSWD: nuclearhazard
 
-
 "
