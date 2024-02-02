@@ -76,7 +76,7 @@ def conf_check():
                 conf_now_flag = False
                 break
             else:
-                print("\nToo big fingers :( wrong command. Try again! :)")
+                print("\nPlease enter correct value")
 
     return conf_now_flag
 
@@ -138,11 +138,14 @@ def do_config():
             clear_the_screen()
             logo_top(False)
             ethernet_ip, wlan_ip = show_ip()
-            print("""\n\n\t\tCurrent configuration: """)
-            print(f"\n\t\tEthernet IP: {ethernet_ip}")
-            print(f"\n\t\tHotspot IP:  {wlan_ip}")
-            print(f"\n\n\t\tSSID (hotspot name): {ssid}")
-            print(f"\n\t\tPassword (password): {password}\n\n")
+            print(f"""\n\n
+            Current configuration: 
+
+            Ethernet IP: {ethernet_ip}
+            Hotspot IP:  {wlan_ip}
+            SSID (hotspot name): {ssid}
+            Password (password): {password}\n\n""")
+
             input("\n\tHit Enter to exit this screen")
             conf_now_flag = 0
         if selection in ['change', 'n', 'no']:

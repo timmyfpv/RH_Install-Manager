@@ -1,7 +1,10 @@
 from modules import rhim_load_config
+import os
+
 
 def net_auto_ap():
 
+    os.system("./scripts/auto_hotspot.sh")
 
 
 def main():
