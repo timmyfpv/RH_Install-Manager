@@ -1,5 +1,4 @@
 import os
-
 from conf_wizard_net_ap import ap_config
 from modules import rhim_load_config, clear_the_screen, logo_top, Bcolors
 from net_and_ap_man_conf import net_and_ap_conf
@@ -58,9 +57,11 @@ def conf_wizard_net(config):
                         
                         1 - Setup hotspot - always on (Bookworm)
                         
-                        2 - Setup hotspot - always on (Bullseye/Buster)
+                        2 - Setup automatic hotspot/Wi-Fi (Bookworm)
+                        
+                        3 - Setup hotspot - always on (Bullseye/Buster)
 
-                        3 - Setup automatic hotspot/Wi-Fi (Bullseye/Buster)
+                        4 - Setup automatic hotspot/Wi-Fi (Bullseye/Buster)
 
                 {yellow}e - Exit to main menu {endc}
 
@@ -70,8 +71,10 @@ def conf_wizard_net(config):
         if selection == '1':
             ap_config()
         elif selection == '2':
-            net_and_ap_conf(config)
+            auto_ap_config()
         elif selection == '3':
+            net_and_ap_conf(config)
+        elif selection == '4':
             confirm_auto_hotspot(config)
         elif selection == 'e':
             break
