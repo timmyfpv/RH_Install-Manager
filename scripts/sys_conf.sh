@@ -97,10 +97,8 @@ i2c_enabling() {
 dtoverlay=i2c1-pi5
 dtparam=i2c_arm=on
 
-
 [pi3]
 dtparam=i2c_arm=on
-
 dtparam=i2c_baudrate=75000
 core_freq=250
 i2c-bcm2708
