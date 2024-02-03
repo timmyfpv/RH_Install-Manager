@@ -1,8 +1,7 @@
 import os
 import sys
 from time import sleep
-
-from conf_wizard_net import conf_wizard_net
+from net_hotspot_menu import net_menu
 from conf_wizard_rhim import conf_rhim
 from modules import clear_the_screen, Bcolors, logo_top, triangle_image_show, rhim_asci_image_show, rhim_load_config, \
     load_rhim_sys_markers, write_rhim_sys_markers, get_rhim_version, rhim_config_check, write_json
@@ -417,7 +416,7 @@ def features_menu(config):
         if selection == '1':
             serial_menu(config)
         elif selection == '2':
-            conf_wizard_net(config)
+            net_menu(config)
         elif selection == '3':
             clear_the_screen()
             os.system("pinout")

@@ -1,6 +1,5 @@
 import os
 from time import sleep
-
 from modules import clear_the_screen, Bcolors, logo_top, rhim_load_config
 from nodes_flash_common import com_init, prepare_mate_node, reset_gpio_pin
 

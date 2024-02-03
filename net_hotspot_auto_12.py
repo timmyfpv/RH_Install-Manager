@@ -4,7 +4,7 @@ import os
 
 def net_auto_ap():
 
-    os.system("./scripts/auto_hotspot.sh")
+    os.system("scripts/net_hotspot_auto_12.sh")
 
 
 def main():

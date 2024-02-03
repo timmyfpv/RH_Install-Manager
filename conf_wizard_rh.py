@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 from time import sleep
-
 from modules import clear_the_screen, Bcolors, logo_top, write_json
 
 

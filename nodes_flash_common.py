@@ -1,5 +1,4 @@
 from time import sleep
-
 from modules import rhim_load_config, Bcolors
 
 
