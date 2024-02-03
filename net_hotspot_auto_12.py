@@ -1,4 +1,4 @@
-from modules import rhim_load_config, show_ip, logo_top, clear_the_screen
+from modules import show_ip, logo_top, clear_the_screen
 import json
 import os
 from time import sleep
