@@ -36,14 +36,14 @@ def net_hotspot_auto_11(config):
             print("""
                 #######################################################################
                 #                                                                     #
-                # {bg}   Configuring automatic hotspot is complete {endc}             #
+                # {bg}  Configuring auto hotspot is complete - service active{endc}   #
                 #                                                                     #
                 #              {bold}         Thank you!        {endc}                #
                 #                                                                     #
                 #######################################################################\n\n
                 """.format(nodes_number=config.nodes_number, bold=Bcolors.BOLD_S,
                            bg=Bcolors.BOLD + Bcolors.GREEN + (' ' * 4), endc=Bcolors.ENDC_S))
-            input("Press enter to continue:")
+            input("Press 'Enter' to continue")
             break
         elif selection == 'e':
             break
