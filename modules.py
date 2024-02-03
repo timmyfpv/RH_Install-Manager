@@ -33,7 +33,7 @@ def get_host_info():
         hostname = socket.gethostname()
         ip_addresses = subprocess.check_output(['hostname', '-I']).decode('utf-8').strip().split()
         for ip in ip_addresses:
-            ip_list.append(ip)
+            ip_list.append(ip) if len(ip) < 16 else None
         for i in range(3):
             ip_list.append("0")  # so at least ip_list have at least 3 arguments - due to return function
 
