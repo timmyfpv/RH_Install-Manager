@@ -11,18 +11,18 @@ def net_menu(config):
         logo_top(config.debug_mode)
         features_menu_content = """
 
-                            {rmh}NETWORKING MENU{endc}{bold}
+                        {rmh}NETWORKING MENU{endc}{bold}
 
-                        
-                        1 - Setup hotspot - always on (Bookworm)
-                        
-                        2 - Setup automatic hotspot/Wi-Fi (Bookworm)
-                        
-                        3 - Setup hotspot - always on (Bullseye/Buster)
-
-                        4 - Setup automatic hotspot/Wi-Fi (Bullseye/Buster)
-
-                {yellow}e - Exit to main menu {endc}
+                            
+                    1 - Setup hotspot - always on (Bookworm)
+                    
+                    2 - Setup automatic hotspot/Wi-Fi (Bookworm)
+                    
+                    3 - Setup hotspot - always on (Bullseye/Buster)
+    
+                    4 - Setup automatic hotspot/Wi-Fi (Bullseye/Buster)
+    
+            {yellow}e - Exit to main menu {endc}
 
                  """.format(rmh=Bcolors.RED_MENU_HEADER, yellow=Bcolors.YELLOW_S, bold=Bcolors.BOLD, endc=Bcolors.ENDC)
         print(features_menu_content)
