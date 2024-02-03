@@ -7,15 +7,20 @@ def net_hotspot_auto_11(config):
         clear_the_screen()
         features_menu_content = """
 
-             {bold} Automatic Hotspot / Wifi setup{endc}
+             {bold} Automatic Hotspot / Wi-Fi setup{endc}
+
 
          Automatic hotspot will configure your timer to connect to any previously
-         known wifi network if detected on startup.  
+         known Wi-Fi network if detected on startup.  
 
          If no known network is found, the timer will create a self-hosting hotspot
-         that can be connected to on address: 10.0.0.5 
+         that can be connected to on address: 10.0.0.5 (or <your_hostname>.local)
 
-         The command 'autohotspot' will be available after install to re-detect wifi.
+         The command 'autohotspot' will be available after install to re-detect Wi-Fi.
+         
+         Rebooting the timer will also cause it to re-detect know Wi-Fi networks 
+         or create the hotspot (if known networks are not present). 
+
 
                      {green} y - Start auto hotspot config {endc}
 
@@ -39,6 +44,7 @@ def net_hotspot_auto_11(config):
                 """.format(nodes_number=config.nodes_number, bold=Bcolors.BOLD_S,
                            bg=Bcolors.BOLD + Bcolors.GREEN + (' ' * 4), endc=Bcolors.ENDC_S))
             input("Press enter to continue:")
+            break
         elif selection == 'e':
             break
     pass
