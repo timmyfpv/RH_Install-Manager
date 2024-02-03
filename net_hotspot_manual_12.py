@@ -1,17 +1,8 @@
 import json
 import os
-import subprocess
 from pathlib import Path
 from time import sleep
-from modules import clear_the_screen, logo_top
-
-
-def show_ip():
-    ethernet_ip_os = "ifconfig eth0 | grep -oP 'inet \K\S+' || echo 'no wired connection'"
-    ethernet_ip = (subprocess.check_output(ethernet_ip_os, shell=True, text=True)).strip()
-    hotspot_ip_os = "ifconfig wlan0 | grep -oP 'inet \K\S+' || echo 'no wireless connection'"
-    wlan_ip = (subprocess.check_output(hotspot_ip_os, shell=True, text=True)).strip()
-    return ethernet_ip, wlan_ip
+from modules import clear_the_screen, logo_top, show_ip
 
 
 def conf_check():
@@ -61,13 +52,12 @@ def conf_check():
         Please note that this action will disable Wi-Fi client mode 
         on your Raspberry.
             """)
-            print("""\n\t\tCurrent configuration:""")
-            print(f"\n\t\tEthernet IP: {ethernet_ip}")
-            print(f"\n\t\tWi-Fi IP:    {wlan_ip}")
+            print(f"""
+        Current configuration:
+        Ethernet IP: {ethernet_ip}
+        Wi-Fi IP:    {wlan_ip}\n""")
             confirm_conf = input("""
-    
         Do you want to continue? [Y/n]\t\t""").lower()
-
             if not confirm_conf:
                 print("Answer defaulted to: yes")
                 break
@@ -84,7 +74,8 @@ def conf_check():
 
 
 def save_config_os(ssid, password):
-    os.system("sudo nmcli connection delete $(sudo nmcli -t -f NAME,TYPE con show | awk -F: '/:802-11-wireless$/ {print $1}') > /dev/null 2>&1")
+    os.system(
+        "sudo nmcli connection delete $(sudo nmcli -t -f NAME,TYPE con show | awk -F: '/:802-11-wireless$/ {print $1}') > /dev/null 2>&1")
     os.system(f"sudo nmcli con add con-name hotspot ifname wlan0 type wifi ssid {ssid}")
     os.system(f"sudo nmcli con modify hotspot wifi-sec.key-mgmt wpa-psk")
     os.system(f"sudo nmcli con modify hotspot wifi-sec.psk '{password}'")
