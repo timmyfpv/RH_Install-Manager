@@ -27,6 +27,7 @@ def conf_check():
 
         Ethernet IP: {ethernet_ip}
         Hotspot IP:  {wlan_ip}
+        
         SSID (hotspot name): {ssid}
         Password (password): {password}
         \n\n""")
@@ -131,6 +132,7 @@ def do_config():
 
             Ethernet IP: {ethernet_ip}
             Hotspot IP:  {wlan_ip}
+            
             SSID (hotspot name): {ssid}
             Password (password): {password}\n\n""")
 

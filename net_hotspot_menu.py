@@ -14,13 +14,13 @@ def net_menu(config):
                         {rmh}NETWORKING MENU (choose right OS){endc}{bold}
 
                             
-                1 - Setup hotspot - always on (Bookworm)
+                1 - Setup automatic hotspot/Wi-Fi   (Bookworm)
                 
-                2 - Setup automatic hotspot/Wi-Fi (Bookworm)
+                2 - Setup hotspot - always on       (Bookworm)
                 
-                3 - Setup hotspot - always on (Bullseye)
+                3 - Setup automatic hotspot/Wi-Fi   (Bullseye)
 
-                4 - Setup automatic hotspot/Wi-Fi (Bullseye)
+                4 - Setup hotspot - always on       (Bullseye)
 
         {yellow}e - Exit to main menu {endc}
 
@@ -28,13 +28,13 @@ def net_menu(config):
         print(features_menu_content)
         selection = input()
         if selection == '1':
-            net_hotspot_manual_12()
-        elif selection == '2':
             net_hotspot_auto_12()
+        elif selection == '2':
+            net_hotspot_manual_12()
         elif selection == '3':
-            net_hotspot_manual_11(config)
-        elif selection == '4':
             net_hotspot_auto_11(config)
+        elif selection == '4':
+            net_hotspot_manual_11(config)
         elif selection == 'e':
             break
     pass
