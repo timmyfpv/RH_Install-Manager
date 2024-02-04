@@ -24,6 +24,7 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 sudo cp -f "${SCRIPTDIR}/hostapd.conf" /etc/hostapd/hostapd.conf
 
 #change the  name of the hotspot (in place)
+echo
 echo "What do you want your hotspot name to be? (default is ROTORHAZARD):"
 read -r hotspot
 

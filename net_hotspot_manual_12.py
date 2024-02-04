@@ -1,18 +1,8 @@
 import json
 import os
-import subprocess
 from pathlib import Path
 from time import sleep
-
-from modules import clear_the_screen, logo_top
-
-
-def show_ip():
-    ethernet_ip_os = "ifconfig eth0 | grep -oP 'inet \K\S+' || echo 'no wired connection'"
-    ethernet_ip = (subprocess.check_output(ethernet_ip_os, shell=True, text=True)).strip()
-    hotspot_ip_os = "ifconfig wlan0 | grep -oP 'inet \K\S+' || echo 'no wireless connection'"
-    wlan_ip = (subprocess.check_output(hotspot_ip_os, shell=True, text=True)).strip()
-    return ethernet_ip, wlan_ip
+from modules import clear_the_screen, logo_top, show_ip
 
 
 def conf_check():
@@ -30,13 +20,16 @@ def conf_check():
         password = ap_config.get("WIFI", {}).get("PASSWORD")
         ethernet_ip, wlan_ip = show_ip()
 
-        print("""\n\tLooks like you have AccessPoint already configured.
-              \n\n\t\tCurrent configuration:""")
-        print(f"\n\t\tEthernet IP: {ethernet_ip}")
-        print(f"\n\t\tHotspot IP:  {wlan_ip}\n")
-        print(f"\n\t\tSSID (hotspot name): {ssid}")
-        print(f"\n\t\tPassword (password): {password}")
-        print("\n\n")
+        print(f"""\n
+        Looks like you have AccessPoint already configured.
+              
+              Current configuration:
+              
+        Ethernet IP: {ethernet_ip}
+        Hotspot IP:  {wlan_ip}
+        SSID (hotspot name): {ssid}
+        Password (password): {password}
+        \n\n""")
 
         while True:
             cont_conf = input("\tOverwrite and continue anyway? [Y/n]\t\t").lower()
@@ -50,7 +43,7 @@ def conf_check():
                 conf_now_flag = False
                 break
             else:
-                print("\nToo big fingers :( wrong command. Try again! :)")
+                print("\nPlease enter correct value")
 
     else:
         while True:
@@ -59,13 +52,12 @@ def conf_check():
         Please note that this action will disable Wi-Fi client mode 
         on your Raspberry.
             """)
-            print("""\n\t\tCurrent configuration:""")
-            print(f"\n\t\tEthernet IP: {ethernet_ip}")
-            print(f"\n\t\tWi-Fi IP:    {wlan_ip}")
+            print(f"""
+        Current configuration:
+        Ethernet IP: {ethernet_ip}
+        Wi-Fi IP:    {wlan_ip}\n""")
             confirm_conf = input("""
-    
         Do you want to continue? [Y/n]\t\t""").lower()
-
             if not confirm_conf:
                 print("Answer defaulted to: yes")
                 break
@@ -76,13 +68,14 @@ def conf_check():
                 conf_now_flag = False
                 break
             else:
-                print("\nToo big fingers :( wrong command. Try again! :)")
+                print("\nPlease enter correct value")
 
     return conf_now_flag
 
 
 def save_config_os(ssid, password):
-    os.system("sudo nmcli connection delete $(sudo nmcli -t -f NAME,TYPE con show | awk -F: '/:802-11-wireless$/ {print $1}') > /dev/null 2>&1")
+    os.system(
+        "sudo nmcli connection delete $(sudo nmcli -t -f NAME,TYPE con show | awk -F: '/:802-11-wireless$/ {print $1}') > /dev/null 2>&1")
     os.system(f"sudo nmcli con add con-name hotspot ifname wlan0 type wifi ssid {ssid}")
     os.system(f"sudo nmcli con modify hotspot wifi-sec.key-mgmt wpa-psk")
     os.system(f"sudo nmcli con modify hotspot wifi-sec.psk '{password}'")
@@ -130,7 +123,7 @@ def do_config():
             if selection in valid_options:
                 break
             else:
-                print("\nToo big fingers ;) - please type yes/abort/change")
+                print("\nPlease enter correct value")
         if selection[0] == 'y':
             with open(f"{home_dir}/RH_Install-Manager/ap-config.json", "w") as json_file:
                 json.dump(ap_config, json_file, indent=4)
@@ -138,11 +131,14 @@ def do_config():
             clear_the_screen()
             logo_top(False)
             ethernet_ip, wlan_ip = show_ip()
-            print("""\n\n\t\tCurrent configuration: """)
-            print(f"\n\t\tEthernet IP: {ethernet_ip}")
-            print(f"\n\t\tHotspot IP:  {wlan_ip}")
-            print(f"\n\n\t\tSSID (hotspot name): {ssid}")
-            print(f"\n\t\tPassword (password): {password}\n\n")
+            print(f"""\n\n
+            Current configuration: 
+
+            Ethernet IP: {ethernet_ip}
+            Hotspot IP:  {wlan_ip}
+            SSID (hotspot name): {ssid}
+            Password (password): {password}\n\n""")
+
             input("\n\tHit Enter to exit this screen")
             conf_now_flag = 0
         if selection in ['change', 'n', 'no']:
@@ -155,14 +151,14 @@ def do_config():
     return conf_now_flag
 
 
-def ap_config():
+def net_hotspot_manual_12():
     config_now = 1
     while config_now:
         config_now = do_config()
 
 
 def main():
-    ap_config()
+    net_hotspot_manual_12()
 
 
 if __name__ == "__main__":

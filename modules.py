@@ -19,13 +19,21 @@ def host_sys_info():
     return host
 
 
+def show_ip():
+    ethernet_ip_os = "ifconfig eth0 | grep -oP 'inet \K\S+' || sudo ifconfig eth0 | grep -oP 'inet \K\S+' || echo 'no wired connection'"
+    ethernet_ip = (subprocess.check_output(ethernet_ip_os, shell=True, text=True)).strip()
+    hotspot_ip_os = "ifconfig wlan0 | grep -oP 'inet \K\S+' || sudo ifconfig wlan0 | grep -oP 'inet \K\S+' || echo 'no wireless connection'"
+    wlan_ip = (subprocess.check_output(hotspot_ip_os, shell=True, text=True)).strip()
+    return ethernet_ip, wlan_ip
+
+
 def get_host_info():
     ip_list = []
     try:
         hostname = socket.gethostname()
         ip_addresses = subprocess.check_output(['hostname', '-I']).decode('utf-8').strip().split()
         for ip in ip_addresses:
-            ip_list.append(ip)
+            ip_list.append(ip) if len(ip) < 16 else None
         for i in range(3):
             ip_list.append("0")  # so at least ip_list have at least 3 arguments - due to return function
 

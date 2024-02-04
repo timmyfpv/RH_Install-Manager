@@ -1,5 +1,4 @@
 import os
-
 from modules import clear_the_screen, Bcolors, rhim_load_config
 
 
@@ -235,13 +234,13 @@ def ap_menu():
     first_page()
 
 
-def net_and_ap_conf(config):
+def net_hotspot_manual_11(config):
     step_zero(config)
 
 
 def main():
     config = rhim_load_config()
-    net_and_ap_conf(config)
+    net_hotspot_manual_11(config)
 
 
 if __name__ == "__main__":

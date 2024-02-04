@@ -301,8 +301,8 @@ def installation(conf_allowed, config, git_flag, quick_install=False):
     else:
         if not first_part_of_installation_done_flag:
             if quick_install == 1:
-                os.system("sudo ~/RH_Install-Manager/scripts/additional_sys_conf.sh shutdown_pin 19 2500")
-                os.system("sudo ~/RH_Install-Manager/scripts/additional_sys_conf.sh led")
+                os.system("~/RH_Install-Manager/scripts/additional_sys_conf.sh shutdown_pin 19 2500")
+                os.system("~/RH_Install-Manager/scripts/additional_sys_conf.sh led")
             print(f"\n\t\t{Bcolors.GREEN}Internet connection - OK{Bcolors.ENDC}")
             sleep(1)
             clear_the_screen()

@@ -1,25 +1,27 @@
+from modules import Bcolors, clear_the_screen
 import os
 
-from conf_wizard_net_ap import ap_config
-from modules import rhim_load_config, clear_the_screen, logo_top, Bcolors
-from net_and_ap_man_conf import net_and_ap_conf
 
-
-def confirm_auto_hotspot(config):
+def net_hotspot_auto_11(config):
     while True:
         clear_the_screen()
         features_menu_content = """
 
-             {bold} Automatic Hotspot / Wifi setup{endc}
-         
+             {bold} Automatic Hotspot / Wi-Fi setup{endc}
+
+
          Automatic hotspot will configure your timer to connect to any previously
-         known wifi network if detected on startup.  
-         
+         known Wi-Fi network if detected on startup.  
+
          If no known network is found, the timer will create a self-hosting hotspot
-         that can be connected to on address: 10.0.0.5 
+         that can be connected to on address: 10.0.0.5 (or <your_hostname>.local)
+
+         The command 'autohotspot' will be available after install to re-detect Wi-Fi.
          
-         The command 'autohotspot' will be available after install to re-detect wifi.
-         
+         Rebooting the timer will also cause it to re-detect know Wi-Fi networks 
+         or create the hotspot (if known networks are not present). 
+
+
                      {green} y - Start auto hotspot config {endc}
 
                     {yellow} e - Exit to main menu {endc}
@@ -34,53 +36,22 @@ def confirm_auto_hotspot(config):
             print("""
                 #######################################################################
                 #                                                                     #
-                # {bg}   Configuring automatic hotspot is complete {endc}             #
+                # {bg}  Configuring auto hotspot is complete - service active{endc}   #
                 #                                                                     #
                 #              {bold}         Thank you!        {endc}                #
                 #                                                                     #
                 #######################################################################\n\n
                 """.format(nodes_number=config.nodes_number, bold=Bcolors.BOLD_S,
                            bg=Bcolors.BOLD + Bcolors.GREEN + (' ' * 4), endc=Bcolors.ENDC_S))
-            input("Press enter to continue:")
-        elif selection == 'e':
+            input("Press 'Enter' to continue")
             break
-    pass
-
-
-def conf_wizard_net(config):
-    while True:
-        clear_the_screen()
-        logo_top(config.debug_mode)
-        features_menu_content = """
-
-                            {rmh}NETWORKING MENU{endc}{bold}
-
-                        
-                        1 - Setup hotspot - always on (Bookworm)
-                        
-                        2 - Setup hotspot - always on (Bullseye/Buster)
-
-                        3 - Setup automatic hotspot/Wi-Fi (Bullseye/Buster)
-
-                {yellow}e - Exit to main menu {endc}
-
-                 """.format(rmh=Bcolors.RED_MENU_HEADER, yellow=Bcolors.YELLOW_S, bold=Bcolors.BOLD, endc=Bcolors.ENDC)
-        print(features_menu_content)
-        selection = input()
-        if selection == '1':
-            ap_config()
-        elif selection == '2':
-            net_and_ap_conf(config)
-        elif selection == '3':
-            confirm_auto_hotspot(config)
         elif selection == 'e':
             break
     pass
 
 
 def main():
-    config = rhim_load_config()
-    conf_wizard_net(config)
+    net_hotspot_auto_11()
 
 
 if __name__ == "__main__":

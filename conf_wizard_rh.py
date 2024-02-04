@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 from time import sleep
-
 from modules import clear_the_screen, Bcolors, logo_top, write_json
 
 
@@ -389,9 +388,9 @@ If you want to use value given as default, just hit 'Enter'.
             write_json(rh_config, f"{home_dir}/RotorHazard/src/server/config.json")
             print(f"\n{Bcolors.UNDERLINE}Configuration saved{Bcolors.ENDC}\n")
             os.system(
-                f"sudo {home_dir}/RH_Install-Manager/scripts/additional_sys_conf.sh shutdown_pin {rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN']} "
+                f"{home_dir}/RH_Install-Manager/scripts/additional_sys_conf.sh shutdown_pin {rh_config['GENERAL']['SHUTDOWN_BUTTON_GPIOPIN']} "
                 f"{rh_config['GENERAL']['SHUTDOWN_BUTTON_DELAYMS']}")
-            os.system(f"sudo {home_dir}/RH_Install-Manager/scripts/additional_sys_conf.sh led ")
+            os.system(f"{home_dir}/RH_Install-Manager/scripts/additional_sys_conf.sh led ")
             print(f"\nreboot maybe required\n")
             sleep(5)
             conf_now_flag = 0
