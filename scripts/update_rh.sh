@@ -85,7 +85,7 @@ if ! test -f "$PYTHON3_CONVERSION_FLAG_FILE"; then
 
   printf "\n"
 
-  if grep -Fq "python server.py" "/home/'${1}'/.bashrc"; then
+  if grep -Fq "python server.py" "/home/"${1}"/.bashrc"; then
     echo "old python based server-start alias found"
     sed -i 's/python server.py/python3 server.py/g' ~/.bashrc
     echo "'ss' alias changed to python3 version"
