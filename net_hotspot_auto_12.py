@@ -142,7 +142,7 @@ def do_config():
             SSID (hotspot name): {ssid}
             Password (password): {password}\n\n""")
 
-            input("\n\tHit Enter to exit this screen")
+            input("\n\tHit 'Enter' to exit this screen ")
             conf_now_flag = 0
         if selection in ['ch', 'change', 'n', 'no']:
             conf_now_flag = 1

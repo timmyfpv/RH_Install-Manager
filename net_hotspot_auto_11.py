@@ -22,6 +22,7 @@ def net_hotspot_auto_11(config):
          or create the hotspot (if known networks are not present). 
 
 
+
                      {green} y - Start auto hotspot config {endc}
 
                     {yellow} e - Exit to main menu {endc}
