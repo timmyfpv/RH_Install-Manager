@@ -5,6 +5,9 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+6f32.401.35
+1. Initial system config tweaked for all Bullseye and Bookworm
+
 6f31.401.35
 1. Networking (hotspots) tweaks and improvements
 
