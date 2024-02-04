@@ -51,8 +51,8 @@ def conf_check():
             print("""
 
         You are about to enable automatic Wi-Fi hotspot on your timer. 
-        This feature will make your device act as an Access Point
-        when no known Wi-Fi networks are discovered. 
+        If no known network is found, the timer will create a self-hosting hotspot
+        that can be connected to on address: 10.42.0.1 (or <your_hostname>.local)
         It checks for available networks after every reboot.
         
             """)
