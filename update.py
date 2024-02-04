@@ -392,7 +392,7 @@ def features_menu(config):
         update_available = Bcolors.UNDERLINE if rhim_update_available_check() else ''
         features_menu_content = """
         
-                            {rmf}FEATURES MENU{endc}
+                            {rmf}FEATURES MENU{endc}{bold}
 
 
                     1 - {update_flag}Update the Install-Manager{endc}{bold}
