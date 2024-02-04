@@ -11,7 +11,11 @@ def show_os_info(config):
     clear_the_screen()
     logo_top(config.debug_mode)
     print("\n\n")
+    os.system("cat /sys/firmware/devicetree/base/model")
+    print("\n")
     os.system("cat /etc/os-release")
+    print("\n\n")
+    input("Hit 'Enter' to exit")
 
 
 def net_menu(config):
