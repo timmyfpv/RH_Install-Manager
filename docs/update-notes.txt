@@ -5,6 +5,10 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+6f43.401.35
+1. Features menu tweaked
+2. Another hotspots improvements
+
 6f4.401.35
 1. Initial system config tweaked for all Bullseye and Bookworm
 2. Networking (hotspots) tweaks and improvements
