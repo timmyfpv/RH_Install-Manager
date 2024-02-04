@@ -50,8 +50,11 @@ def conf_check():
         while True:
             print("""
 
-        Please note that this action will disable Wi-Fi client mode 
-        on your Raspberry.
+        You are about to enable automatic Wi-Fi hotspot on your Raspberry Pi. 
+        This feature will make your device act as an Access Point
+        when no known Wi-Fi networks are discovered. 
+        It checks for available networks after every reboot.
+        
             """)
             print(f"""
         Current configuration:
@@ -106,14 +109,17 @@ def do_config():
 
         ap_config["WIFI"]["PASSWORD"] = password
 
-        ap_configuration_summary = f"""\n\n
+        ap_configuration_summary = f"""
+        
+        
             WIFI SSID:          {ap_config["WIFI"]["SSID"]}
             WIFI Password:      {ap_config["WIFI"]["PASSWORD"]}
 
-            Please check. Confirm? [yes/change/abort]\n"""
+            Please check. Confirm? [yes/change/abort]
+"""
         print(ap_configuration_summary)
 
-        valid_options = ['y', 'yes', 'n', 'no', 'change', 'abort']
+        valid_options = ['y', 'yes', 'n', 'no', 'ch', 'change', 'abort']
         while True:
             selection = input().strip()
             if selection in valid_options:
@@ -138,7 +144,7 @@ def do_config():
 
             input("\n\tHit Enter to exit this screen")
             conf_now_flag = 0
-        if selection in ['change', 'n', 'no']:
+        if selection in ['ch', 'change', 'n', 'no']:
             conf_now_flag = 1
         if selection == 'abort':
             print("Configuration aborted.\n")
