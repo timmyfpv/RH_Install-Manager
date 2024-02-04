@@ -391,6 +391,7 @@ def features_menu(config):
         logo_top(config.debug_mode)
         update_available = Bcolors.UNDERLINE if rhim_update_available_check() else ''
         features_menu_content = """
+        
                             {rmf}FEATURES MENU{endc}
 
 
@@ -499,6 +500,7 @@ def main_menu(config):
                 rh_installation_state = f"{Bcolors.GREEN}1 - RotorHazard Manager{Bcolors.ENDC}{Bcolors.RED} ! PENDING STABLE UPDATE !{Bcolors.ENDC}"
 
         main_menu_content = """ 
+        
                             {rmf}MAIN MENU{endc}
 
                         {bold}  
