@@ -391,10 +391,10 @@ def features_menu(config):
         logo_top(config.debug_mode)
         update_available = Bcolors.UNDERLINE if rhim_update_available_check() else ''
         features_menu_content = """
-                            {rmf}FEATURES MENU{endc}{bold}
+                            {rmf}FEATURES MENU{endc}
 
 
-                    1 - Enable serial protocol {endc}{bold}
+                    1 - {update_flag}Update the Install-Manager{endc}{bold}
 
                     2 - Access Point and Internet
 
@@ -402,9 +402,7 @@ def features_menu(config):
 
                     4 - Add useful aliases
 
-                    5 - {update_flag}Update the Install-Manager{endc}{bold}
-
-                    6 - Create a RHIM log file{yellow}
+                    5 - Create a RHIM log file{yellow}
 
                     e - Exit to main menu {endc}
 
@@ -414,7 +412,7 @@ def features_menu(config):
         print(features_menu_content)
         selection = input()
         if selection == '1':
-            serial_menu(config)
+            self_updater(config)
         elif selection == '2':
             net_menu(config)
         elif selection == '3':
@@ -427,8 +425,6 @@ def features_menu(config):
             except AttributeError:
                 attribute_error_handling()
         elif selection == '5':
-            self_updater(config)  # todo better "wrong user name" handling and added here too
-        elif selection == '6':  # maybe add a general checking if username is setup right?
             log_to_dev(config)
         elif selection == 'e':
             break
