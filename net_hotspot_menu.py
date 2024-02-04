@@ -1,8 +1,21 @@
+import os
+
 from modules import rhim_load_config, clear_the_screen, logo_top, Bcolors
 from net_hotspot_manual_12 import net_hotspot_manual_12
 from net_hotspot_auto_12 import net_hotspot_auto_12
 from net_hotspot_manual_11 import net_hotspot_manual_11
 from net_hotspot_auto_11 import net_hotspot_auto_11
+
+
+def show_os_info(config):
+    clear_the_screen()
+    logo_top(config.debug_mode)
+    print("\n\n")
+    os.system("cat /sys/firmware/devicetree/base/model")
+    print("\n")
+    os.system("cat /etc/os-release")
+    print("\n\n")
+    input("Hit 'Enter' to exit")
 
 
 def net_menu(config):
@@ -21,6 +34,8 @@ def net_menu(config):
                 3 - Setup automatic hotspot/Wi-Fi   (Bullseye)
 
                 4 - Setup hotspot - always on       (Bullseye)
+                
+                5 - Show my Raspberry Pi OS information
 
         {yellow}e - Exit to main menu {endc}
 
@@ -35,6 +50,8 @@ def net_menu(config):
             net_hotspot_auto_11(config)
         elif selection == '4':
             net_hotspot_manual_11(config)
+        elif selection == '5':
+            show_os_info(config)
         elif selection == 'e':
             break
     pass

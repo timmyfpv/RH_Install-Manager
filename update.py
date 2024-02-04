@@ -404,7 +404,7 @@ def features_menu(config):
 
                     5 - {update_flag}Update the Install-Manager{endc}{bold}
 
-                    6 - Create a rhim log file{yellow}
+                    6 - Create a RHIM log file{yellow}
 
                     e - Exit to main menu {endc}
 

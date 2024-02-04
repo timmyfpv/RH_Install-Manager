@@ -50,7 +50,7 @@ def conf_check():
         while True:
             print("""
 
-        You are about to enable automatic Wi-Fi hotspot on your Raspberry Pi. 
+        You are about to enable automatic Wi-Fi hotspot on your timer. 
         This feature will make your device act as an Access Point
         when no known Wi-Fi networks are discovered. 
         It checks for available networks after every reboot.
