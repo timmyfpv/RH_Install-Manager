@@ -218,4 +218,4 @@ if [ "$1" != "no_start" ]; then
   python3 start_rhim.py || python3 start_rhim.py
 fi
 # for some reason 'requests' module sometimes isn't loaded properly the first time
-# and requires second program launch
+# and requires second instance of the program to be launched
