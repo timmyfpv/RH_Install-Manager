@@ -33,7 +33,7 @@ if ! test -f "$PYTHON3_CONVERSION_FLAG_FILE"; then
 
   ### sensors transition to python3 handling ###
 
-  printf "\n\n    Converting existing sensors libraries to python3 versions \n"
+  printf "\n\n    Converting existing sensors libraries to python3 versions "
 
   INA_SENSOR_FILES=/home/"${1}"/pi_ina219
 
@@ -61,7 +61,7 @@ if ! test -f "$PYTHON3_CONVERSION_FLAG_FILE"; then
 
   echo "
 
-      supporting libraries updated to python3
+    sensors libraries updated to python3
 
 "
 
@@ -73,6 +73,6 @@ ADAFRUIT_FILE=/usr/local/lib/python3*/dist-packages/Adafruit_GPIO/Platform.py
 
 if test -d "$ADAFRUIT_FILE"; then
   (sudo sed -i 's/UNKNOWN          = 0/UNKNOWN          = 1/' "$ADAFRUIT_FILE" &&
-    printf "\n $green Adafruit_GPIO compatibility is now OK $endc \n\n") ||
+    printf "\n $green Adafruit_GPIO library is now compatible $endc \n\n") ||
     (printf "$endc \nAdafruit_GPIO compatibility file not found - skipping \n\n $endc" && sleep 2)
 fi

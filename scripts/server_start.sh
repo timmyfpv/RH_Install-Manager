@@ -36,7 +36,7 @@ echo "You can stop the server by pressing Ctrl+C "
 printf "Server booting, please wait"
 dots5
 echo
-(cd ~/RotorHazard/src/server && source ~/.venv/bin/activate && python server.py) || exit
+(cd ~/RotorHazard/src/server && source ~/.venv/bin/activate && python3 server.py) || exit
 
 # scripts like those ensures that files are being executed in right directory but main program
 # istelf can be continued from previous directory after such a script was executed or stopped

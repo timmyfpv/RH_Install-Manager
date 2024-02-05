@@ -52,7 +52,7 @@ alias rhim="cd ~/RH_Install-Manager && sh ./rhim.sh"                        # op
   if ! grep -q "~/.venv/bin/activate" ~/.bashrc; then
     echo '
 #[added during RH_Install-Manager setup]
-alias rh="cd ~/RotorHazard/src/server && source ~/.venv/bin/activate && python server.py"   # starts RH-server' >> ~/.bashrc
+alias rh="cd ~/RotorHazard/src/server && source ~/.venv/bin/activate && python3 server.py"   # starts RH-server' >> ~/.bashrc
   fi
 }
 
