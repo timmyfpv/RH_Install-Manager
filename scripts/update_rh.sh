@@ -59,7 +59,7 @@ pip3 install --upgrade --no-cache-dir -r requirements.txt
 pip3 install cffi pillow==9.5.0
 
 cd /home/"${1}"/RH_Install-Manager/scripts/ || exit
-sudo ./python3_transition.sh
+sudo ./python3_transition.sh "${1}"
 
 # port forwarding
 if ! grep -q "sudo iptables -A PREROUTING -t nat -p tcp --dport 8080 -j REDIRECT --to-ports 80" /etc/rc.local; then
