@@ -67,8 +67,12 @@ if ! test -f "$PYTHON3_CONVERSION_FLAG_FILE"; then
 
 fi
 
-
 # added because of the broken Adafruit_GPIO compatibility on Raspbian 11 Bullseye and newer Pis
-(sudo sed -i 's/UNKNOWN          = 0/UNKNOWN          = 1/' /usr/local/lib/python3*/dist-packages/Adafruit_GPIO/Platform.py && \
-printf "\n $green Adafruit_GPIO compatibility is now OK $endc \n\n") || \
-(printf "$endc \nAdafruit_GPIO compatibility file not found - skipping \n\n $endc" && sleep 2)
+
+ADAFRUIT_FILE=/usr/local/lib/python3*/dist-packages/Adafruit_GPIO/Platform.py
+
+if test -d "$ADAFRUIT_FILE"; then
+  (sudo sed -i 's/UNKNOWN          = 0/UNKNOWN          = 1/' "$ADAFRUIT_FILE" &&
+    printf "\n $green Adafruit_GPIO compatibility is now OK $endc \n\n") ||
+    (printf "$endc \nAdafruit_GPIO compatibility file not found - skipping \n\n $endc" && sleep 2)
+fi
