@@ -52,7 +52,7 @@ alias rhim="cd ~/RH_Install-Manager && sh ./rhim.sh"                        # op
   if ! grep -q "~/.venv/bin/activate" ~/.bashrc; then
     echo '
 #[added during RH_Install-Manager setup]
-alias rh="cd ~/RotorHazard/src/server && source ~/.venv/bin/activate && python server.py"   # starts RH-server' >> ~/.bashrc
+alias rh="cd ~/RotorHazard/src/server && source ~/.venv/bin/activate && python3 server.py"   # starts RH-server' >> ~/.bashrc
   fi
 }
 
@@ -218,4 +218,4 @@ if [ "$1" != "no_start" ]; then
   python3 start_rhim.py || python3 start_rhim.py
 fi
 # for some reason 'requests' module sometimes isn't loaded properly the first time
-# and requires second program launch
+# and requires second instance of the program to be launched
