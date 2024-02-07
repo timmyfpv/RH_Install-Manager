@@ -34,9 +34,9 @@ if ! test -f "$PYTHON3_CONVERSION_FLAG_FILE"; then
   ### sensors transition to python3 handling ###
 
   INA_SENSOR_FILES=/home/"${1}"/pi_ina219
-  printf "\n\n    Converting INA sensor library to python3 versions "
 
   if test -d "$INA_SENSOR_FILES"; then
+    printf "\n\n Converting INA sensor library to python3 versions "
     cd /home/"${1}" || exit
     sudo rm -r "$INA_SENSOR_FILES" || exit
     sudo git clone https://github.com/chrisb2/pi_ina219.git
@@ -48,9 +48,9 @@ if ! test -f "$PYTHON3_CONVERSION_FLAG_FILE"; then
   fi
 
   BME_SENSOR_FILES=/home/"${1}"/bme280
-  printf "\n\n Converting existing BME sensor library to python3 versions "
 
   if test -d "$BME_SENSOR_FILES"; then
+    printf "\n\n Converting existing BME sensor library to python3 versions "
     cd /home/"${1}" || exit
     sudo rm -r "$BME_SENSOR_FILES" || exit
     sudo git clone https://github.com/rm-hull/bme280.git
