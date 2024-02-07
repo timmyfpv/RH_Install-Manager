@@ -26,16 +26,18 @@ sleep 2
   mv RH_Install-Manager-* RH_Install-Manager || return 1
 
   printf "
---------------------------------------------------------------------
+-----------------------------------------------------------------
 $green
 Program downloaded successfully. To open the Installer now type:$endc
 cd ~/RH_Install-Manager
 ./rhim.sh
 $yellow
+
 For the NuclearHazard quick install, enter:$endc
 cd ~/RH_Install-Manager/NuclearHazard
-./nh-install.sh 1
-
+./nh-install.sh 1 $yellow
+! perform ONLY if you use NuclearHazard timer !
+$endc
 "
 
 }
