@@ -28,14 +28,13 @@ if ! test -f "$PYTHON3_CONVERSION_FLAG_FILE"; then
   if grep -Fq "python server.py" "/home/"${1}"/.bashrc"; then
     echo "old python based server-start alias found"
     sed -i 's/python server.py/python3 server.py/g' ~/.bashrc
-    echo "'ss' alias changed to python3 version"
+    echo "'rh' alias changed to python3 version"
   fi
 
   ### sensors transition to python3 handling ###
 
-  printf "\n\n    Converting existing sensors libraries to python3 versions "
-
   INA_SENSOR_FILES=/home/"${1}"/pi_ina219
+  printf "\n\n    Converting INA sensor library to python3 versions "
 
   if test -d "$INA_SENSOR_FILES"; then
     cd /home/"${1}" || exit
@@ -44,9 +43,12 @@ if ! test -f "$PYTHON3_CONVERSION_FLAG_FILE"; then
     cd /home/"${1}"/pi_ina219 || exit
     printf "\n\n  INA sensor library will be updated to python3 \n\n"
     sudo python3 setup.py install
+    echo "\n done"
+
   fi
 
   BME_SENSOR_FILES=/home/"${1}"/bme280
+  printf "\n\n Converting existing BME sensor library to python3 versions "
 
   if test -d "$BME_SENSOR_FILES"; then
     cd /home/"${1}" || exit
@@ -55,15 +57,10 @@ if ! test -f "$PYTHON3_CONVERSION_FLAG_FILE"; then
     cd /home/"${1}"/bme280 || exit
     printf "\n\n  BME sensor library will be updated to python3 \n\n"
     sudo python3 setup.py install
+    echo "\n done"
   fi
 
   touch "$PYTHON3_CONVERSION_FLAG_FILE"
-
-  echo "
-
-    sensors libraries updated to python3
-
-"
 
 fi
 
