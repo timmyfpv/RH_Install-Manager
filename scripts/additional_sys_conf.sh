@@ -16,10 +16,18 @@ if [ "$1" == "shutdown_pin" ]; then
   sudo sed -i '/gpio-shutdown,gpio_pin/d' "${boot_directory}"/config.txt
   echo "
 ### GPIO pin - RH_Install-Manager ###
+[pi4]
 dtoverlay=gpio-shutdown,gpio_pin=$2,debounce=$3
+
+[pi3]
+dtoverlay=gpio-shutdown,gpio_pin=$2,debounce=$3
+
+[pi02]
+dtoverlay=gpio-shutdown,gpio_pin=$2,debounce=$3
+
+[all]
   " | sudo tee -a "${boot_directory}"/config.txt
 fi
-
 
 if [ "$1" == "led" ]; then
 

@@ -5,6 +5,9 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+6f45.401.35
+1. Improved Pi 5 configuration process
+
 6f43.401.35
 1. Features menu tweaked
 2. Another hotspots improvements
