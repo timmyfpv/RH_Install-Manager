@@ -5,6 +5,9 @@
         UPDATE NOTES:
         ^^^^^^^^^^^^
 
+6f48.401.35
+1. RotorHazard 4.1.0-beta.4 installation and update support added
+
 6f47.401.35
 1. RotorHazard 4.1.0-beta.3 installation and update support added
 
