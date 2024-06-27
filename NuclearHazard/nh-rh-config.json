@@ -1,8 +1,8 @@
 {
 	"GENERAL": {
 		"HTTP_PORT": 5000,
-		"ADMIN_USERNAME": "NuclearHazard",
-		"ADMIN_PASSWORD": "nuclearhazard",
+		"ADMIN_USERNAME": "admin",
+		"ADMIN_PASSWORD": "Rotorhazard",
 		"DEBUG": false,
 		"CORS_ALLOWED_HOSTS": "*",
         "SHUTDOWN_BUTTON_GPIOPIN": 19,
@@ -13,7 +13,7 @@
 	},
 	"SENSORS": {
 	},
-	"SERIAL_PORTS": [],
+	"SERIAL_PORTS": ["/dev/serial0"],
 	"LED": {
 		"LED_COUNT": 0,
 		"LED_ROWS": 1,
